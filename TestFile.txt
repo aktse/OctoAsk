@@ -3,3 +3,4 @@ Team Members:
 - Neel Parikh
 - Christopher Li Sheung Ying
 - Kevin De Asis
+- Aaron Tse
