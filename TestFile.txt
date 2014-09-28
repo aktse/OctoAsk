@@ -2,3 +2,4 @@ Team Members:
 - Ivan Barreto Luna
 - Neel Parikh
 - Christopher Li Sheung Ying
+- Kevin De Asis
