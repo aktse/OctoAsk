@@ -4,3 +4,4 @@ Team Members:
 - Christopher Li Sheung Ying
 - Kevin De Asis
 - Aaron Tse
+- Chuan Chen
