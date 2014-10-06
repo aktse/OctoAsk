@@ -1,5 +1,9 @@
 package cs.ualberta.octoaskt12;
 
+import java.util.ArrayList;
+
+import cs.ualberta.octoaskt12.adapters.CustomArrayAdapter;
+
 import android.app.Activity;
 
 import android.app.ActionBar;
@@ -18,21 +22,16 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class MainActivity extends FragmentActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-	/**
-	 * Fragment managing the behaviors, interactions and presentation of the
-	 * navigation drawer.
-	 */
+	public static ArrayList<UserText> userText = new ArrayList<UserText>();
+
 	private NavigationDrawerFragment mNavigationDrawerFragment;
 
-	/**
-	 * Used to store the last screen title. For use in
-	 * {@link #restoreActionBar()}.
-	 */
 	private CharSequence mTitle;
 
 	@Override
@@ -47,6 +46,9 @@ public class MainActivity extends FragmentActivity implements
 		// Set up the drawer.
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
 				(DrawerLayout) findViewById(R.id.drawer_layout));
+
+		userText.add(new UserText("sup bruh"));
+		userText.add(new UserText("nm homes"));
 	}
 
 	@Override
@@ -134,6 +136,8 @@ public class MainActivity extends FragmentActivity implements
 
 	public static class QuestionFragment extends Fragment {
 
+		public CustomArrayAdapter userTextViewAdapter = null;
+
 		public static QuestionFragment newInstance() {
 			QuestionFragment fragment = new QuestionFragment();
 			return fragment;
@@ -145,8 +149,13 @@ public class MainActivity extends FragmentActivity implements
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
+			this.userTextViewAdapter = new CustomArrayAdapter(getActivity(),
+					userText);
 			View rootView = inflater.inflate(R.layout.fragment_question,
-					container, false);
+			container, false);
+			ListView lv = (ListView)rootView.findViewById(R.id.question_list);
+			lv.setAdapter(userTextViewAdapter);
+
 			return rootView;
 		}
 
