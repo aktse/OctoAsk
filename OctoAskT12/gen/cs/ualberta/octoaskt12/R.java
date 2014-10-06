@@ -35,8 +35,11 @@ public final class R {
     public static final class id {
         public static final int container=0x7f080001;
         public static final int drawer_layout=0x7f080000;
-        public static final int list_question_subtitle=0x7f080005;
-        public static final int list_question_title=0x7f080004;
+        public static final int layout_bottom=0x7f080006;
+        public static final int list_question_answer=0x7f080007;
+        public static final int list_question_time=0x7f080008;
+        public static final int list_question_title=0x7f080005;
+        public static final int list_question_upvote=0x7f080004;
         public static final int navigation_drawer=0x7f080002;
         public static final int question_list=0x7f080003;
     }
