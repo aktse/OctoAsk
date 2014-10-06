@@ -5,6 +5,7 @@
 
 # Package Files #
 *.jar
+!OctoAskT12/libs/*.jar
 *.war
 *.ear
 
