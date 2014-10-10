@@ -81,6 +81,11 @@ public class MainActivity extends FragmentActivity implements
 					.replace(R.id.container, ProfileFragment.newInstance())
 					.commit();
 			break;
+		case 6:
+			fragmentManager.beginTransaction()
+					.replace(R.id.container, HistoryFragment.newInstance())
+					.commit();
+			break;
 		}
 	}
 
@@ -101,6 +106,11 @@ public class MainActivity extends FragmentActivity implements
 		case 5:
 			mTitle = getString(R.string.title_section5);
 			break;
+		case 6:
+			mTitle = getString(R.string.title_section6);
+			break;
+
+			
 		}
 	}
 
@@ -266,4 +276,31 @@ public class MainActivity extends FragmentActivity implements
 			((MainActivity) activity).onSectionAttached(5);
 		}
 	}
+	//
+	
+	public static class HistoryFragment extends Fragment {
+
+		public static HistoryFragment newInstance() {
+			HistoryFragment fragment = new HistoryFragment();
+			return fragment;
+		}
+
+		public HistoryFragment() {
+		}
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+				Bundle savedInstanceState) {
+			View rootView = inflater.inflate(R.layout.fragment_history,
+					container, false);
+			return rootView;
+		}
+
+		@Override
+		public void onAttach(Activity activity) {
+			super.onAttach(activity);
+			((MainActivity) activity).onSectionAttached(6);
+		}
+	}
+	//
 }
