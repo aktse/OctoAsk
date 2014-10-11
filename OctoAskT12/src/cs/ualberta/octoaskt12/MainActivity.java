@@ -59,8 +59,9 @@ public class MainActivity extends FragmentActivity implements
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
 				(DrawerLayout) findViewById(R.id.drawer_layout));
 
-		//userText.add(new UserText("sup bruh"));
-		//userText.add(new UserText("nm homes"));
+		// Kevin and Chris commented these two userText.add when making the junit testcase
+		userText.add(new UserText("sup bruh"));
+		userText.add(new UserText("nm homes"));
 		
 		MyQuestionFilename = "ChrisFile";
 	}
@@ -239,11 +240,9 @@ public class MainActivity extends FragmentActivity implements
 		SaveMyQuestions();
 	}*/
 	
-	
-	
 	//
 	
-
+	
 	public static class MyQuestionsFragment extends Fragment {
 
 		public static MyQuestionsFragment newInstance() {
