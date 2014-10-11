@@ -1,5 +1,10 @@
 package cs.ualberta.octoaskt12;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import cs.ualberta.octoaskt12.adapters.CustomArrayAdapter;
@@ -12,6 +17,7 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -28,11 +34,17 @@ import android.widget.TextView;
 public class MainActivity extends FragmentActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks {
 
+	
+	// Don't delete userText, we are assuming these are the questions added to the userText
+	
 	public static ArrayList<UserText> userText = new ArrayList<UserText>();
+	public static ArrayList<UserText> myQuestions = new ArrayList<UserText>();
 
 	private NavigationDrawerFragment mNavigationDrawerFragment;
 
 	private CharSequence mTitle;
+	
+	private static String MyQuestionFilename;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +59,10 @@ public class MainActivity extends FragmentActivity implements
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
 				(DrawerLayout) findViewById(R.id.drawer_layout));
 
-		userText.add(new UserText("sup bruh"));
-		userText.add(new UserText("nm homes"));
+		//userText.add(new UserText("sup bruh"));
+		//userText.add(new UserText("nm homes"));
+		
+		MyQuestionFilename = "ChrisFile";
 	}
 
 	@Override
@@ -175,6 +189,60 @@ public class MainActivity extends FragmentActivity implements
 			((MainActivity) activity).onSectionAttached(1);
 		}
 	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		userText.clear();
+	}
+	
+	//
+	
+	//
+	
+	public void SaveMyQuestions() {
+		try {
+			FileOutputStream fos = openFileOutput(MyQuestionFilename, MODE_PRIVATE);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(userText);
+			fos.close();
+		} catch(IOException e) {
+			Log.i("heysave", "heysave");
+		}
+	}
+	
+	public void LoadMyQuestions() throws ClassNotFoundException{
+		
+		ArrayList<UserText> MyQuestions = new ArrayList<UserText>();
+		
+		try {
+			FileInputStream fos = openFileInput(MyQuestionFilename);
+			ObjectInputStream ois = new ObjectInputStream(fos);
+			MyQuestions = (ArrayList<UserText>) ois.readObject();
+			fos.close();
+		} catch (IOException e) {
+			Log.i("Well", "GoBackToLoadAgain");
+		}
+		
+		int instanceinarraysize = MyQuestions.size();
+		userText.clear();
+		int dummy;
+		
+		for (dummy = 0; dummy < instanceinarraysize; dummy++) {
+			userText.add(MyQuestions.get(dummy));
+		}
+	}
+	
+	/*@Override
+	protected void onDestroy() {
+		super.onStop();
+		SaveMyQuestions();
+	}*/
+	
+	
+	
+	//
+	
 
 	public static class MyQuestionsFragment extends Fragment {
 
@@ -302,5 +370,4 @@ public class MainActivity extends FragmentActivity implements
 			((MainActivity) activity).onSectionAttached(6);
 		}
 	}
-	//
 }
