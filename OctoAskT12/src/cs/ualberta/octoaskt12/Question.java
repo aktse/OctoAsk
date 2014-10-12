@@ -1,50 +1,101 @@
 package cs.ualberta.octoaskt12;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class Question {
 
-	private String question;
-	private int upvotes;
-	private int answers;
-	private int replies;
+	private String questionTitle;
+	private String questionBody;
+	private int numVotes;
 	private GregorianCalendar dateCreated;
+	private User user;
+	private ArrayList<Answer> answers = new ArrayList<Answer>();
+	private ArrayList<Reply> replies = new ArrayList<Reply>();
 	
-	public Question(String string) {
-		this.question = string;
+	public Question(String questionTitle, String questionBody, User user) {
+		this.questionTitle = questionTitle;
+		this.questionBody = questionBody;
 		this.dateCreated = new GregorianCalendar();
-	}
-
-	public String getString() {
-		return this.question;
+		this.user = user;
 	}
 	
-	public void incrementAnswers() {
-		answers++;
+	/***************************************************************************
+ 	* Text
+ 	***************************************************************************/
+	
+	public void setTitle(String questionTitle) {
+		this.questionTitle = questionTitle;
 	}
 	
-	public int getAnswers(){
+	public String getTitle() {
+		return questionTitle;
+	}
+	
+	public void setBody(String questionBody) {
+		this.questionBody = questionBody;
+	}
+	
+	public String getBody() {
+		return questionBody;
+	}
+	
+	 /***************************************************************************
+	 * Votes
+	 ***************************************************************************/
+	
+	public int getVotes() {
+		return numVotes;
+	}
+	
+	public void incrementVotes() {
+		numVotes++;
+	}
+	
+	/***************************************************************************
+ 	* Answers
+ 	***************************************************************************/
+	
+	public int getNumAnswers() {
+		return answers.size();
+	}
+	
+	public ArrayList<Answer> getAnswers() {
 		return answers;
 	}
 	
-	public int getVotes(){
-		return upvotes;
+	public void addAnswer(Answer answer) {
+		answers.add(answer);
 	}
 	
-	public void incrementVotes(){
-		upvotes++;
+	/***************************************************************************
+	 * Replies
+	 ***************************************************************************/
+	
+	public int getNumReplies() {
+		return replies.size();
 	}
 	
-	public int getReplies() {
+	public ArrayList<Reply> getReplies() {
 		return replies;
 	}
 	
-	public void incrementReplies(){
-		replies++;
+	public void addReply(Reply reply) {
+		replies.add(reply);
 	}
 	
-	public GregorianCalendar getTime(){	
+	/***************************************************************************
+ 	* Misc
+ 	***************************************************************************/
+	
+	public String getUser() {
+		return user.getName();
+	}
+	
+	public GregorianCalendar getTime() {
 		return dateCreated;
 	}
+
+	
 	
 }

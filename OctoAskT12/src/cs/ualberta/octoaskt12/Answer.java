@@ -1,36 +1,77 @@
 package cs.ualberta.octoaskt12;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class Answer {
-	private String answer;
-	private int upvotes;
-	private int replies;
+	private String answerTitle;
+	private String answerBody;
+	private User user;
+	private int numVotes;
+	private ArrayList<Reply> replies = new ArrayList<Reply>();
 	private GregorianCalendar dateCreated;
 	
-	public Answer(String string) {
-		this.answer = string;
+	public Answer(String answerTitle, String answerBody, User user) {
+		this.answerTitle = answerTitle;
+		this.answerBody = answerBody;
 		this.dateCreated = new GregorianCalendar();
-	}
-
-	public String getString() {
-		return this.answer;
+		this.user = user;
 	}
 	
-	public int getVotes(){
-		return upvotes;
+	/***************************************************************************
+ 	* Text
+ 	***************************************************************************/
+	
+	public String getTitle() {
+		return answerTitle;
+	}
+	
+	public void setTitle(String answerTitle) {
+		this.answerTitle = answerTitle;
+	}
+	
+	public String getBody() {
+		return answerBody;
+	}
+	
+	public void setBody(String answerBody) {
+		this.answerBody = answerBody;
+	}
+	
+	/***************************************************************************
+ 	* Votes
+ 	***************************************************************************/
+	
+	public int getVotes() {
+		return numVotes;
 	}
 	
 	public void incrementVotes() {
-		upvotes++;
+		numVotes++;
 	}
 	
-	public int getReplies(){
+	/***************************************************************************
+ 	* Replies
+ 	***************************************************************************/
+	
+	public int getNumReplies() {
+		return replies.size();
+	}
+	
+	public ArrayList<Reply> getReplies() {
 		return replies;
 	}
 	
-	public void incrementReplies() {
-		replies++;
+	public void addReply(Reply reply) {
+		replies.add(reply);
+	}
+	
+	/***************************************************************************
+ 	* Misc
+ 	***************************************************************************/
+	
+	public String getUser() {
+		return user.getName();
 	}
 	
 	public GregorianCalendar getTime(){	
