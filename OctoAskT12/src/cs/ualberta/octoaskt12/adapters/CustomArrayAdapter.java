@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import cs.ualberta.octoaskt12.Question;
 import cs.ualberta.octoaskt12.R;
-import cs.ualberta.octoaskt12.UserText;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,20 +14,20 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class CustomArrayAdapter extends ArrayAdapter<UserText>{
+public class CustomArrayAdapter extends ArrayAdapter<Question>{
 
-	private ArrayList<UserText> userText = null;
+	private ArrayList<Question> questions = null;
 	
-	public CustomArrayAdapter(Context context, ArrayList<UserText> userText){
-		super(context, R.layout.fragment_question_list_item, userText);
+	public CustomArrayAdapter(Context context, ArrayList<Question> questions){
+		super(context, R.layout.fragment_question_list_item, questions);
 		
-		this.userText = userText;
+		this.questions = questions;
 	}
 	
 	//Used to get the item located at the position of the onClick event
 	@Override
-	public UserText getItem(int position) {
-		return userText.get(position);
+	public Question getItem(int position) {
+		return questions.get(position);
 	}
 	
 	@Override
@@ -39,12 +39,12 @@ public class CustomArrayAdapter extends ArrayAdapter<UserText>{
 		}
 		
 		TextView question = (TextView) view.findViewById(R.id.list_question_title);
-		question.setText(userText.get(position).getUserText());
+		question.setText(questions.get(position).getString());
 		TextView answers = (TextView) view.findViewById(R.id.list_question_answer);
-		answers.setText(userText.get(position).getAnswers() + " answers");
+		answers.setText(questions.get(position).getAnswers() + " answers");
 		
 		TextView time = (TextView) view.findViewById(R.id.list_question_time);
-		GregorianCalendar gc = userText.get(position).getTime();
+		GregorianCalendar gc = questions.get(position).getTime();
 		GregorianCalendar now = new GregorianCalendar();
 		long difference = now.getTime().getTime() - gc.getTime().getTime();
 		long timeInSeconds = difference/1000;
@@ -65,7 +65,7 @@ public class CustomArrayAdapter extends ArrayAdapter<UserText>{
 		System.out.println(timeInHours);
 
 		TextView upvotes = (TextView) view.findViewById(R.id.list_question_upvote_caption);
-		upvotes.setText(userText.get(position).getVotes() + " upvotes");
+		upvotes.setText(questions.get(position).getVotes() + " upvotes");
 		
 		return view;
 	}

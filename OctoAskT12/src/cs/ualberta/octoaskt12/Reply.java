@@ -1,5 +1,6 @@
 package cs.ualberta.octoaskt12;
 
+<<<<<<< HEAD
 
 public class Reply {
 	private String replyText = "";
@@ -23,5 +24,26 @@ public class Reply {
 		this.upvote++;
 	}
 		
+=======
+import java.util.GregorianCalendar;
+
+public class Reply {
+
+	private String reply;
+	private GregorianCalendar dateCreated;
+
+	public Reply (String string) {
+		this.reply = string;
+		this.dateCreated = new GregorianCalendar();
+	}
+	
+	public String getString() {
+		return reply;
+	}
+	
+	public GregorianCalendar getTime() {
+		return dateCreated;
+	}
+>>>>>>> beae88ca4458365291a2f48cac9adabcffe17f16
 	
 }

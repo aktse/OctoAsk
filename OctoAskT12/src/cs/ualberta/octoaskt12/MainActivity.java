@@ -37,8 +37,8 @@ public class MainActivity extends FragmentActivity implements
 	
 	// Don't delete userText, we are assuming these are the questions added to the userText
 	
-	public static ArrayList<UserText> userText = new ArrayList<UserText>();
-	public static ArrayList<UserText> myQuestions = new ArrayList<UserText>();
+	public static ArrayList<Question> questions = new ArrayList<Question>();
+	public static ArrayList<Question> myQuestions = new ArrayList<Question>();
 
 	private NavigationDrawerFragment mNavigationDrawerFragment;
 
@@ -60,8 +60,8 @@ public class MainActivity extends FragmentActivity implements
 				(DrawerLayout) findViewById(R.id.drawer_layout));
 
 		// Kevin and Chris commented these two userText.add when making the junit testcase
-		userText.add(new UserText("sup bruh"));
-		userText.add(new UserText("nm homes"));
+		questions.add(new Question("sup bruh"));
+		questions.add(new Question("nm homes"));
 		
 		MyQuestionFilename = "ChrisFile";
 	}
@@ -161,7 +161,7 @@ public class MainActivity extends FragmentActivity implements
 
 	public static class QuestionFragment extends Fragment {
 
-		public CustomArrayAdapter userTextViewAdapter = null;
+		public CustomArrayAdapter questionsViewAdapter = null;
 
 		public static QuestionFragment newInstance() {
 			QuestionFragment fragment = new QuestionFragment();
@@ -174,12 +174,12 @@ public class MainActivity extends FragmentActivity implements
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			this.userTextViewAdapter = new CustomArrayAdapter(getActivity(),
-					userText);
+			this.questionsViewAdapter = new CustomArrayAdapter(getActivity(),
+					questions);
 			View rootView = inflater.inflate(R.layout.fragment_question,
 			container, false);
 			ListView lv = (ListView)rootView.findViewById(R.id.question_list);
-			lv.setAdapter(userTextViewAdapter);
+			lv.setAdapter(questionsViewAdapter);
 
 			return rootView;
 		}
@@ -194,7 +194,7 @@ public class MainActivity extends FragmentActivity implements
 	@Override
 	protected void onPause() {
 		super.onPause();
-		userText.clear();
+		questions.clear();
 	}
 	
 	//
@@ -205,7 +205,7 @@ public class MainActivity extends FragmentActivity implements
 		try {
 			FileOutputStream fos = openFileOutput(MyQuestionFilename, MODE_PRIVATE);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
-			oos.writeObject(userText);
+			oos.writeObject(questions);
 			fos.close();
 		} catch(IOException e) {
 			Log.i("heysave", "heysave");
@@ -214,23 +214,23 @@ public class MainActivity extends FragmentActivity implements
 	
 	public void LoadMyQuestions() throws ClassNotFoundException{
 		
-		ArrayList<UserText> MyQuestions = new ArrayList<UserText>();
+		ArrayList<Question> MyQuestions = new ArrayList<Question>();
 		
 		try {
 			FileInputStream fos = openFileInput(MyQuestionFilename);
 			ObjectInputStream ois = new ObjectInputStream(fos);
-			MyQuestions = (ArrayList<UserText>) ois.readObject();
+			MyQuestions = (ArrayList<Question>) ois.readObject();
 			fos.close();
 		} catch (IOException e) {
 			Log.i("Well", "GoBackToLoadAgain");
 		}
 		
 		int instanceinarraysize = MyQuestions.size();
-		userText.clear();
+		questions.clear();
 		int dummy;
 		
 		for (dummy = 0; dummy < instanceinarraysize; dummy++) {
-			userText.add(MyQuestions.get(dummy));
+			questions.add(MyQuestions.get(dummy));
 		}
 	}
 	
@@ -239,9 +239,6 @@ public class MainActivity extends FragmentActivity implements
 		super.onStop();
 		SaveMyQuestions();
 	}*/
-	
-	//
-	
 	
 	public static class MyQuestionsFragment extends Fragment {
 
