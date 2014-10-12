@@ -37,9 +37,13 @@ public class MainActivity extends FragmentActivity implements
 	
 	// Don't delete userText, we are assuming these are the questions added to the userText
 	
+	public static QuestionArrayList questionArrayList = new QuestionArrayList();
+	
+	/*
 	public static ArrayList<Question> questions = new ArrayList<Question>();
 	public static ArrayList<Question> myQuestions = new ArrayList<Question>();
-
+	*/
+	
 	private NavigationDrawerFragment mNavigationDrawerFragment;
 
 	private CharSequence mTitle;
@@ -60,10 +64,12 @@ public class MainActivity extends FragmentActivity implements
 				(DrawerLayout) findViewById(R.id.drawer_layout));
 
 		// Kevin and Chris commented these two userText.add when making the junit testcase
-		questions.add(new Question("sup bruh"));
+		/*questions.add(new Question("sup bruh"));
 		questions.add(new Question("nm homes"));
+		*/
 		
-		MyQuestionFilename = "ChrisFile";
+		questionArrayList.addQuestion(new Question("sup bruh", "neel",new User("Ivan Burrito")));
+		//MyQuestionFilename = "ChrisFile";
 	}
 
 	@Override
@@ -175,7 +181,7 @@ public class MainActivity extends FragmentActivity implements
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 			this.questionsViewAdapter = new CustomArrayAdapter(getActivity(),
-					questions);
+					questionArrayList);
 			View rootView = inflater.inflate(R.layout.fragment_question,
 			container, false);
 			ListView lv = (ListView)rootView.findViewById(R.id.question_list);
@@ -191,12 +197,13 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 	
+	/*
 	@Override
 	protected void onPause() {
 		super.onPause();
 		questions.clear();
 	}
-	
+	*/
 	//
 	
 	//
@@ -205,13 +212,13 @@ public class MainActivity extends FragmentActivity implements
 		try {
 			FileOutputStream fos = openFileOutput(MyQuestionFilename, MODE_PRIVATE);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
-			oos.writeObject(questions);
+			oos.writeObject(questionArrayList);
 			fos.close();
 		} catch(IOException e) {
 			Log.i("heysave", "heysave");
 		}
 	}
-	
+	/*
 	public void LoadMyQuestions() throws ClassNotFoundException{
 		
 		ArrayList<Question> MyQuestions = new ArrayList<Question>();
@@ -232,7 +239,7 @@ public class MainActivity extends FragmentActivity implements
 		for (dummy = 0; dummy < instanceinarraysize; dummy++) {
 			questions.add(MyQuestions.get(dummy));
 		}
-	}
+	}*/
 	
 	/*@Override
 	protected void onDestroy() {
