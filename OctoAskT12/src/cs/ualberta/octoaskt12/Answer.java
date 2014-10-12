@@ -4,15 +4,13 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class Answer {
-	private String answerTitle;
 	private String answerBody;
 	private User user;
 	private int numVotes;
 	private ArrayList<Reply> replies = new ArrayList<Reply>();
 	private GregorianCalendar dateCreated;
 	
-	public Answer(String answerTitle, String answerBody, User user) {
-		this.answerTitle = answerTitle;
+	public Answer(String answerBody, User user) {
 		this.answerBody = answerBody;
 		this.dateCreated = new GregorianCalendar();
 		this.user = user;
@@ -21,14 +19,6 @@ public class Answer {
 	/***************************************************************************
  	* Text
  	***************************************************************************/
-	
-	public String getTitle() {
-		return answerTitle;
-	}
-	
-	public void setTitle(String answerTitle) {
-		this.answerTitle = answerTitle;
-	}
 	
 	public String getBody() {
 		return answerBody;

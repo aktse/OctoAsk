@@ -8,7 +8,8 @@ public class Reply {
 	private User user;
 	private GregorianCalendar dateCreated;
 
-	public Reply (String reply) {
+	public Reply (String reply, User user) {
+		this.user = user;
 		this.reply = reply;
 		this.dateCreated = new GregorianCalendar();
 	}
