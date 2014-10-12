@@ -1,35 +1,6 @@
 package cs.ualberta.octoaskt12;
 
-<<<<<<< HEAD
 import java.util.ArrayList;
-
-
-public class Answer {
-	private String answerBody = "";
-	private int upvote = 0;
-	
-	// An answer contains replies
-	ArrayList<Reply> replies = new ArrayList<Reply>();
-
-	// get the body of the answer
-	public String getAnswerBody() {
-		return answerBody;
-	}
-	
-	// set the body of the answer
-	public void setAnswerBody(String answerBody) {
-		this.answerBody = answerBody;
-	}
-	
-	// get the count of the upVote for the answer
-	public int getUpVote() {
-		return upvote;
-	}
-	
-	// increment the count of upVote for the answer
-	public void incrementUpVote() {
-		this.upvote++;
-=======
 import java.util.GregorianCalendar;
 
 public class Answer {
@@ -65,7 +36,6 @@ public class Answer {
 	
 	public GregorianCalendar getTime(){	
 		return dateCreated;
->>>>>>> beae88ca4458365291a2f48cac9adabcffe17f16
 	}
 	
 }
