@@ -2,27 +2,25 @@ package cs.ualberta.octoaskt12;
 
 import java.util.ArrayList;
 
-
 public class User {
-	private String username = "";
-	protected ArrayList<Question> myQuestions = new ArrayList<Question>();
-	protected ArrayList<Answer> myAnswers = new ArrayList<Answer>();
-	protected ArrayList<Reply> myReplies = new ArrayList<Reply>();
 	
+	private String name;
+	private QuestionArrayList questions = new QuestionArrayList();
 	
 	public User(String name) {
-		super();
-		this.username = name;
+		this.name = name;
 	}
 	
-	// get the user's name
 	public String getName() {
-		return username;
+		return name;
 	}
-		
-	// set the user's name
+	
 	public void setName(String name) {
-		this.username = name;
+		this.name = name;
+	}
+	
+	public ArrayList<Question> getQuestions() {
+		return questions.getQuestions();
 	}
 	
 }
