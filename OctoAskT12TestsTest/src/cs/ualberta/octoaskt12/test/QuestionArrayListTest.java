@@ -42,8 +42,6 @@ public class QuestionArrayListTest extends TestCase {
 		q1.addAnswer(a1);
 		
 		int aIndex =  q1.getAnswers().indexOf(a1);
-//		ArrayList<Question> answers = q1.getAnswers();
-//		get(answers.indexOf(a1));
 		Reply r2 = new Reply("reply 1", new User("ivan"));
 		q1.getAnswers().get(aIndex).addReply(r2);
 		
