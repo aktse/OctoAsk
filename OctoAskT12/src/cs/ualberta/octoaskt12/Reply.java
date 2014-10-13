@@ -18,11 +18,11 @@ public class Reply {
  	* Replies
  	***************************************************************************/
 	
-	public String getString() {
+	public String getBody() {
 		return reply;
 	}
 	
-	public void setString(String reply) {
+	public void setBody(String reply) {
 		this.reply = reply;
 	}
 	
