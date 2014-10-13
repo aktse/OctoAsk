@@ -1,9 +1,14 @@
 package cs.ualberta.octoaskt12;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class User {
+public class User implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2652571757539537096L;
 	private String name;
 	private QuestionArrayList questions = new QuestionArrayList();
 	

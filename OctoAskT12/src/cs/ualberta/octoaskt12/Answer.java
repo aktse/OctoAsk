@@ -1,9 +1,14 @@
 package cs.ualberta.octoaskt12;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-public class Answer {
+public class Answer implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5590593466133278091L;
 	private String answerBody;
 	private User user;
 	private int numVotes;
