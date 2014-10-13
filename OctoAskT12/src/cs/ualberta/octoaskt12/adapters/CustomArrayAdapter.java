@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import cs.ualberta.octoaskt12.Question;
+import cs.ualberta.octoaskt12.QuestionArrayList;
 import cs.ualberta.octoaskt12.R;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -18,10 +19,10 @@ public class CustomArrayAdapter extends ArrayAdapter<Question>{
 
 	private ArrayList<Question> questions = null;
 	
-	public CustomArrayAdapter(Context context, ArrayList<Question> questions){
-		super(context, R.layout.fragment_question_list_item, questions);
+	public CustomArrayAdapter(Context context, QuestionArrayList questions){
+		super(context, R.layout.fragment_question_list_item, questions.getQuestions());
 		
-		this.questions = questions;
+		this.questions = questions.getQuestions();
 	}
 	
 	//Used to get the item located at the position of the onClick event
@@ -39,7 +40,7 @@ public class CustomArrayAdapter extends ArrayAdapter<Question>{
 		}
 		
 		TextView question = (TextView) view.findViewById(R.id.list_question_title);
-		question.setText(questions.get(position).getString());
+		question.setText(questions.get(position).getTitle());
 		TextView answers = (TextView) view.findViewById(R.id.list_question_answer);
 		answers.setText(questions.get(position).getAnswers() + " answers");
 		
