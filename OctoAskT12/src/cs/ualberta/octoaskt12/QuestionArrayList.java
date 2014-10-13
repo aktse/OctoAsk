@@ -18,4 +18,19 @@ public class QuestionArrayList {
 		this.questions.add(question);
 	}
 	
+	public int getSize() {
+		return questions.size();
+	}
+	
+	public void clear() {
+		questions.clear();
+	}
+	
+	public Question get(int i) {
+		return questions.get(i);
+	}
+	
+	public void add(Question question) {
+		questions.add(question);
+	}
 }
