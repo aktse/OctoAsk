@@ -6,10 +6,6 @@ public class QuestionArrayList {
 	
 	private ArrayList<Question> questions = new ArrayList<Question>();
 	
-	public QuestionArrayList() {
-		
-	}
-	
 	public ArrayList<Question> getQuestions() {
 		return questions;
 	}
