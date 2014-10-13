@@ -8,6 +8,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import cs.ualberta.octoaskt12.adapters.CustomArrayAdapter;
+import cs.ualberta.octoaskt12.adapters.DetailViewAdapter;
 
 import android.app.Activity;
 
@@ -15,6 +16,7 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,7 +29,10 @@ import android.view.ViewGroup;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.DrawerLayout;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -40,7 +45,7 @@ public class MainActivity extends FragmentActivity implements
 	private NavigationDrawerFragment mNavigationDrawerFragment;
 
 	private CharSequence mTitle;
-	
+
 	private static String MyQuestionFilename;
 	private static Context context;
 	
@@ -59,9 +64,11 @@ public class MainActivity extends FragmentActivity implements
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
 				(DrawerLayout) findViewById(R.id.drawer_layout));
 
+
 		
 		questionArrayList.addQuestion(new Question("sup bruh", "neel",new User("Ivan Burrito")));
 		MyQuestionFilename = "ChrisFile";
+
 	}
 
 	@Override
@@ -123,7 +130,6 @@ public class MainActivity extends FragmentActivity implements
 			mTitle = getString(R.string.title_section6);
 			break;
 
-			
 		}
 	}
 
@@ -175,9 +181,30 @@ public class MainActivity extends FragmentActivity implements
 			this.questionsViewAdapter = new CustomArrayAdapter(getActivity(),
 					questionArrayList);
 			View rootView = inflater.inflate(R.layout.fragment_question,
-			container, false);
-			ListView lv = (ListView)rootView.findViewById(R.id.question_list);
+					container, false);
+			ListView lv = (ListView) rootView.findViewById(R.id.question_list);
 			lv.setAdapter(questionsViewAdapter);
+			lv.setOnItemClickListener(new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+					// TODO Auto-generated method stub
+					FragmentManager fragmentManager = getFragmentManager();
+					fragmentManager
+							.beginTransaction()
+							.replace(
+									R.id.container,
+									QuestionDetailFragment
+											.newInstance(questionArrayList
+													.getQuestions().get(
+															position)))
+							.commit();
+					// QuestionDetailFragment fragment =
+					// QuestionDetailFragment.newInstance(questionArrayList.getQuestions().get(position));
+				}
+
+			});
 
 			return rootView;
 		}
@@ -188,17 +215,15 @@ public class MainActivity extends FragmentActivity implements
 			((MainActivity) activity).onSectionAttached(1);
 		}
 	}
-	
+
 	/*
-	@Override
-	protected void onPause() {
-		super.onPause();
-		questions.clear();
-	}
-	*/
+	 * @Override protected void onPause() { super.onPause(); questions.clear();
+	 * }
+	 */
 	//
-	
+
 	//
+
 	
 	public static void SaveMyQuestions(Context context, QuestionArrayList questions) {
 		OfflineDataManager.SaveMyQuestions(context, questions);
@@ -246,6 +271,7 @@ public class MainActivity extends FragmentActivity implements
 		SaveMyQuestions();
 	}*/
 	
+
 	public static class MyQuestionsFragment extends Fragment {
 
 		public static MyQuestionsFragment newInstance() {
@@ -346,8 +372,9 @@ public class MainActivity extends FragmentActivity implements
 			((MainActivity) activity).onSectionAttached(5);
 		}
 	}
+
 	//
-	
+
 	public static class HistoryFragment extends Fragment {
 
 		public static HistoryFragment newInstance() {
@@ -371,5 +398,51 @@ public class MainActivity extends FragmentActivity implements
 			super.onAttach(activity);
 			((MainActivity) activity).onSectionAttached(6);
 		}
+	}
+
+	public static class QuestionDetailFragment extends Fragment {
+		public static QuestionDetailFragment newInstance(Question question) {
+			QuestionDetailFragment fragment = new QuestionDetailFragment();
+			Bundle args = new Bundle();
+			args.putSerializable("question", question);
+			fragment.setArguments(args);
+			return fragment;
+		}
+
+		public QuestionDetailFragment() {
+
+		}
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+				Bundle savedInstanceState) {
+
+			View rootView = inflater.inflate(R.layout.detail_view, container,
+					false);
+			Question question = (Question) getArguments().getSerializable(
+					"question");
+
+			ExpandableListView expListView = (ExpandableListView) rootView
+					.findViewById(R.id.view_question_detail);
+
+			DetailViewAdapter detailViewAdapter = new DetailViewAdapter(
+					getActivity(), question);
+
+			expListView.setAdapter(detailViewAdapter);
+
+			return rootView;
+		}
+
+		// @Override
+		// public void onAttach(Activity activity) {
+		// super.onAttach(activity);
+		// ((MainActivity) activity).onSec
+		// }
+	}
+
+	public void createQuestion(MenuItem menu) {
+		Intent intent = new Intent(MainActivity.this,
+				CreateQuestionActivity.class);
+		startActivity(intent);
 	}
 }

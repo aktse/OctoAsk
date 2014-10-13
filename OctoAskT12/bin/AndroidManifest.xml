@@ -24,6 +24,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".CreateQuestionActivity"
+            android:label="@string/title_activity_create_question" >
+        </activity>
+        <activity
+            android:name=".QuestionDetailedViewActivity"
+            android:label="@string/title_activity_question_detailed_view" >
+        </activity>
     </application>
 
 </manifest>
