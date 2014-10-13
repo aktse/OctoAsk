@@ -39,28 +39,23 @@ import android.widget.TextView;
 public class MainActivity extends FragmentActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-	// Don't delete userText, we are assuming these are the questions added to
-	// the userText
-
+		
 	public static QuestionArrayList questionArrayList = new QuestionArrayList();
-
-	/*
-	 * public static ArrayList<Question> questions = new ArrayList<Question>();
-	 * public static ArrayList<Question> myQuestions = new
-	 * ArrayList<Question>();
-	 */
-
+		
 	private NavigationDrawerFragment mNavigationDrawerFragment;
 
 	private CharSequence mTitle;
 
 	private static String MyQuestionFilename;
-
+	private static Context context;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		context = this;
+		
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
 				.findFragmentById(R.id.navigation_drawer);
 		mTitle = getTitle();
@@ -69,16 +64,11 @@ public class MainActivity extends FragmentActivity implements
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
 				(DrawerLayout) findViewById(R.id.drawer_layout));
 
-		// Kevin and Chris commented these two userText.add when making the
-		// junit testcase
-		/*
-		 * questions.add(new Question("sup bruh")); questions.add(new
-		 * Question("nm homes"));
-		 */
 
-		questionArrayList.addQuestion(new Question("sup bruh", "neel",
-				new User("Ivan Burrito")));
-		// MyQuestionFilename = "ChrisFile";
+		
+		questionArrayList.addQuestion(new Question("sup bruh", "neel",new User("Ivan Burrito")));
+		MyQuestionFilename = "ChrisFile";
+
 	}
 
 	@Override
@@ -234,37 +224,53 @@ public class MainActivity extends FragmentActivity implements
 
 	//
 
-	// public void SaveMyQuestions() {
-	// try {
-	// FileOutputStream fos = openFileOutput(MyQuestionFilename, MODE_PRIVATE);
-	// ObjectOutputStream oos = new ObjectOutputStream(fos);
-	// oos.writeObject(questionArrayList);
-	// fos.close();
-	// } catch(IOException e) {
-	// Log.i("heysave", "heysave");
-	// }
-	// }
-	/*
-	 * public void LoadMyQuestions() throws ClassNotFoundException{
-	 * 
-	 * ArrayList<Question> MyQuestions = new ArrayList<Question>();
-	 * 
-	 * try { FileInputStream fos = openFileInput(MyQuestionFilename);
-	 * ObjectInputStream ois = new ObjectInputStream(fos); MyQuestions =
-	 * (ArrayList<Question>) ois.readObject(); fos.close(); } catch (IOException
-	 * e) { Log.i("Well", "GoBackToLoadAgain"); }
-	 * 
-	 * int instanceinarraysize = MyQuestions.size(); questions.clear(); int
-	 * dummy;
-	 * 
-	 * for (dummy = 0; dummy < instanceinarraysize; dummy++) {
-	 * questions.add(MyQuestions.get(dummy)); } }
-	 */
-
-	/*
-	 * @Override protected void onDestroy() { super.onStop(); SaveMyQuestions();
-	 * }
-	 */
+	
+	public static void SaveMyQuestions(Context context, QuestionArrayList questions) {
+		OfflineDataManager.SaveMyQuestions(context, questions);
+		/*try {
+			FileOutputStream fos = context.openFileOutput(MyQuestionFilename, MODE_PRIVATE);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(questions);
+			fos.close();
+		} catch(IOException e) {
+			Log.i("heysave", "heysave");
+		}*/
+	}
+	
+	public static Context CallContext() {
+		return context;
+	}
+	
+	public static void LoadMyQuestions(Context context, QuestionArrayList questions) throws ClassNotFoundException{
+		OfflineDataManager.LoadMyQuestions(context, questions);
+		
+		/*QuestionArrayList MyQuestions = new QuestionArrayList();
+		
+		
+		try {
+			FileInputStream fos = context.openFileInput(MyQuestionFilename);
+			ObjectInputStream ois = new ObjectInputStream(fos);
+			MyQuestions = (QuestionArrayList) ois.readObject();
+			fos.close();
+		} catch (IOException e) {
+			Log.i("Well", "GoBackToLoadAgain");
+		}
+		
+		int instanceinarraysize = MyQuestions.getSize();
+		questions.clear();
+		int dummy;
+		
+		for (dummy = 0; dummy < instanceinarraysize; dummy++) {
+			questions.add(MyQuestions.get(dummy));
+		}*/
+	}
+	
+	/*@Override
+	protected void onDestroy() {
+		super.onStop();
+		SaveMyQuestions();
+	}*/
+	
 
 	public static class MyQuestionsFragment extends Fragment {
 
