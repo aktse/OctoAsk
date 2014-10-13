@@ -7,9 +7,15 @@
     <string name="title_section3">Favorites</string>
     <string name="title_section4">Read Later</string>
     <string name="title_section5">My Profile</string>
-    <string name="title_section6">History</string>  
+    <string name="title_section6">History</string>
     <string name="upvote">Upvotes</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_activity_user_login">Login</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="login_text">Enter Username</string>
+    <string name="login_button">Login</string>
+    <string name="title_activity_bulshiitjyitrhyr">Bulshiitjyitrhyr</string>
 
 </resources>
