@@ -8,6 +8,8 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import cs.ualberta.octoaskt12.adapters.CustomArrayAdapter;
+import cs.ualberta.octoaskt12.adapters.DetailAnswerViewAdapter;
+import cs.ualberta.octoaskt12.adapters.DetailViewAdapter;
 
 import android.app.Activity;
 
@@ -15,6 +17,7 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,33 +30,31 @@ import android.view.ViewGroup;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.DrawerLayout;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 public class MainActivity extends FragmentActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-	
-	// Don't delete userText, we are assuming these are the questions added to the userText
-	
 	public static QuestionArrayList questionArrayList = new QuestionArrayList();
-	
-	/*
-	public static ArrayList<Question> questions = new ArrayList<Question>();
-	public static ArrayList<Question> myQuestions = new ArrayList<Question>();
-	*/
-	
+
 	private NavigationDrawerFragment mNavigationDrawerFragment;
 
 	private CharSequence mTitle;
-	
+
 	private static String MyQuestionFilename;
+	private static Context context;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		context = this;
 
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
 				.findFragmentById(R.id.navigation_drawer);
@@ -63,13 +64,23 @@ public class MainActivity extends FragmentActivity implements
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
 				(DrawerLayout) findViewById(R.id.drawer_layout));
 
-		// Kevin and Chris commented these two userText.add when making the junit testcase
-		/*questions.add(new Question("sup bruh"));
-		questions.add(new Question("nm homes"));
-		*/
-		
-		questionArrayList.addQuestion(new Question("sup bruh", "neel",new User("Ivan Burrito")));
-		//MyQuestionFilename = "ChrisFile";
+		questionArrayList
+				.addQuestion(new Question(
+						"sup bruh",
+						"neel asf sadfsd gsdfg dfsg dsfg dfs gsd dsfgsd gsdfgsdf gdfs dfs",
+						new User("Ivan Burrito")));
+		questionArrayList.getQuestions().get(0)
+				.addReply(new Reply("my reply", new User("Neel")));
+		questionArrayList.getQuestions().get(0)
+				.addReply(new Reply("my reply 2", new User("Neel P")));
+		questionArrayList.getQuestions().get(0).addAnswer(new Answer("answer1", new User("neeel")));
+		questionArrayList.getQuestions().get(0).addAnswer(new Answer("answer2", new User("neeel")));
+		questionArrayList.getQuestions().get(0).getAnswers().get(0).addReply(new Reply("answer reply 1", new User("ivan")));
+		questionArrayList.getQuestions().get(0).getAnswers().get(0).addReply(new Reply("answer reply 2", new User("ivan")));
+		questionArrayList.getQuestions().get(0).getAnswers().get(1).addReply(new Reply("answer reply 1", new User("ivan")));
+
+		MyQuestionFilename = "ChrisFile";
+
 	}
 
 	@Override
@@ -131,7 +142,6 @@ public class MainActivity extends FragmentActivity implements
 			mTitle = getString(R.string.title_section6);
 			break;
 
-			
 		}
 	}
 
@@ -183,9 +193,30 @@ public class MainActivity extends FragmentActivity implements
 			this.questionsViewAdapter = new CustomArrayAdapter(getActivity(),
 					questionArrayList);
 			View rootView = inflater.inflate(R.layout.fragment_question,
-			container, false);
-			ListView lv = (ListView)rootView.findViewById(R.id.question_list);
+					container, false);
+			ListView lv = (ListView) rootView.findViewById(R.id.question_list);
 			lv.setAdapter(questionsViewAdapter);
+			lv.setOnItemClickListener(new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+					// TODO Auto-generated method stub
+					FragmentManager fragmentManager = getFragmentManager();
+					fragmentManager
+							.beginTransaction()
+							.replace(
+									R.id.container,
+									QuestionDetailFragment
+											.newInstance(questionArrayList
+													.getQuestions().get(
+															position)))
+							.commit();
+					// QuestionDetailFragment fragment =
+					// QuestionDetailFragment.newInstance(questionArrayList.getQuestions().get(position));
+				}
+
+			});
 
 			return rootView;
 		}
@@ -196,57 +227,58 @@ public class MainActivity extends FragmentActivity implements
 			((MainActivity) activity).onSectionAttached(1);
 		}
 	}
-	
+
 	/*
-	@Override
-	protected void onPause() {
-		super.onPause();
-		questions.clear();
-	}
-	*/
+	 * @Override protected void onPause() { super.onPause(); questions.clear();
+	 * }
+	 */
 	//
-	
+
 	//
-	
-	public void SaveMyQuestions() {
-		try {
-			FileOutputStream fos = openFileOutput(MyQuestionFilename, MODE_PRIVATE);
-			ObjectOutputStream oos = new ObjectOutputStream(fos);
-			oos.writeObject(questionArrayList);
-			fos.close();
-		} catch(IOException e) {
-			Log.i("heysave", "heysave");
-		}
+
+	public static void SaveMyQuestions(Context context,
+			QuestionArrayList questions) {
+		OfflineDataManager.SaveMyQuestions(context, questions);
+		/*
+		 * try { FileOutputStream fos =
+		 * context.openFileOutput(MyQuestionFilename, MODE_PRIVATE);
+		 * ObjectOutputStream oos = new ObjectOutputStream(fos);
+		 * oos.writeObject(questions); fos.close(); } catch(IOException e) {
+		 * Log.i("heysave", "heysave"); }
+		 */
 	}
+
+	public static Context CallContext() {
+		return context;
+	}
+
+	public static void LoadMyQuestions(Context context,
+			QuestionArrayList questions) throws ClassNotFoundException {
+		OfflineDataManager.LoadMyQuestions(context, questions);
+
+		/*
+		 * QuestionArrayList MyQuestions = new QuestionArrayList();
+		 * 
+		 * 
+		 * try { FileInputStream fos =
+		 * context.openFileInput(MyQuestionFilename); ObjectInputStream ois =
+		 * new ObjectInputStream(fos); MyQuestions = (QuestionArrayList)
+		 * ois.readObject(); fos.close(); } catch (IOException e) {
+		 * Log.i("Well", "GoBackToLoadAgain"); }
+		 * 
+		 * int instanceinarraysize = MyQuestions.getSize(); questions.clear();
+		 * int dummy;
+		 * 
+		 * for (dummy = 0; dummy < instanceinarraysize; dummy++) {
+		 * questions.add(MyQuestions.get(dummy)); }
+		 */
+	}
+
 	/*
-	public void LoadMyQuestions() throws ClassNotFoundException{
-		
-		ArrayList<Question> MyQuestions = new ArrayList<Question>();
-		
-		try {
-			FileInputStream fos = openFileInput(MyQuestionFilename);
-			ObjectInputStream ois = new ObjectInputStream(fos);
-			MyQuestions = (ArrayList<Question>) ois.readObject();
-			fos.close();
-		} catch (IOException e) {
-			Log.i("Well", "GoBackToLoadAgain");
-		}
-		
-		int instanceinarraysize = MyQuestions.size();
-		questions.clear();
-		int dummy;
-		
-		for (dummy = 0; dummy < instanceinarraysize; dummy++) {
-			questions.add(MyQuestions.get(dummy));
-		}
-	}*/
-	
-	/*@Override
-	protected void onDestroy() {
-		super.onStop();
-		SaveMyQuestions();
-	}*/
-	
+	 * @Override protected void onDestroy() { super.onStop(); SaveMyQuestions();
+	 * }
+	 */
+
 	public static class MyQuestionsFragment extends Fragment {
 
 		public static MyQuestionsFragment newInstance() {
@@ -347,8 +379,9 @@ public class MainActivity extends FragmentActivity implements
 			((MainActivity) activity).onSectionAttached(5);
 		}
 	}
+
 	//
-	
+
 	public static class HistoryFragment extends Fragment {
 
 		public static HistoryFragment newInstance() {
@@ -372,5 +405,58 @@ public class MainActivity extends FragmentActivity implements
 			super.onAttach(activity);
 			((MainActivity) activity).onSectionAttached(6);
 		}
+	}
+
+	public static class QuestionDetailFragment extends Fragment {
+		public static QuestionDetailFragment newInstance(Question question) {
+			QuestionDetailFragment fragment = new QuestionDetailFragment();
+			Bundle args = new Bundle();
+			args.putSerializable("question", question);
+			fragment.setArguments(args);
+			return fragment;
+		}
+
+		public QuestionDetailFragment() {
+
+		}
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+				Bundle savedInstanceState) {
+
+			View rootView = inflater.inflate(R.layout.detail_view, container,
+					false);
+			Question question = (Question) getArguments().getSerializable(
+					"question");
+
+			ExpandableListView questionExpandable = (ExpandableListView) rootView
+					.findViewById(R.id.view_question_detail);
+
+			DetailViewAdapter detailViewAdapter = new DetailViewAdapter(
+					getActivity(), question);
+
+			questionExpandable.setAdapter(detailViewAdapter);
+
+			ExpandableListView answerExpandable = (ExpandableListView) rootView
+					.findViewById(R.id.list_answer_detail);
+
+			DetailAnswerViewAdapter detailAnswerViewAdapter = new DetailAnswerViewAdapter(
+					getActivity(), question);
+			
+			answerExpandable.setAdapter(detailAnswerViewAdapter);
+
+			return rootView;
+		}
+		// @Override
+		// public void onAttach(Activity activity) {
+		// super.onAttach(activity);
+		// ((MainActivity) activity).onSec
+		// }
+	}
+
+	public void createQuestion(MenuItem menu) {
+		Intent intent = new Intent(MainActivity.this,
+				CreateQuestionActivity.class);
+		startActivity(intent);
 	}
 }

@@ -8,7 +8,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.widget.EditText;
 
 public class UserLoginActivity extends Activity {
 	ArrayList<User> userList;
@@ -22,8 +22,8 @@ public class UserLoginActivity extends Activity {
 		ActionBar actionBar = getActionBar();
 		actionBar.hide();
 		// get the username text entered by the user in login screen
-		TextView textView = (TextView) findViewById(R.id.loginText);
-		String username = textView.toString();
+		EditText textView = (EditText) findViewById(R.id.loginText);
+		String username = textView.getText().toString();
 		
 		// check if the username is already in our list of users
 		userList = UserArrayList.getUserList();

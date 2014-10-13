@@ -42,7 +42,7 @@ public class CustomArrayAdapter extends ArrayAdapter<Question>{
 		TextView question = (TextView) view.findViewById(R.id.list_question_title);
 		question.setText(questions.get(position).getTitle());
 		TextView answers = (TextView) view.findViewById(R.id.list_question_answer);
-		answers.setText(questions.get(position).getAnswers() + " answers");
+		answers.setText(questions.get(position).getAnswers().size() + " answers");
 		
 		TextView time = (TextView) view.findViewById(R.id.list_question_time);
 		GregorianCalendar gc = questions.get(position).getTime();

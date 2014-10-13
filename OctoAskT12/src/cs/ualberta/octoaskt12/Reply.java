@@ -1,9 +1,14 @@
 package cs.ualberta.octoaskt12;
 
+import java.io.Serializable;
 import java.util.GregorianCalendar;
 
-public class Reply {
-	// the reply text
+public class Reply implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3694885075802427310L;
 	private String reply;
 	// the user of this reply
 	private User user;
@@ -22,12 +27,12 @@ public class Reply {
 	/***************************************************************************
  	* These method concerns the text of the reply.
  	***************************************************************************/
-	// get the text of the reply
-	public String getString() {
+
+	public String getBody() {
 		return reply;
 	}
-	// set the reply text
-	public void setString(String reply) {
+	
+	public void setBody(String reply) {
 		this.reply = reply;
 	}
 	
