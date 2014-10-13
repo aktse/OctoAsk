@@ -15,6 +15,7 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -365,5 +366,11 @@ public class MainActivity extends FragmentActivity implements
 			super.onAttach(activity);
 			((MainActivity) activity).onSectionAttached(6);
 		}
+	}
+	
+	public void createQuestion(MenuItem menu) {
+		Intent intent = new Intent(MainActivity.this,
+				CreateQuestionActivity.class);
+		startActivity(intent);
 	}
 }
