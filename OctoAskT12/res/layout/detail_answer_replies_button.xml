@@ -4,26 +4,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <ExpandableListView
-        android:id="@+id/view_question_detail"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@id/detail_answer_replies"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:groupIndicator="@null" />
+        android:textSize="15sp" />
 
     <Button
-        android:id="@+id/detail_question_replies_add"
+        android:id="@+id/detail_answer_replies_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
+        android:focusable="false"
         android:text="Add Reply"
         android:textSize="10sp" />
-
-    <ExpandableListView
-        android:id="@+id/list_answer_detail"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_margin="5dp"
-        android:groupIndicator="@null" />
 
 </LinearLayout>

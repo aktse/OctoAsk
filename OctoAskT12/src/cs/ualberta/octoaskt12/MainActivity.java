@@ -8,6 +8,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import cs.ualberta.octoaskt12.adapters.CustomArrayAdapter;
+import cs.ualberta.octoaskt12.adapters.DetailAnswerViewAdapter;
 import cs.ualberta.octoaskt12.adapters.DetailViewAdapter;
 
 import android.app.Activity;
@@ -39,23 +40,22 @@ import android.widget.TextView;
 public class MainActivity extends FragmentActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-		
 	public static QuestionArrayList questionArrayList = new QuestionArrayList();
-		
+
 	private NavigationDrawerFragment mNavigationDrawerFragment;
 
 	private CharSequence mTitle;
 
 	private static String MyQuestionFilename;
 	private static Context context;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
 		context = this;
-		
+
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
 				.findFragmentById(R.id.navigation_drawer);
 		mTitle = getTitle();
@@ -64,9 +64,21 @@ public class MainActivity extends FragmentActivity implements
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
 				(DrawerLayout) findViewById(R.id.drawer_layout));
 
+		questionArrayList
+				.addQuestion(new Question(
+						"sup bruh",
+						"neel asf sadfsd gsdfg dfsg dsfg dfs gsd dsfgsd gsdfgsdf gdfs dfs",
+						new User("Ivan Burrito")));
+		questionArrayList.getQuestions().get(0)
+				.addReply(new Reply("my reply", new User("Neel")));
+		questionArrayList.getQuestions().get(0)
+				.addReply(new Reply("my reply 2", new User("Neel P")));
+		questionArrayList.getQuestions().get(0).addAnswer(new Answer("answer1", new User("neeel")));
+		questionArrayList.getQuestions().get(0).addAnswer(new Answer("answer2", new User("neeel")));
+		questionArrayList.getQuestions().get(0).getAnswers().get(0).addReply(new Reply("answer reply 1", new User("ivan")));
+		questionArrayList.getQuestions().get(0).getAnswers().get(0).addReply(new Reply("answer reply 2", new User("ivan")));
+		questionArrayList.getQuestions().get(0).getAnswers().get(1).addReply(new Reply("answer reply 1", new User("ivan")));
 
-		
-		questionArrayList.addQuestion(new Question("sup bruh", "neel",new User("Ivan Burrito")));
 		MyQuestionFilename = "ChrisFile";
 
 	}
@@ -224,53 +236,48 @@ public class MainActivity extends FragmentActivity implements
 
 	//
 
-	
-	public static void SaveMyQuestions(Context context, QuestionArrayList questions) {
+	public static void SaveMyQuestions(Context context,
+			QuestionArrayList questions) {
 		OfflineDataManager.SaveMyQuestions(context, questions);
-		/*try {
-			FileOutputStream fos = context.openFileOutput(MyQuestionFilename, MODE_PRIVATE);
-			ObjectOutputStream oos = new ObjectOutputStream(fos);
-			oos.writeObject(questions);
-			fos.close();
-		} catch(IOException e) {
-			Log.i("heysave", "heysave");
-		}*/
+		/*
+		 * try { FileOutputStream fos =
+		 * context.openFileOutput(MyQuestionFilename, MODE_PRIVATE);
+		 * ObjectOutputStream oos = new ObjectOutputStream(fos);
+		 * oos.writeObject(questions); fos.close(); } catch(IOException e) {
+		 * Log.i("heysave", "heysave"); }
+		 */
 	}
-	
+
 	public static Context CallContext() {
 		return context;
 	}
-	
-	public static void LoadMyQuestions(Context context, QuestionArrayList questions) throws ClassNotFoundException{
+
+	public static void LoadMyQuestions(Context context,
+			QuestionArrayList questions) throws ClassNotFoundException {
 		OfflineDataManager.LoadMyQuestions(context, questions);
-		
-		/*QuestionArrayList MyQuestions = new QuestionArrayList();
-		
-		
-		try {
-			FileInputStream fos = context.openFileInput(MyQuestionFilename);
-			ObjectInputStream ois = new ObjectInputStream(fos);
-			MyQuestions = (QuestionArrayList) ois.readObject();
-			fos.close();
-		} catch (IOException e) {
-			Log.i("Well", "GoBackToLoadAgain");
-		}
-		
-		int instanceinarraysize = MyQuestions.getSize();
-		questions.clear();
-		int dummy;
-		
-		for (dummy = 0; dummy < instanceinarraysize; dummy++) {
-			questions.add(MyQuestions.get(dummy));
-		}*/
+
+		/*
+		 * QuestionArrayList MyQuestions = new QuestionArrayList();
+		 * 
+		 * 
+		 * try { FileInputStream fos =
+		 * context.openFileInput(MyQuestionFilename); ObjectInputStream ois =
+		 * new ObjectInputStream(fos); MyQuestions = (QuestionArrayList)
+		 * ois.readObject(); fos.close(); } catch (IOException e) {
+		 * Log.i("Well", "GoBackToLoadAgain"); }
+		 * 
+		 * int instanceinarraysize = MyQuestions.getSize(); questions.clear();
+		 * int dummy;
+		 * 
+		 * for (dummy = 0; dummy < instanceinarraysize; dummy++) {
+		 * questions.add(MyQuestions.get(dummy)); }
+		 */
 	}
-	
-	/*@Override
-	protected void onDestroy() {
-		super.onStop();
-		SaveMyQuestions();
-	}*/
-	
+
+	/*
+	 * @Override protected void onDestroy() { super.onStop(); SaveMyQuestions();
+	 * }
+	 */
 
 	public static class MyQuestionsFragment extends Fragment {
 
@@ -422,17 +429,24 @@ public class MainActivity extends FragmentActivity implements
 			Question question = (Question) getArguments().getSerializable(
 					"question");
 
-			ExpandableListView expListView = (ExpandableListView) rootView
+			ExpandableListView questionExpandable = (ExpandableListView) rootView
 					.findViewById(R.id.view_question_detail);
 
 			DetailViewAdapter detailViewAdapter = new DetailViewAdapter(
 					getActivity(), question);
 
-			expListView.setAdapter(detailViewAdapter);
+			questionExpandable.setAdapter(detailViewAdapter);
+
+			ExpandableListView answerExpandable = (ExpandableListView) rootView
+					.findViewById(R.id.list_answer_detail);
+
+			DetailAnswerViewAdapter detailAnswerViewAdapter = new DetailAnswerViewAdapter(
+					getActivity(), question);
+			
+			answerExpandable.setAdapter(detailAnswerViewAdapter);
 
 			return rootView;
 		}
-
 		// @Override
 		// public void onAttach(Activity activity) {
 		// super.onAttach(activity);

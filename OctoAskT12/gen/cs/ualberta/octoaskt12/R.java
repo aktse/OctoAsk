@@ -36,29 +36,30 @@ public final class R {
         public static final int upvote=0x7f020005;
     }
     public static final class id {
-        public static final int action_settings=0x7f080016;
+        public static final int action_settings=0x7f080017;
         public static final int button1=0x7f080002;
         public static final int button2=0x7f080003;
         public static final int container=0x7f080005;
         public static final int detail_answer_header=0x7f080007;
         public static final int detail_answer_replies=0x7f080008;
-        public static final int detail_question_body=0x7f08000a;
-        public static final int detail_question_header=0x7f080009;
-        public static final int detail_question_replies=0x7f08000b;
-        public static final int detail_question_replies_add=0x7f08000c;
+        public static final int detail_answer_replies_add=0x7f080009;
+        public static final int detail_question_body=0x7f08000b;
+        public static final int detail_question_header=0x7f08000a;
+        public static final int detail_question_replies=0x7f08000c;
+        public static final int detail_question_replies_add=0x7f08000e;
         public static final int drawer_layout=0x7f080004;
         public static final int editText1=0x7f080001;
         public static final int editText2=0x7f080000;
-        public static final int item1=0x7f080017;
-        public static final int layout_bottom=0x7f080013;
-        public static final int list_answer_detail=0x7f08000e;
-        public static final int list_question_answer=0x7f080014;
-        public static final int list_question_time=0x7f080015;
-        public static final int list_question_title=0x7f080011;
-        public static final int list_question_upvote=0x7f080010;
-        public static final int list_question_upvote_caption=0x7f080012;
+        public static final int item1=0x7f080018;
+        public static final int layout_bottom=0x7f080014;
+        public static final int list_answer_detail=0x7f08000f;
+        public static final int list_question_answer=0x7f080015;
+        public static final int list_question_time=0x7f080016;
+        public static final int list_question_title=0x7f080012;
+        public static final int list_question_upvote=0x7f080011;
+        public static final int list_question_upvote_caption=0x7f080013;
         public static final int navigation_drawer=0x7f080006;
-        public static final int question_list=0x7f08000f;
+        public static final int question_list=0x7f080010;
         public static final int view_question_detail=0x7f08000d;
     }
     public static final class layout {
@@ -67,17 +68,18 @@ public final class R {
         public static final int activity_question_detailed_view=0x7f030002;
         public static final int detail_answer_header=0x7f030003;
         public static final int detail_answer_replies=0x7f030004;
-        public static final int detail_question_header=0x7f030005;
-        public static final int detail_question_replies=0x7f030006;
-        public static final int detail_view=0x7f030007;
-        public static final int fragment_favorite=0x7f030008;
-        public static final int fragment_history=0x7f030009;
-        public static final int fragment_later=0x7f03000a;
-        public static final int fragment_myquestions=0x7f03000b;
-        public static final int fragment_navigation_drawer=0x7f03000c;
-        public static final int fragment_profile=0x7f03000d;
-        public static final int fragment_question=0x7f03000e;
-        public static final int fragment_question_list_item=0x7f03000f;
+        public static final int detail_answer_replies_button=0x7f030005;
+        public static final int detail_question_header=0x7f030006;
+        public static final int detail_question_replies=0x7f030007;
+        public static final int detail_view=0x7f030008;
+        public static final int fragment_favorite=0x7f030009;
+        public static final int fragment_history=0x7f03000a;
+        public static final int fragment_later=0x7f03000b;
+        public static final int fragment_myquestions=0x7f03000c;
+        public static final int fragment_navigation_drawer=0x7f03000d;
+        public static final int fragment_profile=0x7f03000e;
+        public static final int fragment_question=0x7f03000f;
+        public static final int fragment_question_list_item=0x7f030010;
     }
     public static final class menu {
         public static final int create_question=0x7f070000;
