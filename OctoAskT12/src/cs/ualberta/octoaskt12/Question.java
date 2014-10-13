@@ -11,22 +11,35 @@ public class Question implements Serializable {
 	 */
 	private static final long serialVersionUID = 8648225441126206210L;
 	private String questionTitle;
+	// the body of the question, the actual question
 	private String questionBody;
+	// number of upVotes this question has
 	private int numVotes;
+	// the date the question was created at
 	private GregorianCalendar dateCreated;
+	// the user who asked this question
 	private User user;
+	// the answers for this question
 	private ArrayList<Answer> answers = new ArrayList<Answer>();
+	// the replies for this question
 	private ArrayList<Reply> replies = new ArrayList<Reply>();
 	
+	
+	// Constructor
 	public Question(String questionTitle, String questionBody, User user) {
+		// set the title and body of the question
 		this.questionTitle = questionTitle;
 		this.questionBody = questionBody;
+		// associate this question with the date when it is asked
 		this.dateCreated = new GregorianCalendar();
+		// associate this question with a user
 		this.user = user;
 	}
 	
 	/***************************************************************************
- 	* Text
+ 	* These methods concern the title and body of the question.
+ 	* title is set using setTitle method, and retrieved by getTitle method
+ 	* body is set using setBody method, and retrieved by getBody method
  	***************************************************************************/
 	
 	public void setTitle(String questionTitle) {
@@ -45,9 +58,10 @@ public class Question implements Serializable {
 		return questionBody;
 	}
 	
-	 /***************************************************************************
-	 * Votes
-	 ***************************************************************************/
+	/***************************************************************************
+	* These methods are responsible for getting the up votes of the question and
+	* incrementing up vote whenever a user votes up a question.
+	***************************************************************************/
 	
 	public int getVotes() {
 		return numVotes;
@@ -58,49 +72,48 @@ public class Question implements Serializable {
 	}
 	
 	/***************************************************************************
- 	* Answers
+ 	* These methods concerns the answers associated with the question.
  	***************************************************************************/
-	
+	// get the number of answers for this question
 	public int getNumAnswers() {
 		return answers.size();
 	}
-	
+	// get all the answers for this question, in the form of an array
 	public ArrayList<Answer> getAnswers() {
 		return answers;
 	}
-	
+	// add answer to the answers array list
 	public void addAnswer(Answer answer) {
 		answers.add(answer);
 	}
 	
 	/***************************************************************************
-	 * Replies
+	 * These methods concerns the replies associated with the question.
 	 ***************************************************************************/
-	
+	// get the number of replies the question has.
 	public int getNumReplies() {
 		return replies.size();
 	}
-	
+	// get all the replies for this question, in the form of an array
 	public ArrayList<Reply> getReplies() {
 		return replies;
 	}
-	
+	// add a reply to the reply array list
 	public void addReply(Reply reply) {
 		replies.add(reply);
 	}
 	
 	/***************************************************************************
- 	* Misc
+ 	* Methods which get the user's name that asked the question and the date
+ 	* the question was created.
  	***************************************************************************/
-	
+	// get the user's name
 	public String getUser() {
 		return user.getName();
 	}
-	
+	// get the date the question was created
 	public GregorianCalendar getTime() {
 		return dateCreated;
 	}
 
-	
-	
 }
