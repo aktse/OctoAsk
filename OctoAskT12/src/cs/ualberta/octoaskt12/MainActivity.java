@@ -66,15 +66,15 @@ public class MainActivity extends FragmentActivity implements
 
 		questionArrayList
 				.addQuestion(new Question(
-						"sup bruh",
-						"neel asf sadfsd gsdfg dfsg dsfg dfs gsd dsfgsd gsdfgsdf gdfs dfs",
-						new User("Ivan Burrito")));
+						"How do you sort a list of numbers in C?",
+						"I was wondering what is the most efficient way to sort a list of numbers in C. I have an array like this [1, 6, 3, 4, 9, 12]. I'd appreciate the help. Thanks!",
+						new User("Ivan")));
 		questionArrayList.getQuestions().get(0)
 				.addReply(new Reply("my reply", new User("Neel")));
 		questionArrayList.getQuestions().get(0)
 				.addReply(new Reply("my reply 2", new User("Neel P")));
-		questionArrayList.getQuestions().get(0).addAnswer(new Answer("answer1", new User("neeel")));
-		questionArrayList.getQuestions().get(0).addAnswer(new Answer("answer2", new User("neeel")));
+		questionArrayList.getQuestions().get(0).addAnswer(new Answer("There are several ways you can achieve this. A lot of sort algorithms have a running time of O(nlogn)", new User("Neel")));
+		questionArrayList.getQuestions().get(0).addAnswer(new Answer("I would do either merge sort or insertion sort", new User("Aaron")));
 		questionArrayList.getQuestions().get(0).getAnswers().get(0).addReply(new Reply("answer reply 1", new User("ivan")));
 		questionArrayList.getQuestions().get(0).getAnswers().get(0).addReply(new Reply("answer reply 2", new User("ivan")));
 		questionArrayList.getQuestions().get(0).getAnswers().get(1).addReply(new Reply("answer reply 1", new User("ivan")));
