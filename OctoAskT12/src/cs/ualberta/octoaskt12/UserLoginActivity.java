@@ -26,13 +26,13 @@ public class UserLoginActivity extends Activity {
 		String username = textView.getText().toString();
 		
 		
-		userList = UserArrayList.getUserList();
+		userList = KnownUserList.getUserList();
 		// check if the username is already in our list of users
 		if (!userAlreadyKnown(username)){
 			// user doesnt exist, so make this user
 			User newUser = new User(username);
 			// add this user into our user list
-			UserArrayList.addUser(newUser);
+			KnownUserList.addUser(newUser);
 			// set this user as the one that is currently logged in
 			loggedInUser = newUser;
 		}
@@ -41,7 +41,7 @@ public class UserLoginActivity extends Activity {
 			// the userAlreadyKnown method will set the loggedInUser. 
 		}
 		// set the loggedInUser
-		UserArrayList.setCurrentUser(loggedInUser);
+		KnownUserList.setCurrentUser(loggedInUser);
 		
 		/*
 		 *  the next thing to implment is to show this user as logged in
