@@ -529,13 +529,13 @@ public class MainActivity extends FragmentActivity implements
 
 			questionExpandable.setAdapter(detailViewAdapter);
 			// ///////////////////////////////////////////////////////
-			ExpandableListView answerExpandable = (ExpandableListView) rootView
-					.findViewById(R.id.list_answer_detail);
-
-			DetailAnswerViewAdapter detailAnswerViewAdapter = new DetailAnswerViewAdapter(
-					getActivity(), question);
-
-			answerExpandable.setAdapter(detailAnswerViewAdapter);
+//			ExpandableListView answerExpandable = (ExpandableListView) rootView
+//					.findViewById(R.id.list_answer_detail);
+//
+//			DetailAnswerViewAdapter detailAnswerViewAdapter = new DetailAnswerViewAdapter(
+//					getActivity(), question);
+//
+//			answerExpandable.setAdapter(detailAnswerViewAdapter);
 
 			return rootView;
 		}
