@@ -23,7 +23,7 @@ public class SortTest extends TestCase {
 			question_list.addQuestion(new Question("Q " + i, "Body " + i, mock_user));	
 		}
 		
-		// virtualSortByDateFromNew()
+		// virtualSortByDateFromNew();
 		
 		for (int i = 0; i < 19; i++)
 		{
