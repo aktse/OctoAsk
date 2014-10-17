@@ -88,4 +88,29 @@ public class BrowseQuestionsTest extends TestCase {
 		;
 	}
 	*/
+	
+	// use case 14
+	public void testTrackAnswerCount()
+	{
+		User mock_user = new User("Chris");
+		
+		String title = "What's for lunch?";
+		String body = "Hungry. What is lunch?";
+		Question q1 = new Question(title, body, mock_user);
+
+		ArrayList<Answer> answer_list = new ArrayList<Answer>();
+		
+		for (int i = 0; i < 10; i++)
+		{
+			Answer answer = new Answer("Spam and eggs " + i + ".", mock_user);
+			answer_list.add(answer);
+		}
+		
+		for (Answer answer : answer_list)
+		{
+			q1.addAnswer(answer);
+		}
+		
+		assertEquals("Total answers not tracked.", q1.getNumAnswers(), answer_list.size());
+	}
 }
