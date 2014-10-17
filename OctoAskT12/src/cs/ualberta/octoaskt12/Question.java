@@ -116,4 +116,14 @@ public class Question implements Serializable {
 		return dateCreated;
 	}
 
+	public void attachImage(CustomImage customImage) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public boolean imageExists() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
