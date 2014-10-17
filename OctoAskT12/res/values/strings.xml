@@ -11,9 +11,13 @@
     <string name="upvote">Upvotes</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="title_activity_create_question">Create Question</string>
+    <string name="title_activity_user_login">Login</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="login_text">Enter Username</string>
+    <string name="login_button">Login</string>
+    <string name="title_activity_create_question">Create Question</string>
     <string name="title_activity_question_detailed_view">QuestionDetailedViewActivity</string>
+
 
 </resources>

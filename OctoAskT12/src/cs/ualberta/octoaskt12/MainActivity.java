@@ -69,15 +69,107 @@ public class MainActivity extends FragmentActivity implements
 						"How do you sort a list of numbers in C?",
 						"I was wondering what is the most efficient way to sort a list of numbers in C. I have an array like this [1, 6, 3, 4, 9, 12]. I'd appreciate the help. Thanks!",
 						new User("Ivan")));
-		questionArrayList.getQuestions().get(0)
-				.addReply(new Reply("my reply", new User("Neel")));
-		questionArrayList.getQuestions().get(0)
-				.addReply(new Reply("my reply 2", new User("Neel P")));
-		questionArrayList.getQuestions().get(0).addAnswer(new Answer("There are several ways you can achieve this. A lot of sort algorithms have a running time of O(nlogn)", new User("Neel")));
-		questionArrayList.getQuestions().get(0).addAnswer(new Answer("I would do either merge sort or insertion sort", new User("Aaron")));
-		questionArrayList.getQuestions().get(0).getAnswers().get(0).addReply(new Reply("answer reply 1", new User("ivan")));
-		questionArrayList.getQuestions().get(0).getAnswers().get(0).addReply(new Reply("answer reply 2", new User("ivan")));
-		questionArrayList.getQuestions().get(0).getAnswers().get(1).addReply(new Reply("answer reply 1", new User("ivan")));
+		questionArrayList
+				.getQuestions()
+				.get(0)
+				.addReply(
+						new Reply("I guess you need a fast sorting algorithm?",
+								new User("Neel")));
+		questionArrayList
+				.getQuestions()
+				.get(0)
+				.addReply(
+						new Reply("mmm...sounds like a homework!", new User(
+								"Neel P")));
+		questionArrayList
+				.getQuestions()
+				.get(0)
+				.addAnswer(
+						new Answer(
+								"There are several ways you can achieve this. A lot of sort algorithms have a running time of O(nlogn)",
+								new User("Neel")));
+		questionArrayList
+				.getQuestions()
+				.get(0)
+				.addAnswer(
+						new Answer(
+								"I would do either merge sort or insertion sort",
+								new User("Aaron")));
+		questionArrayList
+				.getQuestions()
+				.get(0)
+				.addAnswer(
+						new Answer(
+								"There are several ways you can achieve this. A lot of sort algorithms have a running time of O(nlogn)",
+								new User("Neel")));
+		questionArrayList
+				.getQuestions()
+				.get(0)
+				.addAnswer(
+						new Answer(
+								"I would do either merge sort or insertion sort",
+								new User("Aaron")));
+		questionArrayList
+				.getQuestions()
+				.get(0)
+				.addAnswer(
+						new Answer(
+								"There are several ways you can achieve this. A lot of sort algorithms have a running time of O(nlogn)",
+								new User("Neel")));
+		questionArrayList
+				.getQuestions()
+				.get(0)
+				.addAnswer(
+						new Answer(
+								"I would do either merge sort or insertion sort",
+								new User("Aaron")));
+		questionArrayList
+				.getQuestions()
+				.get(0)
+				.addAnswer(
+						new Answer(
+								"There are several ways you can achieve this. A lot of sort algorithms have a running time of O(nlogn)",
+								new User("Neel")));
+		questionArrayList
+				.getQuestions()
+				.get(0)
+				.addAnswer(
+						new Answer(
+								"I would do either merge sort or insertion sort",
+								new User("Aaron")));
+		questionArrayList
+				.getQuestions()
+				.get(0)
+				.addAnswer(
+						new Answer(
+								"There are several ways you can achieve this. A lot of sort algorithms have a running time of O(nlogn)",
+								new User("Neel")));
+		questionArrayList
+				.getQuestions()
+				.get(0)
+				.addAnswer(
+						new Answer(
+								"I would do either merge sort or insertion sort",
+								new User("Aaron")));
+		questionArrayList
+				.getQuestions()
+				.get(0)
+				.getAnswers()
+				.get(0)
+				.addReply(
+						new Reply("Selection sort? or merge sort?", new User(
+								"ivan")));
+		questionArrayList.getQuestions().get(0).getAnswers().get(0)
+				.addReply(new Reply("answer reply 2", new User("ivan")));
+		questionArrayList
+				.getQuestions()
+				.get(0)
+				.getAnswers()
+				.get(1)
+				.addReply(
+						new Reply(
+								"I think you should be more specific with your answer and explain which ones would achieve that",
+								new User("ivan")));
 
 		MyQuestionFilename = "ChrisFile";
 
@@ -428,7 +520,7 @@ public class MainActivity extends FragmentActivity implements
 					false);
 			Question question = (Question) getArguments().getSerializable(
 					"question");
-
+			// ///////////////////////////////////////////////////////
 			ExpandableListView questionExpandable = (ExpandableListView) rootView
 					.findViewById(R.id.view_question_detail);
 
@@ -436,13 +528,13 @@ public class MainActivity extends FragmentActivity implements
 					getActivity(), question);
 
 			questionExpandable.setAdapter(detailViewAdapter);
-
+			// ///////////////////////////////////////////////////////
 			ExpandableListView answerExpandable = (ExpandableListView) rootView
 					.findViewById(R.id.list_answer_detail);
 
 			DetailAnswerViewAdapter detailAnswerViewAdapter = new DetailAnswerViewAdapter(
 					getActivity(), question);
-			
+
 			answerExpandable.setAdapter(detailAnswerViewAdapter);
 
 			return rootView;
