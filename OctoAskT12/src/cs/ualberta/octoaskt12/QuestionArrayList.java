@@ -34,4 +34,9 @@ public class QuestionArrayList implements Serializable {
 	public void add(Question question) {
 		questions.add(question);
 	}
+
+	public void sortByImage() {
+		// TODO Auto-generated method stub
+		
+	}
 }
