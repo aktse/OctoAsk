@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="wrap_content"
+    android:minHeight="100dp" >
 	
 	<ImageView
 	    android:id="@+id/list_question_upvote"
@@ -18,7 +19,7 @@
 	    android:layout_toStartOf="@id/list_question_upvote"
 	    android:layout_alignBottom="@id/list_question_upvote"
 	    android:layout_alignTop="@id/list_question_upvote" 	    
-	    android:textSize="25sp"
+	    android:textSize="15sp"
 	    android:textStyle="bold"/>
 	
 	<TextView
