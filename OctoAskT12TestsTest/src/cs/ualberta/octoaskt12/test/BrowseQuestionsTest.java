@@ -20,6 +20,7 @@ public class BrowseQuestionsTest extends TestCase {
 	}
 	
 	// use cases 2 and 5?
+	/*
 	public void testBrowseQuestionAndAnswers()
 	{
 		User mock_user = new User("Chris");
@@ -81,8 +82,10 @@ public class BrowseQuestionsTest extends TestCase {
 	}
 	
 	// test on replies to answers
+	// just found duplicates...
 	public void testRepliesToAnswers()
 	{
 		;
 	}
+	*/
 }
