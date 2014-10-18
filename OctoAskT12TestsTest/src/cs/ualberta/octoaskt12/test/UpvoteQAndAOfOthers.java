@@ -22,7 +22,7 @@ public class UpvoteQAndAOfOthers extends TestCase {
 			mock_user_chris.addQuestion(question);
 		}
 		
-		
+		// stuck
 		//question_list.get(i).
 	}
 }
