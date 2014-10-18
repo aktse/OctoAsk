@@ -8,7 +8,6 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import cs.ualberta.octoaskt12.adapters.CustomArrayAdapter;
-import cs.ualberta.octoaskt12.adapters.DetailAnswerViewAdapter;
 import cs.ualberta.octoaskt12.adapters.DetailViewAdapter;
 
 import android.app.Activity;
