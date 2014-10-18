@@ -37,4 +37,9 @@ public class User implements Serializable {
 		return favouriteQuestions.getQuestions();
 	}
 
+	public void addQuestion(Question question) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -2,8 +2,6 @@ package cs.ualberta.octoaskt12.test;
 
 import java.util.Random;
 
-import android.R;
-
 import cs.ualberta.octoaskt12.CustomImage;
 import cs.ualberta.octoaskt12.Question;
 import cs.ualberta.octoaskt12.QuestionArrayList;
@@ -23,7 +21,7 @@ public class SortTest extends TestCase {
 			question_list.addQuestion(new Question("Q " + i, "Body " + i, mock_user));	
 		}
 		
-		// virtualSortByDateFromNew()
+		// virtualSortByDateFromNew();
 		
 		for (int i = 0; i < 19; i++)
 		{
