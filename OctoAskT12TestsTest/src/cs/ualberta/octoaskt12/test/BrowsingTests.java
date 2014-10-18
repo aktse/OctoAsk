@@ -10,7 +10,7 @@ import cs.ualberta.octoaskt12.Reply;
 import cs.ualberta.octoaskt12.User;
 import junit.framework.TestCase;
 
-public class BrowseQuestionsTest extends TestCase {
+public class BrowsingTests extends TestCase {
 	// use case 1?
 	public void testBrowse()
 	{

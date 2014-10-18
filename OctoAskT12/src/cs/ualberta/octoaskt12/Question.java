@@ -126,4 +126,9 @@ public class Question implements Serializable {
 		return false;
 	}
 
+	public Object getImage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
