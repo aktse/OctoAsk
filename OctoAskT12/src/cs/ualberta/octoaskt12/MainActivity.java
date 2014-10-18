@@ -551,4 +551,8 @@ public class MainActivity extends FragmentActivity implements
 				CreateQuestionActivity.class);
 		startActivity(intent);
 	}
+
+	public static void EditUsername() {
+		//waiting for implementation of other methods
+	}
 }
