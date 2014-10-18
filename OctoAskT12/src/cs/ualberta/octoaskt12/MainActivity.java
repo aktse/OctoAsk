@@ -328,6 +328,31 @@ public class MainActivity extends FragmentActivity implements
 
 	//
 
+	public void createQuestion(MenuItem menu) {
+		Intent intent = new Intent(MainActivity.this,
+				CreateQuestionActivity.class);
+		startActivity(intent);
+	}
+
+	public static void EditUsername() {
+		//waiting for implementation of other methods
+	}
+
+	public static void SeeFreshestComment() {
+		//waiting for implementation of other methods
+		
+	}
+
+	public static void SeeMostUpvotedQuestion() {
+		//waiting for implementation of other methods
+		
+	}
+
+	public static void SeeMostUpvotedAnswer() {
+		//waiting for implementation of other methods
+		
+	}
+	
 	public static void SaveMyQuestions(Context context,
 			QuestionArrayList questions) {
 		OfflineDataManager.SaveMyQuestions(context, questions);
@@ -546,13 +571,5 @@ public class MainActivity extends FragmentActivity implements
 		// }
 	}
 
-	public void createQuestion(MenuItem menu) {
-		Intent intent = new Intent(MainActivity.this,
-				CreateQuestionActivity.class);
-		startActivity(intent);
-	}
 
-	public static void EditUsername() {
-		//waiting for implementation of other methods
-	}
 }
