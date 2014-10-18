@@ -1,8 +1,6 @@
 package cs.ualberta.octoaskt12.test;
 
 import java.util.ArrayList;
-import java.util.Random;
-
 import cs.ualberta.octoaskt12.Answer;
 import cs.ualberta.octoaskt12.CustomImage;
 import cs.ualberta.octoaskt12.Question;

@@ -24,6 +24,8 @@ public class Question implements Serializable {
 	// the replies for this question
 	private ArrayList<Reply> replies = new ArrayList<Reply>();
 	
+	private ArrayList<User> upvotedUsers = new ArrayList<User>();
+	
 	
 	// Constructor
 	public Question(String questionTitle, String questionBody, User user) {

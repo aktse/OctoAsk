@@ -2,8 +2,6 @@ package cs.ualberta.octoaskt12.test;
 
 import java.util.Random;
 
-import android.R;
-
 import cs.ualberta.octoaskt12.CustomImage;
 import cs.ualberta.octoaskt12.Question;
 import cs.ualberta.octoaskt12.QuestionArrayList;
