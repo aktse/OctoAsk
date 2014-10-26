@@ -11,9 +11,9 @@ import android.util.Log;
 
 public class OfflineDataManager {
 	
-	private static String MyQuestionFilename;
+	private static String MyQuestionFilename = "";
 
-public static void LoadMyQuestions(Context context, QuestionArrayList questions) throws ClassNotFoundException{
+	public static void LoadMyQuestions(Context context, QuestionArrayList questions) throws ClassNotFoundException{
 		
 		QuestionArrayList MyQuestions = new QuestionArrayList();
 		
