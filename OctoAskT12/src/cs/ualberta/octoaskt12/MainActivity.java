@@ -14,9 +14,12 @@ import cs.ualberta.octoaskt12.adapters.DetailViewAdapter;
 import android.app.Activity;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,6 +30,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.DrawerLayout;
@@ -42,9 +46,13 @@ public class MainActivity extends FragmentActivity implements
 
 	public static QuestionArrayList questionArrayList = new QuestionArrayList();
 
+	public static QuestionArrayList sortedQuestionArrayList = questionArrayList;
+
 	private NavigationDrawerFragment mNavigationDrawerFragment;
 
 	private CharSequence mTitle;
+
+	private int sortIndex = 0;
 
 	private static String MyQuestionFilename;
 	private static Context context;
@@ -170,6 +178,13 @@ public class MainActivity extends FragmentActivity implements
 						new Reply(
 								"I think you should be more specific with your answer and explain which ones would achieve that",
 								new User("ivan")));
+		questionArrayList
+				.addQuestion(new Question(
+						"Searching a list of numbers in C",
+						"I was wondering how you can implement a way to search for a specific number in a list of numbers in C",
+						new User("Ivan")));
+		questionArrayList.get(1).incrementVotes();
+		questionArrayList.get(1).incrementVotes();
 
 		MyQuestionFilename = "ChrisFile";
 
@@ -267,6 +282,35 @@ public class MainActivity extends FragmentActivity implements
 		return super.onOptionsItemSelected(item);
 	}
 
+	public void createDialog(MenuItem menu) {
+		SortFragment sortFragment = SortFragment.newInstance(sortIndex);
+		sortFragment.show(getSupportFragmentManager(), "Sort");
+	}
+
+	public void doPositiveClick(String string, int sortIndex) {
+
+		SortManager sortManager = new SortManager();
+		this.sortIndex = sortIndex;
+		System.out.println(string);
+		if (string == "Date") {
+			questionArrayList = sortManager.SortByDate(questionArrayList);
+		} else if (string == "Upvotes") {
+			questionArrayList = sortManager.SortByVotes(questionArrayList);
+		} else if (string == "Contains Image") {
+			questionArrayList = sortManager.SortByImages(questionArrayList);
+		} else {
+			System.out.println("invalid selection");
+		}
+		FragmentManager fragmentManager = getFragmentManager();
+		fragmentManager.beginTransaction()
+				.replace(R.id.container, QuestionFragment.newInstance())
+				.commit();
+	}
+
+	public void doNegativeClick() {
+
+	}
+
 	public static class QuestionFragment extends Fragment {
 
 		public CustomArrayAdapter questionsViewAdapter = null;
@@ -324,9 +368,6 @@ public class MainActivity extends FragmentActivity implements
 	 * @Override protected void onPause() { super.onPause(); questions.clear();
 	 * }
 	 */
-	//
-
-	//
 
 	public void createQuestion(MenuItem menu) {
 		Intent intent = new Intent(MainActivity.this,
@@ -335,49 +376,49 @@ public class MainActivity extends FragmentActivity implements
 	}
 
 	public static void EditUsername() {
-		//TestCase 23
-		//waiting for implementation of other methods
+		// TestCase 23
+		// waiting for implementation of other methods
 	}
 
 	public static void SeeFreshestComment() {
-		//TestCase 22
-		//waiting for implementation of other methods
-		
+		// TestCase 22
+		// waiting for implementation of other methods
+
 	}
 
 	public static void SeeMostUpvotedQuestion() {
-		//TestCase 13
-		//waiting for implementation of other methods
-		
+		// TestCase 13
+		// waiting for implementation of other methods
+
 	}
 
 	public static void SeeMostUpvotedAnswer() {
-		//TestCase 13
-		//waiting for implementation of other methods
-		
+		// TestCase 13
+		// waiting for implementation of other methods
+
 	}
+
 	public static void PushStored() {
-		//TestCase 20/21
-		//waiting for implementation of other methods
+		// TestCase 20/21
+		// waiting for implementation of other methods
 
 	}
 
 	public static void AuthorReplyOffline() {
-		//TestCase 20/21
-		//waiting for implementation of other methods
-		
+		// TestCase 20/21
+		// waiting for implementation of other methods
+
 	}
-	
+
 	public static void AuthorQuestionOffline() {
-		//TestCase 20/21
-		//waiting for implementation of other methods
+		// TestCase 20/21
+		// waiting for implementation of other methods
 	}
 
 	public static void AuthorAnswerOffline() {
-		//TestCase 20/21
-		//waiting for implementation of other methods
+		// TestCase 20/21
+		// waiting for implementation of other methods
 	}
-
 
 	public static void SaveMyQuestions(Context context,
 			QuestionArrayList questions) {
@@ -523,8 +564,6 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
-	//
-
 	public static class HistoryFragment extends Fragment {
 
 		public static HistoryFragment newInstance() {
@@ -580,13 +619,15 @@ public class MainActivity extends FragmentActivity implements
 
 			questionExpandable.setAdapter(detailViewAdapter);
 			// ///////////////////////////////////////////////////////
-//			ExpandableListView answerExpandable = (ExpandableListView) rootView
-//					.findViewById(R.id.list_answer_detail);
-//
-//			DetailAnswerViewAdapter detailAnswerViewAdapter = new DetailAnswerViewAdapter(
-//					getActivity(), question);
-//
-//			answerExpandable.setAdapter(detailAnswerViewAdapter);
+			// ExpandableListView answerExpandable = (ExpandableListView)
+			// rootView
+			// .findViewById(R.id.list_answer_detail);
+			//
+			// DetailAnswerViewAdapter detailAnswerViewAdapter = new
+			// DetailAnswerViewAdapter(
+			// getActivity(), question);
+			//
+			// answerExpandable.setAdapter(detailAnswerViewAdapter);
 
 			return rootView;
 		}
@@ -596,6 +637,5 @@ public class MainActivity extends FragmentActivity implements
 		// ((MainActivity) activity).onSec
 		// }
 	}
-
 
 }

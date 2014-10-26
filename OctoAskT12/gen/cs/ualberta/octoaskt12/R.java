@@ -61,6 +61,7 @@ public final class R {
         public static final int loginText=0x7f080007;
         public static final int navigation_drawer=0x7f080006;
         public static final int question_list=0x7f080011;
+        public static final int sort=0x7f08001a;
         public static final int view_question_detail=0x7f08000e;
     }
     public static final class layout {
@@ -82,6 +83,7 @@ public final class R {
         public static final int fragment_profile=0x7f03000f;
         public static final int fragment_question=0x7f030010;
         public static final int fragment_question_list_item=0x7f030011;
+        public static final int sort_dialog=0x7f030012;
     }
     public static final class menu {
         public static final int create_question=0x7f070000;
