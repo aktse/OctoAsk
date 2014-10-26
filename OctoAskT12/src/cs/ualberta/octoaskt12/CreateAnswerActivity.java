@@ -4,22 +4,20 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
 
-public class CreateQuestionActivity extends Activity {
+public class CreateAnswerActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_create_question);
+		setContentView(R.layout.activity_create_answer);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.create_question, menu);
+		getMenuInflater().inflate(R.menu.create_answer, menu);
 		return true;
 	}
 
@@ -36,22 +34,5 @@ public class CreateQuestionActivity extends Activity {
 			onBackPressed();
 		}
 		return super.onOptionsItemSelected(item);
-	}
-	
-	// Cancel the submission of a question
-	public void cancelQuestionAction(View v) {
-		onBackPressed();
-	}
-	
-	
-	public void submitQuestionAction(View v) {
-		EditText titleEditText = (EditText) findViewById(R.id.questionTitleText);
-		EditText bodyEditText = (EditText) findViewById(R.id.questionBodyText);
-		String questionTitle = titleEditText.getText().toString();
-		String questionBody = bodyEditText.getText().toString();
-		User user = UserArrayList.getCurrentUser();
-		Question question = new Question(questionTitle, questionBody, user);
-		QuestionsController.addQuestion(question);
-		onBackPressed();
 	}
 }

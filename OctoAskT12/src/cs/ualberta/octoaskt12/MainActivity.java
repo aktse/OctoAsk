@@ -35,11 +35,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-	public static QuestionArrayList questionArrayList = new QuestionArrayList();
+
+	
+//	UserArrayList.getUserList().addUser(currentUser);
+	
+	public static QuestionArrayList questionArrayList = QuestionsController.getAllQuestions();
 
 	private NavigationDrawerFragment mNavigationDrawerFragment;
 
@@ -52,6 +57,11 @@ public class MainActivity extends FragmentActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		String userName = "Ivan";
+		User currentUser = new User(userName);
+		UserArrayList.addUser(currentUser);
+		UserArrayList.setCurrentUser(currentUser);
 
 		context = this;
 
@@ -62,113 +72,6 @@ public class MainActivity extends FragmentActivity implements
 		// Set up the drawer.
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
 				(DrawerLayout) findViewById(R.id.drawer_layout));
-
-		questionArrayList
-				.addQuestion(new Question(
-						"How do you sort a list of numbers in C?",
-						"I was wondering what is the most efficient way to sort a list of numbers in C. I have an array like this [1, 6, 3, 4, 9, 12]. I'd appreciate the help. Thanks!",
-						new User("Ivan")));
-		questionArrayList
-				.getQuestions()
-				.get(0)
-				.addReply(
-						new Reply("I guess you need a fast sorting algorithm?",
-								new User("Neel")));
-		questionArrayList
-				.getQuestions()
-				.get(0)
-				.addReply(
-						new Reply("mmm...sounds like a homework!", new User(
-								"Neel P")));
-		questionArrayList
-				.getQuestions()
-				.get(0)
-				.addAnswer(
-						new Answer(
-								"There are several ways you can achieve this. A lot of sort algorithms have a running time of O(nlogn)",
-								new User("Neel")));
-		questionArrayList
-				.getQuestions()
-				.get(0)
-				.addAnswer(
-						new Answer(
-								"I would do either merge sort or insertion sort",
-								new User("Aaron")));
-		questionArrayList
-				.getQuestions()
-				.get(0)
-				.addAnswer(
-						new Answer(
-								"There are several ways you can achieve this. A lot of sort algorithms have a running time of O(nlogn)",
-								new User("Neel")));
-		questionArrayList
-				.getQuestions()
-				.get(0)
-				.addAnswer(
-						new Answer(
-								"I would do either merge sort or insertion sort",
-								new User("Aaron")));
-		questionArrayList
-				.getQuestions()
-				.get(0)
-				.addAnswer(
-						new Answer(
-								"There are several ways you can achieve this. A lot of sort algorithms have a running time of O(nlogn)",
-								new User("Neel")));
-		questionArrayList
-				.getQuestions()
-				.get(0)
-				.addAnswer(
-						new Answer(
-								"I would do either merge sort or insertion sort",
-								new User("Aaron")));
-		questionArrayList
-				.getQuestions()
-				.get(0)
-				.addAnswer(
-						new Answer(
-								"There are several ways you can achieve this. A lot of sort algorithms have a running time of O(nlogn)",
-								new User("Neel")));
-		questionArrayList
-				.getQuestions()
-				.get(0)
-				.addAnswer(
-						new Answer(
-								"I would do either merge sort or insertion sort",
-								new User("Aaron")));
-		questionArrayList
-				.getQuestions()
-				.get(0)
-				.addAnswer(
-						new Answer(
-								"There are several ways you can achieve this. A lot of sort algorithms have a running time of O(nlogn)",
-								new User("Neel")));
-		questionArrayList
-				.getQuestions()
-				.get(0)
-				.addAnswer(
-						new Answer(
-								"I would do either merge sort or insertion sort",
-								new User("Aaron")));
-		questionArrayList
-				.getQuestions()
-				.get(0)
-				.getAnswers()
-				.get(0)
-				.addReply(
-						new Reply("Selection sort? or merge sort?", new User(
-								"ivan")));
-		questionArrayList.getQuestions().get(0).getAnswers().get(0)
-				.addReply(new Reply("answer reply 2", new User("ivan")));
-		questionArrayList
-				.getQuestions()
-				.get(0)
-				.getAnswers()
-				.get(1)
-				.addReply(
-						new Reply(
-								"I think you should be more specific with your answer and explain which ones would achieve that",
-								new User("ivan")));
 
 		MyQuestionFilename = "ChrisFile";
 
@@ -287,6 +190,8 @@ public class MainActivity extends FragmentActivity implements
 					container, false);
 			ListView lv = (ListView) rootView.findViewById(R.id.question_list);
 			lv.setAdapter(questionsViewAdapter);
+			Toast.makeText(getActivity(), "On create called", Toast.LENGTH_SHORT).show();
+			questionsViewAdapter.notifyDataSetChanged();
 			lv.setOnItemClickListener(new OnItemClickListener() {
 
 				@Override
@@ -311,6 +216,12 @@ public class MainActivity extends FragmentActivity implements
 
 			return rootView;
 		}
+		
+		@Override
+		public void onResume() {
+			super.onResume();
+			questionsViewAdapter.notifyDataSetChanged();
+		}
 
 		@Override
 		public void onAttach(Activity activity) {
@@ -333,50 +244,56 @@ public class MainActivity extends FragmentActivity implements
 		startActivity(intent);
 	}
 
+	public void createAnswer(MenuItem menu) {
+		Intent intent = new Intent(MainActivity.this,
+				CreateAnswerActivity.class);
+		startActivity(intent);
+	}
+
 	public static void EditUsername() {
-		//TestCase 23
-		//waiting for implementation of other methods
+		// TestCase 23
+		// waiting for implementation of other methods
 	}
 
 	public static void SeeFreshestComment() {
-		//TestCase 22
-		//waiting for implementation of other methods
-		
+		// TestCase 22
+		// waiting for implementation of other methods
+
 	}
 
 	public static void SeeMostUpvotedQuestion() {
-		//TestCase 13
-		//waiting for implementation of other methods
-		
+		// TestCase 13
+		// waiting for implementation of other methods
+
 	}
 
 	public static void SeeMostUpvotedAnswer() {
-		//TestCase 13
-		//waiting for implementation of other methods
-		
+		// TestCase 13
+		// waiting for implementation of other methods
+
 	}
+
 	public static void PushStored() {
-		//TestCase 20/21
-		//waiting for implementation of other methods
+		// TestCase 20/21
+		// waiting for implementation of other methods
 
 	}
 
 	public static void AuthorReplyOffline() {
-		//TestCase 20/21
-		//waiting for implementation of other methods
-		
+		// TestCase 20/21
+		// waiting for implementation of other methods
+
 	}
-	
+
 	public static void AuthorQuestionOffline() {
-		//TestCase 20/21
-		//waiting for implementation of other methods
+		// TestCase 20/21
+		// waiting for implementation of other methods
 	}
 
 	public static void AuthorAnswerOffline() {
-		//TestCase 20/21
-		//waiting for implementation of other methods
+		// TestCase 20/21
+		// waiting for implementation of other methods
 	}
-
 
 	public static void SaveMyQuestions(Context context,
 			QuestionArrayList questions) {
@@ -579,13 +496,15 @@ public class MainActivity extends FragmentActivity implements
 
 			questionExpandable.setAdapter(detailViewAdapter);
 			// ///////////////////////////////////////////////////////
-//			ExpandableListView answerExpandable = (ExpandableListView) rootView
-//					.findViewById(R.id.list_answer_detail);
-//
-//			DetailAnswerViewAdapter detailAnswerViewAdapter = new DetailAnswerViewAdapter(
-//					getActivity(), question);
-//
-//			answerExpandable.setAdapter(detailAnswerViewAdapter);
+			// ExpandableListView answerExpandable = (ExpandableListView)
+			// rootView
+			// .findViewById(R.id.list_answer_detail);
+			//
+			// DetailAnswerViewAdapter detailAnswerViewAdapter = new
+			// DetailAnswerViewAdapter(
+			// getActivity(), question);
+			//
+			// answerExpandable.setAdapter(detailAnswerViewAdapter);
 
 			return rootView;
 		}
@@ -595,6 +514,5 @@ public class MainActivity extends FragmentActivity implements
 		// ((MainActivity) activity).onSec
 		// }
 	}
-
 
 }

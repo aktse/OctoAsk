@@ -16,7 +16,7 @@ public class UserArrayList {
 	
 	// add a new user into the list of users
 	public static void addUser(User user){
-		userArray.add(user);
+		getUserList().add(user);
 	}
 	
 	// get the current user logged in.
