@@ -85,5 +85,20 @@ public class Answer implements Serializable {
 	public GregorianCalendar getTime(){	
 		return dateCreated;
 	}
+
+	public void attachImage(CustomImage temp_image) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public boolean imageExists() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public Object getImage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

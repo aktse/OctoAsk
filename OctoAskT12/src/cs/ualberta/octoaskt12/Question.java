@@ -24,6 +24,8 @@ public class Question implements Serializable {
 	// the replies for this question
 	private ArrayList<Reply> replies = new ArrayList<Reply>();
 	
+	private ArrayList<User> upvotedUsers = new ArrayList<User>();
+	
 	
 	// Constructor
 	public Question(String questionTitle, String questionBody, User user) {
@@ -114,6 +116,21 @@ public class Question implements Serializable {
 	// get the date the question was created
 	public GregorianCalendar getTime() {
 		return dateCreated;
+	}
+
+	public void attachImage(CustomImage customImage) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public boolean imageExists() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public Object getImage() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

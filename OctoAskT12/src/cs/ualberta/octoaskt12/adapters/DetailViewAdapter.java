@@ -1,5 +1,9 @@
 package cs.ualberta.octoaskt12.adapters;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import cs.ualberta.octoaskt12.Answer;
 import cs.ualberta.octoaskt12.Question;
 import cs.ualberta.octoaskt12.R;
 import cs.ualberta.octoaskt12.Reply;
@@ -14,31 +18,47 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 
 	private Context context;
 	private Question question;
+	private ArrayList<Answer> answers;
 
 	public DetailViewAdapter(Context context, Question question) {
 		super();
 		this.context = context;
 		this.question = question;
+		this.answers = question.getAnswers();
+
 	}
 
 	@Override
 	public int getGroupCount() {
-		return 1;
+		return this.answers.size() + 1;
 	}
 
 	@Override
 	public int getChildrenCount(int groupPosition) {
-		return this.question.getReplies().size();
+		if (groupPosition == 0) {
+			return question.getReplies().size();
+		} else {
+			return this.answers.get(groupPosition - 1).getReplies().size();
+		}
 	}
 
 	@Override
 	public Object getGroup(int groupPosition) {
-		return question;
+		if (groupPosition == 0) {
+			return this.question;
+		} else {
+			return this.answers.get(groupPosition - 1);
+		}
 	}
 
 	@Override
 	public Reply getChild(int groupPosition, int childPosition) {
-		return this.question.getReplies().get(childPosition);
+		if (groupPosition == 0) {
+			return this.question.getReplies().get(childPosition);
+		} else {
+			return this.answers.get(groupPosition - 1).getReplies()
+					.get(childPosition);
+		}
 	}
 
 	@Override
@@ -59,42 +79,79 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 	@Override
 	public View getGroupView(int groupPosition, boolean isExpanded,
 			View convertView, ViewGroup parent) {
-		String questionTitle = question.getTitle();
-		String questionBody = question.getBody();
-		if (convertView == null) {
+		if (groupPosition == 0) {
+			String questionTitle = question.getTitle();
+			String questionBody = question.getBody();
+			System.out.println(questionBody);
 			LayoutInflater inflater = (LayoutInflater) this.context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = inflater.inflate(R.layout.detail_question_header,
 					null);
+			TextView questionBodyTextView = (TextView) convertView
+					.findViewById(R.id.detail_question_body);
+			TextView questionTitleTextView = (TextView) convertView
+					.findViewById(R.id.detail_question_header);
+			questionBodyTextView.setText(questionBody);
+			questionTitleTextView.setText(questionTitle);
+			return convertView;
+		} else {
+			String answerBody = answers.get(groupPosition - 1).getBody();
+			System.out.println(answerBody);
+			LayoutInflater inflater = (LayoutInflater) this.context
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			convertView = inflater.inflate(R.layout.detail_answer_header, null);
+			System.out.println("inflated properly");
+			TextView answerBodyTextView = (TextView) convertView
+					.findViewById(R.id.detail_answer_header);
+			if (answerBodyTextView == null) {
+				System.out.println("null");
+			}
+			answerBodyTextView.setText(answerBody);
+
+			return convertView;
 		}
-		TextView questionBodyTextView = (TextView) convertView
-				.findViewById(R.id.detail_question_body);
-		TextView questionTitleTextView = (TextView) convertView
-				.findViewById(R.id.detail_question_header);
-		questionBodyTextView.setText(questionBody);
-		questionTitleTextView.setText(questionTitle);
-		return convertView;
 
 	}
 
 	@Override
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
-		final String replyBody = getChild(groupPosition, childPosition)
-				.getBody();
 
-		if (convertView == null) {
+		if (groupPosition == 0) {
+			final String replyBody = getChild(groupPosition, childPosition)
+					.getBody();
+
 			LayoutInflater inflater = (LayoutInflater) this.context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = inflater.inflate(R.layout.detail_question_replies,
 					null);
+
+			TextView questionReply = (TextView) convertView
+					.findViewById(R.id.detail_question_replies);
+			questionReply.setText(replyBody);
+
+			return convertView;
+		} else {
+			String replyBody = getChild(groupPosition, childPosition).getBody();
+			// if (convertView == null) {
+			if (isLastChild) {
+				LayoutInflater inflater = (LayoutInflater) this.context
+						.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				convertView = inflater.inflate(
+						R.layout.detail_answer_replies_button, null);
+			} else {
+				LayoutInflater inflater = (LayoutInflater) this.context
+						.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				convertView = inflater.inflate(R.layout.detail_answer_replies,
+						null);
+			}
+			// }
+
+			TextView answerReply = (TextView) convertView
+					.findViewById(R.id.detail_answer_replies);
+			answerReply.setText(replyBody);
+			return convertView;
 		}
-
-		TextView questionReply = (TextView) convertView
-				.findViewById(R.id.detail_question_replies);
-		questionReply.setText(replyBody);
-
-		return convertView;
 	}
 
 	@Override

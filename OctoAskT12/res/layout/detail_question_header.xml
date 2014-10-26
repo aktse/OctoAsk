@@ -8,15 +8,18 @@
         android:id="@+id/detail_question_header"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="#0000FF"
-        android:textSize="35sp" />
+        android:textColor="#000000"
+        android:textSize="30sp"
+        android:layout_marginStart="40dp"
+        android:padding="5dp" />
 
     <TextView
         android:id="@+id/detail_question_body"
         android:minHeight="100dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="#0000FF"
-        android:textSize="17sp" />
+        android:textColor="#000000"
+        android:textSize="14sp"
+        android:padding="5dp" />
 
 </LinearLayout>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2014-11-07" view-index="0" gantt-divider-location="277" resource-divider-location="300" version="2.0" locale="en_US">
+    <description/>
+    <view zooming-state="default:0" id="gantt-chart">
+        <field id="tpd3" name="Name" width="56" order="0"/>
+        <field id="tpd4" name="Begin date" width="22" order="1"/>
+        <field id="tpd5" name="End date" width="21" order="2"/>
+    </view>
+    <view id="resource-table">
+        <field id="0" name="Name" width="52" order="0"/>
+        <field id="1" name="Default role" width="47" order="1"/>
+    </view>
+    <!-- -->
+    <calendars>
+        <day-types>
+            <day-type id="0"/>
+            <day-type id="1"/>
+            <calendar id="1" name="default">
+                <default-week sun="1" mon="0" tue="0" wed="0" thu="0" fri="0" sat="1"/>
+                <only-show-weekends value="false"/>
+                <overriden-day-types/>
+                <days/>
+            </calendar>
+        </day-types>
+    </calendars>
+    <tasks empty-milestones="true">
+        <taskproperties>
+            <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
+            <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
+            <taskproperty id="tpd2" name="info" type="default" valuetype="icon"/>
+            <taskproperty id="tpd3" name="name" type="default" valuetype="text"/>
+            <taskproperty id="tpd4" name="begindate" type="default" valuetype="date"/>
+            <taskproperty id="tpd5" name="enddate" type="default" valuetype="date"/>
+            <taskproperty id="tpd6" name="duration" type="default" valuetype="int"/>
+            <taskproperty id="tpd7" name="completion" type="default" valuetype="int"/>
+            <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
+            <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
+        </taskproperties>
+        <task id="23" name="Set username" color="#0033ff" meeting="false" start="2014-10-17" duration="3" complete="0" expand="true"/>
+        <task id="0" name="Add Questions" color="#0033ff" meeting="false" start="2014-10-20" duration="6" complete="0" expand="true"/>
+        <task id="13" name="View Questions" color="#0033ff" meeting="false" start="2014-10-28" duration="6" complete="0" expand="true"/>
+        <task id="15" name="View Number of Answers" color="#0033ff" meeting="false" start="2014-11-05" duration="3" complete="0" expand="true"/>
+        <task id="1" name="Add Answers" color="#0033ff" meeting="false" start="2014-10-17" duration="7" complete="0" expand="true"/>
+        <task id="12" name="View Answers" color="#0033ff" meeting="false" start="2014-10-28" duration="6" complete="0" expand="true"/>
+        <task id="2" name="Add Replies" color="#0033ff" meeting="false" start="2014-10-17" duration="7" complete="0" expand="true"/>
+        <task id="3" name="View Replies" color="#0033ff" meeting="false" start="2014-10-28" duration="6" complete="0" expand="true"/>
+        <task id="4" name="Attach Photos" color="#0033ff" meeting="false" start="2014-11-05" duration="3" complete="0" expand="true"/>
+        <task id="5" name="Sort by Date" color="#00cc00" meeting="false" start="2014-10-17" duration="7" complete="0" expand="true"/>
+        <task id="6" name="Sort by Rating" color="#00cc00" meeting="false" start="2014-10-28" duration="6" complete="0" expand="true"/>
+        <task id="7" name="Sort by Contains Pictures" color="#00cc00" meeting="false" start="2014-11-10" duration="6" complete="0" expand="true"/>
+        <task id="16" name="Search" color="#00cc00" meeting="false" start="2014-11-17" duration="7" complete="0" expand="true"/>
+        <task id="8" name="Upvote Questions" color="#ffff00" meeting="false" start="2014-11-10" duration="6" complete="0" expand="true"/>
+        <task id="9" name="Upvote Answers" color="#ffff00" meeting="false" start="2014-11-13" duration="5" complete="0" expand="true"/>
+        <task id="14" name="Sort by Rating in detailed view" color="#ffff00" meeting="false" start="2014-11-18" duration="4" complete="0" expand="true"/>
+        <task id="22" name="Sort newest comments" color="#ffff00" meeting="false" start="2014-11-20" duration="4" complete="0" expand="true"/>
+        <task id="17" name="Cache asked questions" meeting="false" start="2014-10-17" duration="7" complete="0" expand="true"/>
+        <task id="19" name="Favorite questions" meeting="false" start="2014-10-28" duration="6" complete="0" expand="true"/>
+        <task id="18" name="Cache Favorites" meeting="false" start="2014-11-10" duration="6" complete="0" expand="true"/>
+        <task id="20" name="Cache Drafts" color="#00ffcc" meeting="false" start="2014-11-20" duration="4" complete="0" expand="true"/>
+        <task id="21" name="Upload Drafts" color="#00ffcc" meeting="false" start="2014-11-20" duration="4" complete="0" expand="true"/>
+    </tasks>
+    <resources/>
+    <allocations/>
+    <vacations/>
+    <taskdisplaycolumns>
+        <displaycolumn property-id="tpd2" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd7" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd8" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd6" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd10" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd11" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd9" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd1" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd0" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd3" order="0" width="152" visible="true"/>
+        <displaycolumn property-id="tpd4" order="1" width="60" visible="true"/>
+        <displaycolumn property-id="tpd5" order="2" width="59" visible="true"/>
+    </taskdisplaycolumns>
+    <previous/>
+    <roles roleset-name="Default"/>
+    <roles roleset-name="SoftwareDevelopment"/>
+</project>
