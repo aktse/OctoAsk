@@ -9,7 +9,7 @@
     tools:context="cs.ualberta.octoaskt12.CreateAnswerActivity" >
 
     <EditText
-        android:id="@+id/replyBodyText"
+        android:id="@+id/answerBodyText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -25,11 +25,11 @@
     </EditText>
 
     <Button
-        android:id="@+id/cancelReplyButton"
+        android:id="@+id/cancelAnswerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/replyBodyText"
-        android:layout_below="@+id/replyBodyText"
+        android:layout_alignLeft="@+id/answerBodyText"
+        android:layout_below="@+id/answerBodyText"
         android:layout_marginTop="127dp"
         android:background="@drawable/question_button"
         android:padding="10dp"
@@ -37,12 +37,12 @@
         android:textColor="#ffffff" />
 
     <Button
-        android:id="@+id/submitReplyButton"
+        android:id="@+id/submitAnswerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/cancelReplyButton"
-        android:layout_alignBottom="@+id/cancelReplyButton"
-        android:layout_alignRight="@+id/replyBodyText"
+        android:layout_alignBaseline="@+id/cancelAnswerButton"
+        android:layout_alignBottom="@+id/cancelAnswerButton"
+        android:layout_alignRight="@+id/answerBodyText"
         android:background="@drawable/question_button"
         android:padding="10dp"
         android:text="Submit"

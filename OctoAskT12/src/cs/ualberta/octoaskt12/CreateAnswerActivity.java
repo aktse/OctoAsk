@@ -17,13 +17,13 @@ public class CreateAnswerActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_answer);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		
-		Button submitButton = (Button) findViewById(R.id.submitReplyButton);
+
+		Button submitButton = (Button) findViewById(R.id.submitAnswerButton);
 		submitButton.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				processIntent(true);	
+				processIntent(true);
 			}
 		});
 	}
@@ -49,13 +49,13 @@ public class CreateAnswerActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
+
 	public void processIntent(boolean submitPressed) {
 		Intent intent = getIntent();
 		if (intent != null) {
 			try {
 				if (submitPressed) {
-					EditText answerBodyText = (EditText) findViewById(R.id.replyBodyText);
+					EditText answerBodyText = (EditText) findViewById(R.id.answerBodyText);
 					String answerBody = answerBodyText.getText().toString();
 					Intent returnIntent = new Intent();
 					returnIntent.putExtra("answerBody", answerBody);
@@ -68,13 +68,13 @@ public class CreateAnswerActivity extends Activity {
 		}
 		finish();
 	}
-	
-//	public void submitAnswer(View v) {
-//		EditText answerBodyText = (EditText) findViewById(R.id.questionBodyText);
-//		String answerBody = answerBodyText.getText().toString();
-//	}
-	
+
+	// public void submitAnswer(View v) {
+	// EditText answerBodyText = (EditText) findViewById(R.id.questionBodyText);
+	// String answerBody = answerBodyText.getText().toString();
+	// }
+
 	public void cancelAnswer(View v) {
-		
+
 	}
 }
