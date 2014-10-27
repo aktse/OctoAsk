@@ -1,9 +1,12 @@
 package cs.ualberta.octoaskt12;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 
 public class CreateQuestionActivity extends Activity {
 
@@ -34,5 +37,21 @@ public class CreateQuestionActivity extends Activity {
 			onBackPressed();
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	// Cancel the submission of a question
+	public void cancelQuestionAction(View v) {
+		onBackPressed();
+	}
+
+	public void submitQuestionAction(View v) {
+		EditText titleEditText = (EditText) findViewById(R.id.questionTitleText);
+		EditText bodyEditText = (EditText) findViewById(R.id.questionBodyText);
+		String questionTitle = titleEditText.getText().toString();
+		String questionBody = bodyEditText.getText().toString();
+		User user = UserArrayList.getCurrentUser();
+		Question question = new Question(questionTitle, questionBody, user);
+		QuestionsController.addQuestion(question);
+		onBackPressed();
 	}
 }

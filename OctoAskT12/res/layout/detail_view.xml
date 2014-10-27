@@ -3,27 +3,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
-    <ExpandableListView
-        android:id="@+id/view_question_detail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:groupIndicator="@null" />
-
-    <Button
-        android:id="@+id/detail_question_replies_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:text="Add Reply"
-        android:textSize="10sp" />
-
-    <ExpandableListView
-        android:id="@+id/list_answer_detail"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_margin="5dp"
-        android:groupIndicator="@null" />
-
+	<RelativeLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content">
+	    
+	    <ExpandableListView
+	        android:id="@+id/view_question_detail"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_above="@+id/add_answer_button"
+	        android:layout_alignParentTop="true"
+	        android:layout_margin="5dp"
+	        android:groupIndicator="@null" />
+	
+	<!--     <Button
+	        android:id="@+id/detail_question_replies_add"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="end"
+	        android:text="Add Reply"
+	        android:textSize="10sp" /> -->
+	
+	    <Button
+	        android:id="@+id/add_answer_button"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/question_button"
+	        android:text="Add Answer"
+	        android:textColor="#ffffff"
+	        android:textSize="10sp"
+	        android:layout_alignParentBottom="true" />
+		</RelativeLayout>
 </LinearLayout>
