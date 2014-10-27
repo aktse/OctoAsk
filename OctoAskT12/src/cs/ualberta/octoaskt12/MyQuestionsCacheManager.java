@@ -26,14 +26,13 @@ public class MyQuestionsCacheManager {
 			FileInputStream fis = context.openFileInput(FILENAME);
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			qal = (QuestionArrayList) ois.readObject();
-			
 			fis.close();
 			ois.close();
 		} catch (Exception e) {
-			Log.i("CacheManager", "Error lading");
+			Log.i("CacheManager", "Error loading");
 			e.printStackTrace();
 		}
-		
+
 		return qal;
 	}
 	
@@ -48,7 +47,7 @@ public class MyQuestionsCacheManager {
 			oos.close();
 		}
 		catch (Exception e) {
-			Log.i("CacheManager", "Error saveing");
+			Log.i("CacheManager", "Error saving");
 			e.printStackTrace();
 		}
 	}
