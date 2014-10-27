@@ -18,7 +18,7 @@
         android:background="@drawable/question_edit_text"
         android:ems="10"
         android:gravity="top"
-        android:hint="Answer..."
+        android:hint="Reply..."
         android:inputType="textMultiLine"
         android:minHeight="100dp"
         android:padding="10dp" >
