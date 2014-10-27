@@ -13,9 +13,12 @@ import cs.ualberta.octoaskt12.adapters.DetailViewAdapter;
 import android.app.Activity;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,6 +29,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.DrawerLayout;
@@ -48,9 +52,13 @@ public class MainActivity extends FragmentActivity implements
 	
 	public static QuestionArrayList questionArrayList = QuestionsController.getAllQuestions();
 
+	public static QuestionArrayList sortedQuestionArrayList = questionArrayList;
+
 	private NavigationDrawerFragment mNavigationDrawerFragment;
 
 	private CharSequence mTitle;
+
+	private int sortIndex = 0;
 
 	private static String MyQuestionFilename;
 	private static Context context;
@@ -74,6 +82,7 @@ public class MainActivity extends FragmentActivity implements
 		// Set up the drawer.
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
 				(DrawerLayout) findViewById(R.id.drawer_layout));
+
 
 		MyQuestionFilename = "ChrisFile";
 
@@ -171,6 +180,35 @@ public class MainActivity extends FragmentActivity implements
 		return super.onOptionsItemSelected(item);
 	}
 
+	public void createDialog(MenuItem menu) {
+		SortFragment sortFragment = SortFragment.newInstance(sortIndex);
+		sortFragment.show(getSupportFragmentManager(), "Sort");
+	}
+
+	public void doPositiveClick(String string, int sortIndex) {
+
+		SortManager sortManager = new SortManager();
+		this.sortIndex = sortIndex;
+		System.out.println(string);
+		if (string == "Date") {
+			questionArrayList = sortManager.SortByDate(questionArrayList);
+		} else if (string == "Upvotes") {
+			questionArrayList = sortManager.SortByVotes(questionArrayList);
+		} else if (string == "Contains Image") {
+			questionArrayList = sortManager.SortByImages(questionArrayList);
+		} else {
+			System.out.println("invalid selection");
+		}
+		FragmentManager fragmentManager = getFragmentManager();
+		fragmentManager.beginTransaction()
+				.replace(R.id.container, QuestionFragment.newInstance())
+				.commit();
+	}
+
+	public void doNegativeClick() {
+
+	}
+
 	public static class QuestionFragment extends Fragment {
 
 		public CustomArrayAdapter questionsViewAdapter = null;
@@ -236,9 +274,6 @@ public class MainActivity extends FragmentActivity implements
 	 * @Override protected void onPause() { super.onPause(); questions.clear();
 	 * }
 	 */
-	//
-
-	//
 
 	public void createQuestion(MenuItem menu) {
 		Intent intent = new Intent(MainActivity.this,
@@ -441,8 +476,6 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
-	//
-
 	public static class HistoryFragment extends Fragment {
 
 		public static HistoryFragment newInstance() {
@@ -507,7 +540,6 @@ public class MainActivity extends FragmentActivity implements
 			});
 			
 			questionExpandable.setAdapter(detailViewAdapter);
-
 			return rootView;
 		}
 		public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -524,16 +556,5 @@ public class MainActivity extends FragmentActivity implements
 			super.onResume();
 			detailViewAdapter.notifyDataSetChanged();
 		}
-		
-//		public 
 	}
-//	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//		if (requestCode == CREATE_ANSWER_ACTIVITY_CODE) {
-//			if (resultCode == RESULT_OK) {
-//				String answerBodyText = data.getStringExtra("answerBody");
-//				Answer answer = new Answer(answerBodyText, UserArrayList.getCurrentUser());
-//				question.addAnswer(answer);
-//			}
-//		}
-//	}
 }

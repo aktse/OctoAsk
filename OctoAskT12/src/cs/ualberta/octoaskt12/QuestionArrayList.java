@@ -39,11 +39,6 @@ public class QuestionArrayList implements Serializable {
 		questions.add(question);
 	}
 
-	public void sortByImage() {
-		// TODO Auto-generated method stub
-		
-	}
-
 	public ArrayList<Question> searchQuestion(String searchTerm) {
 		return null;
 		// TODO Auto-generated method stub
