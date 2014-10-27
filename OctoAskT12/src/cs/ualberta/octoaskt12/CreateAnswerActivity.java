@@ -18,7 +18,7 @@ public class CreateAnswerActivity extends Activity {
 		setContentView(R.layout.activity_create_answer);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
-		Button submitButton = (Button) findViewById(R.id.submitReplyButton);
+		Button submitButton = (Button) findViewById(R.id.submitAnswerButton);
 		submitButton.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -55,7 +55,7 @@ public class CreateAnswerActivity extends Activity {
 		if (intent != null) {
 			try {
 				if (submitPressed) {
-					EditText answerBodyText = (EditText) findViewById(R.id.replyBodyText);
+					EditText answerBodyText = (EditText) findViewById(R.id.answerBodyText);
 					String answerBody = answerBodyText.getText().toString();
 					Intent returnIntent = new Intent();
 					returnIntent.putExtra("answerBody", answerBody);

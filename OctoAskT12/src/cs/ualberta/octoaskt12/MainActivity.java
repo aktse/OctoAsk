@@ -36,6 +36,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -43,7 +44,8 @@ import android.widget.TextView;
 public class MainActivity extends FragmentActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-	public static QuestionArrayList questionArrayList = new QuestionArrayList();
+	public static QuestionArrayList questionArrayList = QuestionsController
+			.getAllQuestions();;
 
 	public static QuestionArrayList sortedQuestionArrayList = questionArrayList;
 
@@ -61,6 +63,11 @@ public class MainActivity extends FragmentActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		String userName = "Ivan";
+		User currentUser = new User(userName);
+		UserArrayList.addUser(currentUser);
+		UserArrayList.setCurrentUser(currentUser);
+
 		context = this;
 
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
@@ -70,120 +77,6 @@ public class MainActivity extends FragmentActivity implements
 		// Set up the drawer.
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
 				(DrawerLayout) findViewById(R.id.drawer_layout));
-
-		questionArrayList
-				.addQuestion(new Question(
-						"How do you sort a list of numbers in C?",
-						"I was wondering what is the most efficient way to sort a list of numbers in C. I have an array like this [1, 6, 3, 4, 9, 12]. I'd appreciate the help. Thanks!",
-						new User("Ivan")));
-		questionArrayList
-				.getQuestions()
-				.get(0)
-				.addReply(
-						new Reply("I guess you need a fast sorting algorithm?",
-								new User("Neel")));
-		questionArrayList
-				.getQuestions()
-				.get(0)
-				.addReply(
-						new Reply("mmm...sounds like a homework!", new User(
-								"Neel P")));
-		questionArrayList
-				.getQuestions()
-				.get(0)
-				.addAnswer(
-						new Answer(
-								"There are several ways you can achieve this. A lot of sort algorithms have a running time of O(nlogn)",
-								new User("Neel")));
-		questionArrayList
-				.getQuestions()
-				.get(0)
-				.addAnswer(
-						new Answer(
-								"I would do either merge sort or insertion sort",
-								new User("Aaron")));
-		questionArrayList
-				.getQuestions()
-				.get(0)
-				.addAnswer(
-						new Answer(
-								"There are several ways you can achieve this. A lot of sort algorithms have a running time of O(nlogn)",
-								new User("Neel")));
-		questionArrayList
-				.getQuestions()
-				.get(0)
-				.addAnswer(
-						new Answer(
-								"I would do either merge sort or insertion sort",
-								new User("Aaron")));
-		questionArrayList
-				.getQuestions()
-				.get(0)
-				.addAnswer(
-						new Answer(
-								"There are several ways you can achieve this. A lot of sort algorithms have a running time of O(nlogn)",
-								new User("Neel")));
-		questionArrayList
-				.getQuestions()
-				.get(0)
-				.addAnswer(
-						new Answer(
-								"I would do either merge sort or insertion sort",
-								new User("Aaron")));
-		questionArrayList
-				.getQuestions()
-				.get(0)
-				.addAnswer(
-						new Answer(
-								"There are several ways you can achieve this. A lot of sort algorithms have a running time of O(nlogn)",
-								new User("Neel")));
-		questionArrayList
-				.getQuestions()
-				.get(0)
-				.addAnswer(
-						new Answer(
-								"I would do either merge sort or insertion sort",
-								new User("Aaron")));
-		questionArrayList
-				.getQuestions()
-				.get(0)
-				.addAnswer(
-						new Answer(
-								"There are several ways you can achieve this. A lot of sort algorithms have a running time of O(nlogn)",
-								new User("Neel")));
-		questionArrayList
-				.getQuestions()
-				.get(0)
-				.addAnswer(
-						new Answer(
-								"I would do either merge sort or insertion sort",
-								new User("Aaron")));
-		questionArrayList
-				.getQuestions()
-				.get(0)
-				.getAnswers()
-				.get(0)
-				.addReply(
-						new Reply("Selection sort? or merge sort?", new User(
-								"ivan")));
-		questionArrayList.getQuestions().get(0).getAnswers().get(0)
-				.addReply(new Reply("answer reply 2", new User("ivan")));
-		questionArrayList
-				.getQuestions()
-				.get(0)
-				.getAnswers()
-				.get(1)
-				.addReply(
-						new Reply(
-								"I think you should be more specific with your answer and explain which ones would achieve that",
-								new User("ivan")));
-		questionArrayList
-				.addQuestion(new Question(
-						"Searching a list of numbers in C",
-						"I was wondering how you can implement a way to search for a specific number in a list of numbers in C",
-						new User("Ivan")));
-		questionArrayList.get(1).incrementVotes();
-		questionArrayList.get(1).incrementVotes();
 
 		MyQuestionFilename = "ChrisFile";
 
@@ -331,12 +224,12 @@ public class MainActivity extends FragmentActivity implements
 					container, false);
 			ListView lv = (ListView) rootView.findViewById(R.id.question_list);
 			lv.setAdapter(questionsViewAdapter);
+			questionsViewAdapter.notifyDataSetChanged();
 			lv.setOnItemClickListener(new OnItemClickListener() {
 
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
-					// TODO Auto-generated method stub
 					FragmentManager fragmentManager = getFragmentManager();
 					fragmentManager
 							.beginTransaction()
@@ -347,13 +240,17 @@ public class MainActivity extends FragmentActivity implements
 													.getQuestions().get(
 															position)))
 							.commit();
-					// QuestionDetailFragment fragment =
-					// QuestionDetailFragment.newInstance(questionArrayList.getQuestions().get(position));
 				}
 
 			});
 
 			return rootView;
+		}
+		
+		@Override
+		public void onResume() {
+			super.onResume();
+			questionsViewAdapter.notifyDataSetChanged();
 		}
 
 		@Override
@@ -589,6 +486,10 @@ public class MainActivity extends FragmentActivity implements
 	}
 
 	public static class QuestionDetailFragment extends Fragment {
+		protected static final int CREATE_ANSWER_ACTIVITY_CODE = 1234;
+		DetailViewAdapter detailViewAdapter = null;
+		Question question = null;
+
 		public static QuestionDetailFragment newInstance(Question question) {
 			QuestionDetailFragment fragment = new QuestionDetailFragment();
 			Bundle args = new Bundle();
@@ -597,44 +498,52 @@ public class MainActivity extends FragmentActivity implements
 			return fragment;
 		}
 
-		public QuestionDetailFragment() {
-
-		}
-
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 
 			View rootView = inflater.inflate(R.layout.detail_view, container,
 					false);
-			Question question = (Question) getArguments().getSerializable(
+			question = (Question) getArguments().getSerializable(
 					"question");
-			// ///////////////////////////////////////////////////////
 			ExpandableListView questionExpandable = (ExpandableListView) rootView
 					.findViewById(R.id.view_question_detail);
 
-			DetailViewAdapter detailViewAdapter = new DetailViewAdapter(
-					getActivity(), question);
+			this.detailViewAdapter = new DetailViewAdapter(getActivity(),
+					question);
+			detailViewAdapter.notifyDataSetChanged();
+			Button addAnswerButtton = (Button) rootView
+					.findViewById(R.id.add_answer_button);
+			addAnswerButtton.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(getActivity(),
+							CreateAnswerActivity.class);
+					startActivityForResult(intent, CREATE_ANSWER_ACTIVITY_CODE);
+				}
+			});
 
 			questionExpandable.setAdapter(detailViewAdapter);
-			// ///////////////////////////////////////////////////////
-			// ExpandableListView answerExpandable = (ExpandableListView)
-			// rootView
-			// .findViewById(R.id.list_answer_detail);
-			//
-			// DetailAnswerViewAdapter detailAnswerViewAdapter = new
-			// DetailAnswerViewAdapter(
-			// getActivity(), question);
-			//
-			// answerExpandable.setAdapter(detailAnswerViewAdapter);
 
 			return rootView;
 		}
-		// @Override
-		// public void onAttach(Activity activity) {
-		// super.onAttach(activity);
-		// ((MainActivity) activity).onSec
-		// }
-	}
 
+		public void onActivityResult(int requestCode, int resultCode,
+				Intent data) {
+			if (requestCode == CREATE_ANSWER_ACTIVITY_CODE) {
+				if (resultCode == RESULT_OK) {
+					String answerBodyText = data.getStringExtra("answerBody");
+					Answer answer = new Answer(answerBodyText,
+							UserArrayList.getCurrentUser());
+					question.addAnswer(answer);
+				}
+			}
+		}
+
+		public void onResume() {
+			super.onResume();
+			detailViewAdapter.notifyDataSetChanged();
+		}
+	}
 }
