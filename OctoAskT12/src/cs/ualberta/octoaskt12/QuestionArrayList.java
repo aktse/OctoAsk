@@ -19,6 +19,10 @@ public class QuestionArrayList implements Serializable {
 		this.questions.add(question);
 	}
 	
+	public Question getQuestion(int position) {
+		return getQuestions().get(position);
+	}
+	
 	public int getSize() {
 		return questions.size();
 	}

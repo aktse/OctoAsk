@@ -29,9 +29,11 @@ import android.view.ViewGroup;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.DrawerLayout;
+import android.webkit.WebView.FindListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -190,13 +192,13 @@ public class MainActivity extends FragmentActivity implements
 					container, false);
 			ListView lv = (ListView) rootView.findViewById(R.id.question_list);
 			lv.setAdapter(questionsViewAdapter);
-			Toast.makeText(getActivity(), "On create called", Toast.LENGTH_SHORT).show();
 			questionsViewAdapter.notifyDataSetChanged();
 			lv.setOnItemClickListener(new OnItemClickListener() {
 
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
+					
 					// TODO Auto-generated method stub
 					FragmentManager fragmentManager = getFragmentManager();
 					fragmentManager
@@ -249,7 +251,7 @@ public class MainActivity extends FragmentActivity implements
 				CreateAnswerActivity.class);
 		startActivity(intent);
 	}
-
+	
 	public static void EditUsername() {
 		// TestCase 23
 		// waiting for implementation of other methods
@@ -467,6 +469,10 @@ public class MainActivity extends FragmentActivity implements
 	}
 
 	public static class QuestionDetailFragment extends Fragment {
+		protected static final int CREATE_ANSWER_ACTIVITY_CODE = 1234;
+		DetailViewAdapter detailViewAdapter = null;
+		Question question = null;
+
 		public static QuestionDetailFragment newInstance(Question question) {
 			QuestionDetailFragment fragment = new QuestionDetailFragment();
 			Bundle args = new Bundle();
@@ -475,44 +481,59 @@ public class MainActivity extends FragmentActivity implements
 			return fragment;
 		}
 
-		public QuestionDetailFragment() {
-
-		}
-
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 
 			View rootView = inflater.inflate(R.layout.detail_view, container,
 					false);
-			Question question = (Question) getArguments().getSerializable(
+			question = (Question) getArguments().getSerializable(
 					"question");
-			// ///////////////////////////////////////////////////////
+			
 			ExpandableListView questionExpandable = (ExpandableListView) rootView
 					.findViewById(R.id.view_question_detail);
 
-			DetailViewAdapter detailViewAdapter = new DetailViewAdapter(
+			this.detailViewAdapter = new DetailViewAdapter(
 					getActivity(), question);
-
+			detailViewAdapter.notifyDataSetChanged();
+			Button addAnswerButtton = (Button) rootView.findViewById(R.id.add_answer_button);
+			addAnswerButtton.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(getActivity(), CreateAnswerActivity.class);
+					startActivityForResult(intent, CREATE_ANSWER_ACTIVITY_CODE);
+				}
+			});
+			
 			questionExpandable.setAdapter(detailViewAdapter);
-			// ///////////////////////////////////////////////////////
-			// ExpandableListView answerExpandable = (ExpandableListView)
-			// rootView
-			// .findViewById(R.id.list_answer_detail);
-			//
-			// DetailAnswerViewAdapter detailAnswerViewAdapter = new
-			// DetailAnswerViewAdapter(
-			// getActivity(), question);
-			//
-			// answerExpandable.setAdapter(detailAnswerViewAdapter);
 
 			return rootView;
 		}
-		// @Override
-		// public void onAttach(Activity activity) {
-		// super.onAttach(activity);
-		// ((MainActivity) activity).onSec
-		// }
+		public void onActivityResult(int requestCode, int resultCode, Intent data) {
+			if (requestCode == CREATE_ANSWER_ACTIVITY_CODE) {
+				if (resultCode == RESULT_OK) {
+					String answerBodyText = data.getStringExtra("answerBody");
+					Answer answer = new Answer(answerBodyText, UserArrayList.getCurrentUser());
+					question.addAnswer(answer);
+				}
+			}
+		}
+		
+		public void onResume() {
+			super.onResume();
+			detailViewAdapter.notifyDataSetChanged();
+		}
+		
+//		public 
 	}
-
+//	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//		if (requestCode == CREATE_ANSWER_ACTIVITY_CODE) {
+//			if (resultCode == RESULT_OK) {
+//				String answerBodyText = data.getStringExtra("answerBody");
+//				Answer answer = new Answer(answerBodyText, UserArrayList.getCurrentUser());
+//				question.addAnswer(answer);
+//			}
+//		}
+//	}
 }
