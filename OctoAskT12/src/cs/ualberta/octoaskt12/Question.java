@@ -126,7 +126,7 @@ public class Question implements Serializable {
 
 	public int imageExists() {
 		
-		if (customImage == null) {
+		if (this.customImage == null) {
 			return 0;
 		} else {
 			return 1;
