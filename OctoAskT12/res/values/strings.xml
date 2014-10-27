@@ -18,6 +18,6 @@
     <string name="login_button">Login</string>
     <string name="title_activity_create_question">Create Question</string>
     <string name="title_activity_question_detailed_view">QuestionDetailedViewActivity</string>
-
+    <string name="title_activity_create_answer">CreateAnswerActivity</string>
 
 </resources>

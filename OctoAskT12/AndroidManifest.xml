@@ -37,6 +37,10 @@
             android:name=".QuestionDetailedViewActivity"
             android:label="@string/title_activity_question_detailed_view" >
         </activity>
+        <activity
+            android:name=".CreateAnswerActivity"
+            android:label="@string/title_activity_create_answer" >
+        </activity>
     </application>
 
 </manifest>

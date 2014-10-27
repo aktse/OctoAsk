@@ -26,6 +26,7 @@ public class MyQuestionsCacheManager {
 			FileInputStream fis = context.openFileInput(FILENAME);
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			qal = (QuestionArrayList) ois.readObject();
+
 			fis.close();
 			ois.close();
 		} catch (Exception e) {
