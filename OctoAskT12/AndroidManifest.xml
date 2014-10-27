@@ -40,6 +40,10 @@
             android:name=".CreateAnswerActivity"
             android:label="@string/title_activity_create_answer" >
         </activity>
+        <activity
+            android:name=".CreateReplyActivity"
+            android:label="@string/title_activity_create_reply" >
+        </activity>
     </application>
 
 </manifest>
