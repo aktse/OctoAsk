@@ -8,11 +8,7 @@
         android:title="Create Question">
     </item>
 
-    <item
-        android:id="@+id/item2"
-        android:onClick="createAnswer"
-        android:title="Create Answer">
-    </item>
+
     
     <item
         android:id="@+id/sort"

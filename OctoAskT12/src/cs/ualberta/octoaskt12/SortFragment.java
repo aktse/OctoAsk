@@ -19,7 +19,7 @@ public class SortFragment extends DialogFragment {
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		View inflater = getActivity().getLayoutInflater().inflate(
 				R.layout.sort_dialog, null);
-		
+
 		sortIndex = getArguments().getInt("index");
 		setCancelable(false);
 
@@ -28,7 +28,6 @@ public class SortFragment extends DialogFragment {
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub
 						selected = sortBy[which];
 						sortIndex = which;
 					}
@@ -40,8 +39,8 @@ public class SortFragment extends DialogFragment {
 							@Override
 							public void onClick(DialogInterface dialog,
 									int which) {
-								((MainActivity) getActivity())
-										.doPositiveClick(selected, sortIndex);
+								((MainActivity) getActivity()).doPositiveClick(
+										selected, sortIndex);
 							}
 						})
 				.setNegativeButton("Cancel",
@@ -61,7 +60,7 @@ public class SortFragment extends DialogFragment {
 
 	public static SortFragment newInstance(int sortIndex) {
 		SortFragment sortFragment = new SortFragment();
-		
+
 		Bundle args = new Bundle();
 		args.putInt("index", sortIndex);
 		sortFragment.setArguments(args);
