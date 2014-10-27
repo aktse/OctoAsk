@@ -7,18 +7,17 @@
         android:onClick="createQuestion"
         android:title="Create Question">
     </item>
-<<<<<<< HEAD
+
     <item
         android:id="@+id/item2"
         android:onClick="createAnswer"
         android:title="Create Answer">
-=======
+    </item>
     
     <item
         android:id="@+id/sort"
         android:onClick="createDialog"
         android:title="Sort">
->>>>>>> 2e628b2aca870ba6695caa0de10586c25f4bdb4c
     </item>
 
 </menu>
