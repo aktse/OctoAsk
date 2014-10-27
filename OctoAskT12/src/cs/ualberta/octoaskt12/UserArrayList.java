@@ -2,7 +2,7 @@ package cs.ualberta.octoaskt12;
 
 import java.util.ArrayList;
 
-public class KnownUserList {
+public class UserArrayList {
 	private static User currentUser =  null;
 	private static ArrayList<User> userArray = null;
 	
