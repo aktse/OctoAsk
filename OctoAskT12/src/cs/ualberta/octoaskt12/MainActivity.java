@@ -259,11 +259,6 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
-	/*
-	 * @Override protected void onPause() { super.onPause(); questions.clear();
-	 * }
-	 */
-
 	public void createQuestion(MenuItem menu) {
 		Intent intent = new Intent(MainActivity.this,
 				CreateQuestionActivity.class);
@@ -318,13 +313,7 @@ public class MainActivity extends FragmentActivity implements
 	public static void SaveMyQuestions(Context context,
 			QuestionArrayList questions) {
 		OfflineDataManager.SaveMyQuestions(context, questions);
-		/*
-		 * try { FileOutputStream fos =
-		 * context.openFileOutput(MyQuestionFilename, MODE_PRIVATE);
-		 * ObjectOutputStream oos = new ObjectOutputStream(fos);
-		 * oos.writeObject(questions); fos.close(); } catch(IOException e) {
-		 * Log.i("heysave", "heysave"); }
-		 */
+
 	}
 
 	public static Context CallContext() {
@@ -334,31 +323,14 @@ public class MainActivity extends FragmentActivity implements
 	public static void LoadMyQuestions(Context context,
 			QuestionArrayList questions) throws ClassNotFoundException {
 		OfflineDataManager.LoadMyQuestions(context, questions);
-
-		/*
-		 * QuestionArrayList MyQuestions = new QuestionArrayList();
-		 * 
-		 * 
-		 * try { FileInputStream fos =
-		 * context.openFileInput(MyQuestionFilename); ObjectInputStream ois =
-		 * new ObjectInputStream(fos); MyQuestions = (QuestionArrayList)
-		 * ois.readObject(); fos.close(); } catch (IOException e) {
-		 * Log.i("Well", "GoBackToLoadAgain"); }
-		 * 
-		 * int instanceinarraysize = MyQuestions.getSize(); questions.clear();
-		 * int dummy;
-		 * 
-		 * for (dummy = 0; dummy < instanceinarraysize; dummy++) {
-		 * questions.add(MyQuestions.get(dummy)); }
-		 */
 	}
 
-	/*
-	 * @Override protected void onDestroy() { super.onStop(); SaveMyQuestions();
-	 * }
-	 */
+
 
 	public static class MyQuestionsFragment extends Fragment {
+		
+		public CustomArrayAdapter MyQuestionAdapter = null;
+
 
 		public static MyQuestionsFragment newInstance() {
 			MyQuestionsFragment fragment = new MyQuestionsFragment();
@@ -371,8 +343,36 @@ public class MainActivity extends FragmentActivity implements
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
+			
+			
+			this.MyQuestionAdapter = new CustomArrayAdapter(getActivity(),
+					questionArrayList);
+			
 			View rootView = inflater.inflate(R.layout.fragment_myquestions,
 					container, false);
+			
+
+			ListView lv = (ListView) rootView.findViewById(R.id.myquestion_list);
+			lv.setAdapter(MyQuestionAdapter);
+			lv.setOnItemClickListener(new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+					FragmentManager fragmentManager = getFragmentManager();
+					fragmentManager
+							.beginTransaction()
+							.replace(
+									R.id.container,
+									QuestionDetailFragment
+											.newInstance(questionArrayList
+													.getQuestions().get(
+															position)))
+							.commit();
+				}
+
+			});
+			
 			return rootView;
 		}
 
@@ -383,7 +383,10 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
+	//===
 	public static class FavoriteFragment extends Fragment {
+		
+		public CustomArrayAdapter FavouriteAdapter = null;
 
 		public static FavoriteFragment newInstance() {
 			FavoriteFragment fragment = new FavoriteFragment();
@@ -396,8 +399,35 @@ public class MainActivity extends FragmentActivity implements
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
+			
+			this.FavouriteAdapter = new CustomArrayAdapter(getActivity(),
+					questionArrayList);
+			
 			View rootView = inflater.inflate(R.layout.fragment_favorite,
 					container, false);
+			
+			//==
+			ListView lv = (ListView) rootView.findViewById(R.id.favourite_list);
+			lv.setAdapter(FavouriteAdapter);
+			lv.setOnItemClickListener(new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+					FragmentManager fragmentManager = getFragmentManager();
+					fragmentManager
+							.beginTransaction()
+							.replace(
+									R.id.container,
+									QuestionDetailFragment
+											.newInstance(questionArrayList
+													.getQuestions().get(
+															position)))
+							.commit();
+				}
+
+			});
+			//==
 			return rootView;
 		}
 
@@ -407,8 +437,10 @@ public class MainActivity extends FragmentActivity implements
 			((MainActivity) activity).onSectionAttached(3);
 		}
 	}
-
+//====
 	public static class LaterFragment extends Fragment {
+		
+		public CustomArrayAdapter LaterAdapter = null;
 
 		public static LaterFragment newInstance() {
 			LaterFragment fragment = new LaterFragment();
@@ -423,6 +455,27 @@ public class MainActivity extends FragmentActivity implements
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.fragment_later,
 					container, false);
+			
+			ListView lv = (ListView) rootView.findViewById(R.id.later_list);
+			lv.setAdapter(LaterAdapter);
+			lv.setOnItemClickListener(new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+					FragmentManager fragmentManager = getFragmentManager();
+					fragmentManager
+							.beginTransaction()
+							.replace(
+									R.id.container,
+									QuestionDetailFragment
+											.newInstance(questionArrayList
+													.getQuestions().get(
+															position)))
+							.commit();
+				}
+
+			});
 			return rootView;
 		}
 
@@ -434,6 +487,8 @@ public class MainActivity extends FragmentActivity implements
 	}
 
 	public static class ProfileFragment extends Fragment {
+		
+		
 
 		private static ProfileFragment newInstance() {
 			ProfileFragment fragment = new ProfileFragment();
@@ -458,22 +513,54 @@ public class MainActivity extends FragmentActivity implements
 			((MainActivity) activity).onSectionAttached(5);
 		}
 	}
+	
+	//======
+	
 
 	public static class HistoryFragment extends Fragment {
+		
+		public CustomArrayAdapter HistoryViewAdapter = null;
+
 
 		public static HistoryFragment newInstance() {
-			HistoryFragment fragment = new HistoryFragment();
+			HistoryFragment fragment = new HistoryFragment();		
 			return fragment;
 		}
 
 		public HistoryFragment() {
+			
+			
 		}
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
+			
+			this.HistoryViewAdapter = new CustomArrayAdapter(getActivity(),
+					questionArrayList);
 			View rootView = inflater.inflate(R.layout.fragment_history,
 					container, false);
+			ListView lv = (ListView) rootView.findViewById(R.id.history_list);
+			lv.setAdapter(HistoryViewAdapter);
+			lv.setOnItemClickListener(new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+					FragmentManager fragmentManager = getFragmentManager();
+					fragmentManager
+							.beginTransaction()
+							.replace(
+									R.id.container,
+									QuestionDetailFragment
+											.newInstance(questionArrayList
+													.getQuestions().get(
+															position)))
+							.commit();
+				}
+
+			});
+
 			return rootView;
 		}
 
@@ -483,6 +570,7 @@ public class MainActivity extends FragmentActivity implements
 			((MainActivity) activity).onSectionAttached(6);
 		}
 	}
+	//=========
 
 	public static class QuestionDetailFragment extends Fragment {
 		protected static final int CREATE_ANSWER_ACTIVITY_CODE = 1234;
