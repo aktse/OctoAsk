@@ -183,7 +183,6 @@ public class MainActivity extends FragmentActivity implements
 
 		SortManager sortManager = new SortManager();
 		this.sortIndex = sortIndex;
-		System.out.println(string);
 		if (string == "Date") {
 			questionArrayList = sortManager.SortByDate(questionArrayList);
 		} else if (string == "Upvotes") {
@@ -246,7 +245,7 @@ public class MainActivity extends FragmentActivity implements
 
 			return rootView;
 		}
-		
+
 		@Override
 		public void onResume() {
 			super.onResume();
@@ -504,8 +503,7 @@ public class MainActivity extends FragmentActivity implements
 
 			View rootView = inflater.inflate(R.layout.detail_view, container,
 					false);
-			question = (Question) getArguments().getSerializable(
-					"question");
+			question = (Question) getArguments().getSerializable("question");
 			ExpandableListView questionExpandable = (ExpandableListView) rootView
 					.findViewById(R.id.view_question_detail);
 
