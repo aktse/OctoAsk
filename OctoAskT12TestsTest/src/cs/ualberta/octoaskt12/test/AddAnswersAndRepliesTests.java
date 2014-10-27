@@ -29,7 +29,11 @@ public class AddAnswersAndRepliesTests extends TestCase {
 		// test images exist and are correct
 		for (int i = 0; i < 20; i++)
 		{
-			assertTrue(question_list.get(i).imageExists());
+			boolean imageExists = false;
+			if (question_list.get(i).imageExists() == 1) {
+				imageExists = true;
+			}
+			assertTrue(imageExists);
 			assertEquals(question_list.get(i).getImage(), comparableImageList.get(i));
 		}
 	}

@@ -19,6 +19,10 @@ public class QuestionArrayList implements Serializable {
 		this.questions.add(question);
 	}
 	
+	public Question getQuestion(int position) {
+		return getQuestions().get(position);
+	}
+	
 	public int getSize() {
 		return questions.size();
 	}
@@ -33,11 +37,6 @@ public class QuestionArrayList implements Serializable {
 	
 	public void add(Question question) {
 		questions.add(question);
-	}
-
-	public void sortByImage() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public ArrayList<Question> searchQuestion(String searchTerm) {

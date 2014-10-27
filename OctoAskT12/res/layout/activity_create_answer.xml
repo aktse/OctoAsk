@@ -6,62 +6,44 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="cs.ualberta.octoaskt12.CreateQuestionActivity" >
+    tools:context="cs.ualberta.octoaskt12.CreateAnswerActivity" >
 
     <EditText
-        android:id="@+id/questionTitleText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/questionBodyText"
-        android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/questionBodyText"
-        android:layout_marginTop="17dp"
-        android:background="@drawable/question_edit_text"
-        android:ems="10"
-        android:hint="Title"
-        android:minHeight="40dp"
-        android:padding="10dp" />
-
-    <EditText
-        android:id="@+id/questionBodyText"
+        android:id="@+id/answerBodyText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/questionTitleText"
         android:layout_marginTop="34dp"
         android:background="@drawable/question_edit_text"
         android:ems="10"
         android:gravity="top"
-        android:hint="Body"
+        android:hint="Answer..."
         android:inputType="textMultiLine"
         android:minHeight="100dp"
         android:padding="10dp" >
-
     </EditText>
 
     <Button
-        android:id="@+id/cancelQuestionButton"
+        android:id="@+id/cancelAnswerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/questionBodyText"
-        android:layout_below="@+id/questionBodyText"
+        android:layout_alignLeft="@+id/answerBodyText"
+        android:layout_below="@+id/answerBodyText"
         android:layout_marginTop="127dp"
         android:background="@drawable/question_button"
-        android:onClick="cancelQuestionAction"
         android:padding="10dp"
         android:text="Cancel"
         android:textColor="#ffffff" />
 
     <Button
-        android:id="@+id/submitQuestionButton"
+        android:id="@+id/submitAnswerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/cancelQuestionButton"
-        android:layout_alignBottom="@+id/cancelQuestionButton"
-        android:layout_alignRight="@+id/questionBodyText"
+        android:layout_alignBaseline="@+id/cancelAnswerButton"
+        android:layout_alignBottom="@+id/cancelAnswerButton"
+        android:layout_alignRight="@+id/answerBodyText"
         android:background="@drawable/question_button"
-        android:onClick="submitQuestionAction"
         android:padding="10dp"
         android:text="Submit"
         android:textColor="#ffffff" />

@@ -25,7 +25,6 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 		this.context = context;
 		this.question = question;
 		this.answers = question.getAnswers();
-
 	}
 
 	@Override
@@ -82,7 +81,6 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 		if (groupPosition == 0) {
 			String questionTitle = question.getTitle();
 			String questionBody = question.getBody();
-			System.out.println(questionBody);
 			LayoutInflater inflater = (LayoutInflater) this.context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = inflater.inflate(R.layout.detail_question_header,
@@ -96,11 +94,9 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 			return convertView;
 		} else {
 			String answerBody = answers.get(groupPosition - 1).getBody();
-			System.out.println(answerBody);
 			LayoutInflater inflater = (LayoutInflater) this.context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = inflater.inflate(R.layout.detail_answer_header, null);
-			System.out.println("inflated properly");
 			TextView answerBodyTextView = (TextView) convertView
 					.findViewById(R.id.detail_answer_header);
 			if (answerBodyTextView == null) {

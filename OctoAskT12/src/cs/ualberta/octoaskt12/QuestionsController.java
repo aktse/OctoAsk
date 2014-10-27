@@ -28,8 +28,8 @@ public class QuestionsController {
 	/* add a question to the user's questions list, and also add it into 
 	 * list of all questions.
 	 */
-	public static void addUserQuestion(User user, Question question){
-		getUserQuestions(user).add(question);
+
+	public static void addQuestion(Question question){
 		allQuestions.addQuestion(question);
 	}
 	/* when a user favourites a question, add this question into user
