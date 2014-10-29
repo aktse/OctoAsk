@@ -1,27 +1,23 @@
 package cs.ualberta.octoaskt12.test;
 
-import android.app.Activity;
-import android.content.Context;
-import android.test.ActivityInstrumentationTestCase2;
-import android.util.Log;
-
+import cs.ualberta.octoaskt12.HistoryCacheManager;
 import cs.ualberta.octoaskt12.MainActivity;
-import cs.ualberta.octoaskt12.MyQuestionsCacheManager;
 import cs.ualberta.octoaskt12.Question;
 import cs.ualberta.octoaskt12.QuestionArrayList;
 import cs.ualberta.octoaskt12.User;
-import junit.framework.TestCase;
+import android.content.Context;
+import android.test.ActivityInstrumentationTestCase2;
 
-public class MyQuestionsCacheManagerTest extends ActivityInstrumentationTestCase2<MainActivity> {
+public class HistoryCacheManagerTest extends ActivityInstrumentationTestCase2<MainActivity>{
 
-	public MyQuestionsCacheManagerTest() {
+	public HistoryCacheManagerTest() {
 		super(MainActivity.class);
 	}
 	
 	public void testSaveLoadQuestions()
 	{
 		Context context = MainActivity.CallContext();
-
+		
 		User user = new User("Kevin");
 		QuestionArrayList qal = new QuestionArrayList();
 		
@@ -31,14 +27,11 @@ public class MyQuestionsCacheManagerTest extends ActivityInstrumentationTestCase
 			qal.addQuestion(question);
 		}
 		
-		MyQuestionsCacheManager mqcm = new MyQuestionsCacheManager(context);
-		
-		mqcm.saveQuestions(qal, user);
-		
-		QuestionArrayList qal2 = mqcm.loadQuestions();
+		HistoryCacheManager hcm = new HistoryCacheManager(context);
+		hcm.saveQuestions(qal, user);
+		QuestionArrayList qal2 = hcm.loadQuestions();
 		
 		assert(qal2.getSize() == 10);
-		//assertEquals(qal, qal2);
-		//assertEquals(qal2.getSize(), 0);
 	}
+
 }

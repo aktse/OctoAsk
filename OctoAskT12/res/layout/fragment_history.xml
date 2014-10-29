@@ -6,5 +6,11 @@
     android:background="#FFC0CB" >
   
     
+    <ListView
+        android:id="@+id/history_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    
+    
 
 </LinearLayout>
