@@ -1,6 +1,12 @@
 package cs.ualberta.octoaskt12;
 
-public class ReadLater {
+import java.io.Serializable;
+
+public class ReadLater implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2697955593229698772L;
 	private QuestionArrayList qal;
 	
 	public ReadLater()

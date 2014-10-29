@@ -1,11 +1,16 @@
 package cs.ualberta.octoaskt12;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Favourites {
+public class Favorites implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3063764048456228381L;
 	private ArrayList<Question> favorites;
 	
-	public Favourites()
+	public Favorites()
 	{
 		favorites = new ArrayList<Question>();
 	}
