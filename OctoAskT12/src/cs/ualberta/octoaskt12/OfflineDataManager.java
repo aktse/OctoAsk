@@ -32,7 +32,7 @@ public class OfflineDataManager {
 		int dummy;
 		
 		for (dummy = 0; dummy < instanceinarraysize; dummy++) {
-			questions.add(MyQuestions.get(dummy));
+			questions.addQuestion(MyQuestions.get(dummy));
 		}
 	}
 

@@ -12,7 +12,6 @@ import cs.ualberta.octoaskt12.QuestionArrayList;
 import cs.ualberta.octoaskt12.User;
 import junit.framework.TestCase;
 
-
 public class MyQuestionsCacheManagerTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
 	public MyQuestionsCacheManagerTest() {
