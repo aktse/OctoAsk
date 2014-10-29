@@ -4,37 +4,38 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 
 import android.content.Context;
 import android.util.Log;
 
-public class MyQuestionsCacheManager {
-	private static final String FILENAME = "myQuestions.sav";
+public class FavoritesCacheManager {
+	private static final String FILENAME = "favorites.sav";
 	private User user;
 	private Context context;
 	
-	public MyQuestionsCacheManager(Context context)
+	public FavoritesCacheManager(Context context)
 	{
 		this.context = context;
 	}
 	
-	public QuestionArrayList loadQuestions()
+	public ArrayList<Question> loadFavorites()
 	{
-		QuestionArrayList qal = new QuestionArrayList();
+		ArrayList<Question> favoritesList = new ArrayList<Question>();
 		
 		try {
 			FileInputStream fis = context.openFileInput(FILENAME);
 			ObjectInputStream ois = new ObjectInputStream(fis);
-			qal = (QuestionArrayList) ois.readObject();
+			favoritesList = (ArrayList<Question>) ois.readObject();
 
 			fis.close();
 			ois.close();
 		} catch (Exception e) {
-			Log.i("MYQuestionsCacheManager", "Error loading");
+			Log.i("FavoritesCacheManager", "Error loading");
 			e.printStackTrace();
 		}
 
-		return qal;
+		return favoritesList;
 	}
 	
 	public void saveQuestions(QuestionArrayList qal, User user) {
@@ -48,7 +49,7 @@ public class MyQuestionsCacheManager {
 			oos.close();
 		}
 		catch (Exception e) {
-			Log.i("MyQuestionsCacheManager", "Error saving");
+			Log.i("FavoritesCacheManager", "Error saving");
 			e.printStackTrace();
 		}
 	}
