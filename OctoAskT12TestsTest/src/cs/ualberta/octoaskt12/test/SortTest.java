@@ -27,7 +27,7 @@ public class SortTest extends TestCase {
 		
 		for (int i = 0; i < 19; i++)
 		{
-			assertTrue(question_list.get(i).getTime().getTimeInMillis() <= 
+			assertTrue(question_list.get(i).getTime().getTimeInMillis() >= 
 						question_list.get(i+1).getTime().getTimeInMillis());
 		}
 	}
@@ -78,7 +78,7 @@ public class SortTest extends TestCase {
 		
 		for (int i = 0; i < 19; i++)
 		{
-			assertTrue(question_list.get(i).getVotes() > 
+			assertTrue(question_list.get(i).getVotes() >= 
 						question_list.get(i+1).getVotes());
 		}
 	}
