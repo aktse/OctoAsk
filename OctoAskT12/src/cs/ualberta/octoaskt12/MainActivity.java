@@ -53,7 +53,7 @@ public class MainActivity extends FragmentActivity implements
 
 	private CharSequence mTitle;
 
-	private int sortIndex = 0;
+	private static int sortIndex = 0;
 
 	private static String MyQuestionFilename;
 	private static Context context;
@@ -250,6 +250,14 @@ public class MainActivity extends FragmentActivity implements
 		public void onResume() {
 			super.onResume();
 			questionsViewAdapter.notifyDataSetChanged();
+			SortManager sortManager = new SortManager();
+			if (sortIndex == 0) {
+				questionArrayList = sortManager.SortByDate(questionArrayList);
+			} else if (sortIndex == 1) {
+				questionArrayList = sortManager.SortByVotes(questionArrayList);
+			} else {
+				questionArrayList = sortManager.SortByImages(questionArrayList);
+			}
 		}
 
 		@Override
