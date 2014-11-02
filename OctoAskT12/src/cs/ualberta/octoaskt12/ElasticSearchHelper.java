@@ -93,6 +93,17 @@ public class ElasticSearchHelper {
 	//convert byte streams into character streams
 	private static void GsonFactory() throws IOException{
 		
+		Writer writer = new OutputStreamWriter(new FileOutputStream("Output.json"));
+		//set gson instance other than default
+		GsonBuilder factory = new GsonBuilder();
+		//factory.registerTypeAdapter(Id.class, new IdTypeAdapter());
+		Gson gson = factory.create();
+		//gson.toJson
+
+		
+	} 
+	
+	public QuestionArrayList getAll(){
 		
 		//input
 		/*
@@ -103,14 +114,17 @@ public class ElasticSearchHelper {
 		}
 		 returns everything */
 		
-		Writer writer = new OutputStreamWriter(new FileOutputStream("Output.json"));
-		//set gson instance other than default
-		GsonBuilder factory = new GsonBuilder();
-		//factory.registerTypeAdapter(Id.class, new IdTypeAdapter());
-		Gson gson = factory.create();
-		//gson.toJson
-
+		//theyre using "query" : *
 		
-	} 
+		
+		HttpClient httpClient = new DefaultHttpClient();
+		//use guanos lab function therest too much to type
+		//check if it works WITHOUT IMAGES
+		//Do the serialization thing for images and see if it work
+		// if not work do serialization of just images without the arraylist
+		// then combine images with text search
+
+		return null;
+	}
 	
 }
