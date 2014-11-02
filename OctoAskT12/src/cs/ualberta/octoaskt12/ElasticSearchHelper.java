@@ -10,6 +10,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import com.google.gson.Gson;
+
 import android.content.Context;
 
 public class ElasticSearchHelper {
@@ -17,7 +19,9 @@ public class ElasticSearchHelper {
 	// import gson jar file
 	//remove everything from the database first
 	
-	//private static Gson gson = new Gson();
+	
+	
+	private static Gson gson = new Gson();
 	private Context cntxt;
 	private static HttpClient client = new DefaultHttpClient();
 	
@@ -31,15 +35,14 @@ public class ElasticSearchHelper {
 			
 			HttpClient client = new DefaultHttpClient();
 			HttpPost connect = new HttpPost("http://cmput301.softwareprocess.es:8080/cmput301f14t12/");
-			//String json = gson.toJson(qal);
-			String json = null;
+			String json = gson.toJson(qal);
 			
-			//connect.setEntity(new StringEntity(gson.toJson(qal)));
+			connect.setEntity(new StringEntity(gson.toJson(qal)));
 			connect.setEntity(new StringEntity(""));
 
 			HttpResponse response = client.execute(connect);
 
-			//response.getStatusLine().toString();
+			response.getStatusLine().toString();
 			HttpEntity entity = response.getEntity();
 			
 			BufferedReader reader = new BufferedReader(new InputStreamReader(entity.getContent()));
