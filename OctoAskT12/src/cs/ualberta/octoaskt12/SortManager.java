@@ -17,7 +17,7 @@ public class SortManager {
 			@Override
 			public int compare(Question question1, Question question2) {
 				
-				return question1.getTime().compareTo(question2.getTime());
+				return question2.getTime().compareTo(question1.getTime());
 						
 			}
 		});

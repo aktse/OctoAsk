@@ -18,7 +18,7 @@ public class UpvoteQAndAOfOthers extends TestCase {
 		for (int i = 0; i< 10; i++)
 		{
 			Question question = new Question("Q " + i, "Body " + i, mock_user_chris);
-			question_list.add(question);
+			question_list.addQuestion(question);
 			mock_user_chris.addQuestion(question);
 		}
 		
