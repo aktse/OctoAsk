@@ -79,6 +79,9 @@ public class MainActivity extends FragmentActivity implements
 				(DrawerLayout) findViewById(R.id.drawer_layout));
 
 		MyQuestionFilename = "ChrisFile";
+		
+		ElasticSearchAddQuestion.AddToDatabase();
+
 
 	}
 
