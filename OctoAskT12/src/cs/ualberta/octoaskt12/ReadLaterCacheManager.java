@@ -17,14 +17,14 @@ public class ReadLaterCacheManager {
 		this.context = context;
 	}
 	
-	public QuestionArrayList loadReadLater()
+	public ReadLater loadReadLater()
 	{
-		QuestionArrayList readLaterList = new QuestionArrayList();
+		ReadLater rl = null;
 		
 		try {
 			FileInputStream fis = context.openFileInput(FILENAME);
 			ObjectInputStream ois = new ObjectInputStream(fis);
-			readLaterList = (QuestionArrayList) ois.readObject();
+			rl = (ReadLater) ois.readObject();
 
 			fis.close();
 			ois.close();
@@ -33,7 +33,7 @@ public class ReadLaterCacheManager {
 			e.printStackTrace();
 		}
 
-		return readLaterList;
+		return rl;
 	}
 	
 	public void saveQuestions(ReadLater rl, User user) {

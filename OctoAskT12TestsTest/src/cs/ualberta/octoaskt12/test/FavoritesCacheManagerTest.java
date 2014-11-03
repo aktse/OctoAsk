@@ -14,7 +14,7 @@ public class FavoritesCacheManagerTest extends ActivityInstrumentationTestCase2<
 		super(MainActivity.class);
 	}
 	
-	public void testSaveLoadQuestions()
+	public void testSaveLoadFavorites()
 	{
 		Context context = MainActivity.CallContext();
 
