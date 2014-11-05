@@ -40,6 +40,7 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -585,6 +586,7 @@ public class MainActivity extends FragmentActivity implements
 
 	public static class QuestionDetailFragment extends Fragment {
 		protected static final int CREATE_ANSWER_ACTIVITY_CODE = 1234;
+		private static final int CREATE_REPLY_ACTIVITY_CODE = 1235;
 		DetailViewAdapter detailViewAdapter = null;
 		Question question = null;
 
@@ -600,8 +602,8 @@ public class MainActivity extends FragmentActivity implements
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 
-			View rootView = inflater.inflate(R.layout.detail_view, container,
-					false);
+			View rootView = inflater.inflate(R.layout.detail_view, container,false);
+			View detailView = inflater.inflate(R.layout.detail_answer_replies_button, container, false);
 			question = (Question) getArguments().getSerializable("question");
 			ExpandableListView questionExpandable = (ExpandableListView) rootView
 					.findViewById(R.id.view_question_detail);
@@ -609,8 +611,8 @@ public class MainActivity extends FragmentActivity implements
 			this.detailViewAdapter = new DetailViewAdapter(getActivity(),
 					question);
 			detailViewAdapter.notifyDataSetChanged();
-			Button addAnswerButtton = (Button) rootView
-					.findViewById(R.id.add_answer_button);
+			Button addAnswerButtton = (Button) rootView.findViewById(R.id.add_answer_button);
+		
 			addAnswerButtton.setOnClickListener(new View.OnClickListener() {
 
 				@Override
@@ -620,16 +622,18 @@ public class MainActivity extends FragmentActivity implements
 					startActivityForResult(intent, CREATE_ANSWER_ACTIVITY_CODE);
 				}
 			});
-
+			
+		
 			questionExpandable.setAdapter(detailViewAdapter);
 
 			return rootView;
 		}
-
+		
 		public void onActivityResult(int requestCode, int resultCode,
 				Intent data) {
 			if (requestCode == CREATE_ANSWER_ACTIVITY_CODE) {
 				if (resultCode == RESULT_OK) {
+					Log.v("something","sdfs");
 					String answerBodyText = data.getStringExtra("answerBody");
 					Answer answer = new Answer(answerBodyText,
 							UserArrayList.getCurrentUser());
