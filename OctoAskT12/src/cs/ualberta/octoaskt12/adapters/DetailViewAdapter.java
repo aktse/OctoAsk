@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cs.ualberta.octoaskt12.Answer;
+import cs.ualberta.octoaskt12.AnswerHolder;
 import cs.ualberta.octoaskt12.CreateAnswerActivity;
 import cs.ualberta.octoaskt12.CreateReplyActivity;
 import cs.ualberta.octoaskt12.MainActivity;
 import cs.ualberta.octoaskt12.Question;
+import cs.ualberta.octoaskt12.QuestionHolder;
 import cs.ualberta.octoaskt12.R;
 import cs.ualberta.octoaskt12.Reply;
 import cs.ualberta.octoaskt12.UserArrayList;
@@ -61,7 +63,7 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 	@Override
 	public View getChildView(final int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
-		
+	
 		if (groupPosition == 0) {
 			final String replyBody = getChild(groupPosition, childPosition)
 					.getBody();
@@ -84,6 +86,18 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 				
 				TextView answerReply = (TextView) convertView.findViewById(R.id.detail_answer_replies);
 				answerReply.setText("This Answer has no replies. Be the first to reply.");
+				Button replyButton = (Button) convertView.findViewById(R.id.detail_answer_replies_add);
+				
+				replyButton.setOnClickListener(new View.OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent(context, CreateReplyActivity.class);
+						AnswerHolder answerHolder = AnswerHolder.getInstance();
+						answerHolder.setAnswer(answers.get(groupPosition-1));
+						((Activity)context).startActivity(intent);
+					}
+				});
 				
 			}
 			else{
@@ -92,6 +106,18 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 					LayoutInflater inflater = (LayoutInflater) this.context
 							.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 					convertView = inflater.inflate(R.layout.detail_answer_replies_button, null);
+					Button replyButton = (Button) convertView.findViewById(R.id.detail_answer_replies_add);
+					
+					replyButton.setOnClickListener(new View.OnClickListener() {
+						
+						@Override
+						public void onClick(View v) {
+							Intent intent = new Intent(context, CreateReplyActivity.class);
+							AnswerHolder answerHolder = AnswerHolder.getInstance();
+							answerHolder.setAnswer(answers.get(groupPosition-1));
+							((Activity)context).startActivity(intent);
+						}
+					});
 				} else {
 					LayoutInflater inflater = (LayoutInflater) this.context
 							.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -100,32 +126,15 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 				TextView answerReply = (TextView) convertView.findViewById(R.id.detail_answer_replies);
 				answerReply.setText(replyBody);
 				}
-			Button replyButton = (Button) convertView.findViewById(R.id.detail_answer_replies_add);
-			replyButton.setOnClickListener(new View.OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					Intent intent = new Intent(context, CreateReplyActivity.class);
-					((Activity)context).startActivityForResult(intent, CREATE_REPLY_ACTIVITY_CODE);
-					
-				}
-			});
+			
 			
 			return convertView;
 		}
 		
 	}
 	
-//	public void onActivityResult(int requestCode, int resultCode,Intent data) {
-//		if (requestCode == CREATE_REPLY_ACTIVITY_CODE) {
-//			if (resultCode == Activity.RESULT_OK) {
-//				Toast.makeText(context, "hi", Toast.LENGTH_SHORT).show();
-//				String replyBodyText = data.getStringExtra("replyBody");
-//				Reply reply= new Reply(replyBodyText,UserArrayList.getCurrentUser());
-//				replyList.add(reply);
-//			}
-//		}
-//	}
+	
+	
 	
 	// return number of items in each section
 	@Override
