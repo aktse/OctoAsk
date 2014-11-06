@@ -6,10 +6,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.concurrent.ThreadPoolExecutor;
 
+
+import cs.ualberta.octoaskt12.ES.ES;
 import cs.ualberta.octoaskt12.adapters.CustomArrayAdapter;
 import cs.ualberta.octoaskt12.adapters.DetailViewAdapter;
-
 import android.app.Activity;
 
 import android.app.ActionBar;
@@ -65,6 +67,19 @@ public class MainActivity extends FragmentActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+//		ThreadPoolExecutor tpe = new ThreadPoolExecutor();
+		
+//		ESRequests req = new ESRequests();
+//		try {
+//			req.getQuestions();
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+		
+		ES.sendRequest();
 
 		String userName = "Ivan";
 		User currentUser = new User(userName);
@@ -84,10 +99,6 @@ public class MainActivity extends FragmentActivity implements
 		MyQuestionFilename = "ChrisFile";
 		
 		ElasticSearchAddQuestion.AddToDatabase();
-<<<<<<< HEAD
-=======
-
->>>>>>> 84fe715f02a52b2180093b02c7590549e04a2028
 
 	}
 
