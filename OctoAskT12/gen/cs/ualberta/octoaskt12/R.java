@@ -110,6 +110,7 @@ public final class R {
     public static final class string {
         public static final int action_settings=0x7f05000c;
         public static final int app_name=0x7f050000;
+        public static final int captureImage=0x7f050013;
         public static final int hello_world=0x7f05000b;
         public static final int login_button=0x7f05000e;
         public static final int login_text=0x7f05000d;

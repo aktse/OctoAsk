@@ -45,8 +45,8 @@ public class ElasticSearchAddQuestion extends Activity{
 		@Override
 		public void run(){
 			
-			ElasticSearchHelper es = new ElasticSearchHelper();
-			es.SaveToDatabase(aquestion);
+			//ElasticSearchHelper es = new ElasticSearchHelper();
+			//es.SaveToDatabase(aquestion);
 			
 			try{
 				Thread.sleep(500);
