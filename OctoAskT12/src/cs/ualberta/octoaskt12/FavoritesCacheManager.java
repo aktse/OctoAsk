@@ -19,14 +19,14 @@ public class FavoritesCacheManager {
 		this.context = context;
 	}
 	
-	public ArrayList<Question> loadFavorites()
+	public Favorites loadFavorites()
 	{
 		ArrayList<Question> favoritesList = new ArrayList<Question>();
-		
+		Favorites fav = null;
 		try {
 			FileInputStream fis = context.openFileInput(FILENAME);
 			ObjectInputStream ois = new ObjectInputStream(fis);
-			favoritesList = (ArrayList<Question>) ois.readObject();
+			fav = (Favorites) ois.readObject();
 
 			fis.close();
 			ois.close();
@@ -35,7 +35,7 @@ public class FavoritesCacheManager {
 			e.printStackTrace();
 		}
 
-		return favoritesList;
+		return fav;
 	}
 	
 	public void saveFavorites(Favorites fav, User user) {

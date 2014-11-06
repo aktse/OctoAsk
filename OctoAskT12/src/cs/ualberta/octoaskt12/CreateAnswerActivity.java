@@ -69,12 +69,7 @@ public class CreateAnswerActivity extends Activity {
 		finish();
 	}
 
-	// public void submitAnswer(View v) {
-	// EditText answerBodyText = (EditText) findViewById(R.id.questionBodyText);
-	// String answerBody = answerBodyText.getText().toString();
-	// }
-
 	public void cancelAnswer(View v) {
-
+		onBackPressed();
 	}
 }
