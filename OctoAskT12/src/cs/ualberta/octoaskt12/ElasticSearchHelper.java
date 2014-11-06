@@ -25,9 +25,6 @@ import android.content.Context;
 import android.util.Log;
 
 public class ElasticSearchHelper {
-		
-<<<<<<< HEAD
-=======
 	
 	private static Gson gson;
 	private static final String RESOURCE_URL = "http://cmput301.softwareprocess.es:8080/cmput301f14t12/abc/def";
@@ -365,12 +362,12 @@ public class ElasticSearchHelper {
 	
 		//input
 		
-		 {
-    	"query": {
-        	"match_all": {}
-    			}
-		}
-		 returns everything 
+//		 {
+//    	"query": {
+//        	"match_all": {}
+//    			}
+//		}
+//		 returns everything 
 		
 		//theyre using "query" : *
 		
@@ -385,10 +382,10 @@ public class ElasticSearchHelper {
 		return null;
 	}*/
 	
-<<<<<<< HEAD
+//<<<<<<< HEAD
+////}
+//=======
 //}
-=======
-}
-
-	*/
->>>>>>> 84fe715f02a52b2180093b02c7590549e04a2028
+//
+//	*/
+//>>>>>>> 84fe715f02a52b2180093b02c7590549e04a2028
