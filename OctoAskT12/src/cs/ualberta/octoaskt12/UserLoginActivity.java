@@ -25,8 +25,9 @@ public class UserLoginActivity extends Activity {
 		EditText textView = (EditText) findViewById(R.id.loginText);
 		String username = textView.getText().toString();
 		
-		// check if the username is already in our list of users
+		
 		userList = UserArrayList.getUserList();
+		// check if the username is already in our list of users
 		if (!userAlreadyKnown(username)){
 			// user doesnt exist, so make this user
 			User newUser = new User(username);
@@ -41,6 +42,16 @@ public class UserLoginActivity extends Activity {
 		}
 		// set the loggedInUser
 		UserArrayList.setCurrentUser(loggedInUser);
+		
+		/*
+		 *  the next thing to implment is to show this user as logged in
+		 *  in the navigation drawer:
+		 *  
+		 *  |___Logged In As: <username>__|  <--- shows this user is logged in
+		 *  |			.				  |
+		 *  |			.				  |
+		 *  |_________Logout?-------------|  <---- option to logout
+		 */
 
 	}
 
@@ -63,6 +74,10 @@ public class UserLoginActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	/* this method will iterate through the list of all user objects
+	 * if a known user already has the name of the username current login in
+	 * then set the variable loggedInUser as this known user.
+	 */
 	public boolean userAlreadyKnown(String username){
 		boolean userKnown = false;
 		Iterator<User> user_itr = userList.iterator();
@@ -70,10 +85,17 @@ public class UserLoginActivity extends Activity {
 			User user = user_itr.next();
 			// if the entered username is already a name of a known user
 			if(user.getName() == username){
+				// user is found in our user list
 				userKnown = true;
 				loggedInUser = user;
+				/* no need to iterate through the rest of the user objects
+				 * so, break out of the while loop.
+				 */
+				break;
 			}
 		}
+		// if user is known, return true
+		// if user is not known, return false
 		return userKnown;
 	}
 }
