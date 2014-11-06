@@ -643,11 +643,6 @@ public class MainActivity extends FragmentActivity implements
 					question.addAnswer(answer);
 				}
 			}
-		
-			Log.v("jhi","Asdas");
-			Toast.makeText(context, "hi", Toast.LENGTH_SHORT).show();
-		
-			
 			
 		}
 
