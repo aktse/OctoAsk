@@ -63,29 +63,65 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 	@Override
 	public View getChildView(final int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
-	
+		LayoutInflater inflater = (LayoutInflater) this.context
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		// get replies for the question
 		if (groupPosition == 0) {
-			final String replyBody = getChild(groupPosition, childPosition)
-					.getBody();
-
-			LayoutInflater inflater = (LayoutInflater) this.context
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			convertView = inflater.inflate(R.layout.detail_question_replies,null);
- 
-			TextView questionReply = (TextView) convertView
-					.findViewById(R.id.detail_question_replies);
-			questionReply.setText(replyBody);
-
+			// if the question does not have any replies, notify no replies to user/
+			if(this.question.getReplies().size()==0){				
+				convertView = inflater.inflate(R.layout.detail_question_replies_button,null);
+				TextView questionReply = (TextView) convertView.findViewById(R.id.detail_question_replies);
+				questionReply.setText("This Question has no replies. Be the first to reply.");
+				Button replyButton = (Button) convertView.findViewById(R.id.detail_question_replies_add);
+				replyButton.setOnClickListener(new View.OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent(context, CreateReplyActivity.class);
+						intent.putExtra("replyFor", "1");
+						QuestionHolder questionHolder = QuestionHolder.getInstance();
+						questionHolder.setQuestion(question);
+						((Activity)context).startActivity(intent);
+					}
+				});
+			}
+			// the question already contains replies, then display them.
+			else{
+				String replyBody = getChild(groupPosition, childPosition).getBody();
+				// if it is the last child, then display the add reply button
+				if (isLastChild){
+					convertView = inflater.inflate(R.layout.detail_question_replies_button, null);
+					Button replyButton = (Button) convertView.findViewById(R.id.detail_question_replies_add);
+					replyButton.setOnClickListener(new View.OnClickListener() {
+						
+						@Override
+						public void onClick(View v) {
+							Intent intent = new Intent(context, CreateReplyActivity.class);
+							intent.putExtra("replyFor", "1");
+							QuestionHolder questionHolder = QuestionHolder.getInstance();
+							questionHolder.setQuestion(question);
+							((Activity)context).startActivity(intent);
+						}
+					});
+				}
+				// question already contains replies, so display them
+				else{
+					convertView = inflater.inflate(R.layout.detail_question_replies,null);
+				}
+				TextView questionReply = (TextView) convertView.findViewById(R.id.detail_question_replies);
+				questionReply.setText(replyBody);
+			}
 			return convertView;
-		} else {
-			
+		} 
+		// get replies for the answers
+		else {
+			// if the answer does not have any replies, notify no replies to user.
 			if (this.answers.get(groupPosition -1).getReplies().size() == 0){
-				LayoutInflater inflater = (LayoutInflater) this.context
-						.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				
 				convertView = inflater.inflate(R.layout.detail_answer_replies_button, null);
 				
 				TextView answerReply = (TextView) convertView.findViewById(R.id.detail_answer_replies);
-				answerReply.setText("This Answer has no replies. Be the first to reply.");
+				answerReply.setText("This answer has no replies. Be the first to reply.");
 				Button replyButton = (Button) convertView.findViewById(R.id.detail_answer_replies_add);
 				
 				replyButton.setOnClickListener(new View.OnClickListener() {
@@ -93,6 +129,7 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 					@Override
 					public void onClick(View v) {
 						Intent intent = new Intent(context, CreateReplyActivity.class);
+						intent.putExtra("replyFor", "0");
 						AnswerHolder answerHolder = AnswerHolder.getInstance();
 						answerHolder.setAnswer(answers.get(groupPosition-1));
 						((Activity)context).startActivity(intent);
@@ -100,11 +137,11 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 				});
 				
 			}
+			// if the answer does contain replies, then simply display them
 			else{
 				String replyBody = getChild(groupPosition, childPosition).getBody();
+				// if it is the last child, then display the add reply button
 				if (isLastChild) {
-					LayoutInflater inflater = (LayoutInflater) this.context
-							.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 					convertView = inflater.inflate(R.layout.detail_answer_replies_button, null);
 					Button replyButton = (Button) convertView.findViewById(R.id.detail_answer_replies_add);
 					
@@ -113,21 +150,22 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 						@Override
 						public void onClick(View v) {
 							Intent intent = new Intent(context, CreateReplyActivity.class);
+							intent.putExtra("replyFor", "0");
 							AnswerHolder answerHolder = AnswerHolder.getInstance();
 							answerHolder.setAnswer(answers.get(groupPosition-1));
 							((Activity)context).startActivity(intent);
 						}
 					});
-				} else {
-					LayoutInflater inflater = (LayoutInflater) this.context
-							.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				} 
+				// if it is not the last child, then just display a single reply row.
+				else {
 					convertView = inflater.inflate(R.layout.detail_answer_replies,null);
 				}
 				TextView answerReply = (TextView) convertView.findViewById(R.id.detail_answer_replies);
 				answerReply.setText(replyBody);
 				}
 			
-			
+			// return the child view
 			return convertView;
 		}
 		
@@ -139,13 +177,14 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 	// return number of items in each section
 	@Override
 	public int getChildrenCount(int groupPosition) {
+		int replySize;
 		if (groupPosition == 0) {
-			return question.getReplies().size();
+			replySize = question.getReplies().size();
 		} else {
-			int replySize = this.answers.get(groupPosition - 1).getReplies().size();
-			if (replySize == 0){return 1;};
-			return replySize;
+			replySize = this.answers.get(groupPosition - 1).getReplies().size();
 		}
+		if (replySize == 0){return 1;};
+		return replySize;
 	} 
 	// return sections
 	@Override

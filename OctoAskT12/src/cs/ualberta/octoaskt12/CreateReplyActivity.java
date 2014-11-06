@@ -20,25 +20,32 @@ public class CreateReplyActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_reply);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		Intent intent = getIntent();
+		final String extraKey = intent.getStringExtra("replyFor");
 		Button submitReply = (Button) findViewById(R.id.submitReplyButton);
 		submitReply.setOnClickListener(new View.OnClickListener() {
-			
+		
 			@Override
 			public void onClick(View v) {
-				processIntent(true);
+				EditText replyBodyText = (EditText) findViewById(R.id.replyBodyText);
+				String replyBody = replyBodyText.getText().toString();
+				// user wants to reply to an answer
+				
+				if (extraKey.equals("0")){
+					AnswerHolder answerHolder = AnswerHolder.getInstance();
+					Answer answer = answerHolder.getAnswer();
+					answer.addReply(new Reply(replyBody, UserArrayList.getCurrentUser()));		
+				}
+				if (extraKey.equals("1")){
+					QuestionHolder questionHolder = QuestionHolder.getInstance();
+					Question question = questionHolder.getQuestion();
+					question.addReply(new Reply(replyBody, UserArrayList.getCurrentUser()));
+				}
 				onBackPressed();
 			}
 		});
 	}
 
-	public void processIntent(boolean submitPressed) {
-		Toast.makeText(getApplication(), "hi", Toast.LENGTH_SHORT).show();
-		AnswerHolder answerHolder = AnswerHolder.getInstance();
-		Answer answer = answerHolder.getAnswer();
-		EditText replyBodyText = (EditText) findViewById(R.id.replyBodyText);
-		String replyBody = replyBodyText.getText().toString();
-		answer.addReply(new Reply(replyBody, UserArrayList.getCurrentUser()));
-	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
