@@ -42,6 +42,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 public class MainActivity extends FragmentActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks {
 
@@ -58,6 +59,7 @@ public class MainActivity extends FragmentActivity implements
 
 	private static String MyQuestionFilename;
 	private static Context context;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -629,17 +631,21 @@ public class MainActivity extends FragmentActivity implements
 			return rootView;
 		}
 		
-		public void onActivityResult(int requestCode, int resultCode,
-				Intent data) {
+		public void onActivityResult(int requestCode, int resultCode, Intent data) {
 			if (requestCode == CREATE_ANSWER_ACTIVITY_CODE) {
 				if (resultCode == RESULT_OK) {
-					Log.v("something","sdfs");
 					String answerBodyText = data.getStringExtra("answerBody");
 					Answer answer = new Answer(answerBodyText,
 							UserArrayList.getCurrentUser());
 					question.addAnswer(answer);
 				}
 			}
+		
+			Log.v("jhi","Asdas");
+			Toast.makeText(context, "hi", Toast.LENGTH_SHORT).show();
+		
+			
+			
 		}
 
 		public void onResume() {

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,29 +26,18 @@ public class CreateReplyActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				processIntent(true);
+				onBackPressed();
 			}
 		});
 	}
 
 	public void processIntent(boolean submitPressed) {
-		Intent intent = getIntent();
-		if (intent != null) {
-			try {
-				if (submitPressed) {
-					EditText replyBodyText = (EditText) findViewById(R.id.replyBodyText);
-					String replyBody = replyBodyText.getText().toString();
-					int answerPos = intent.getIntExtra("answerPos", -1);
-					Intent returnIntent = new Intent();
-					returnIntent.putExtra("answerPos", answerPos);
-					returnIntent.putExtra("replyBody", replyBody);
-					setResult(RESULT_OK, returnIntent);
-				}
-			} catch (Exception e) {
-				setResult(RESULT_CANCELED);
-				finish();
-			}
-		}
-		finish();
+		Toast.makeText(getApplication(), "hi", Toast.LENGTH_SHORT).show();
+		AnswerHolder answerHolder = AnswerHolder.getInstance();
+		Answer answer = answerHolder.getAnswer();
+		EditText replyBodyText = (EditText) findViewById(R.id.replyBodyText);
+		String replyBody = replyBodyText.getText().toString();
+		answer.addReply(new Reply(replyBody, UserArrayList.getCurrentUser()));
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
