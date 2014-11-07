@@ -29,7 +29,7 @@ public class Question implements Serializable {
 	
 	private ArrayList<User> upvotedUsers = new ArrayList<User>();
 	
-	private Drawable questionImage = null;
+	private CustomImage customImage = null;
 	
 	
 	// Constructor
@@ -123,21 +123,21 @@ public class Question implements Serializable {
 		return dateCreated;
 	}
 
-	public void attachImage(Drawable questionImage) {
-		this.questionImage = questionImage;
+	public void attachImage(CustomImage customImage) {
+		this.customImage = customImage;
 	}
 
 	public int imageExists() {
 		
-		if (this.questionImage == null) {
+		if (this.customImage == null) {
 			return 0;
 		} else {
 			return 1;
 		}		
 	}
 
-	public Drawable getImage() {
-		return this.questionImage;
+	public CustomImage getImage() {
+		return this.customImage;
 	}
 
 }

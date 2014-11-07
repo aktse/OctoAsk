@@ -112,7 +112,6 @@ public class CreateQuestionActivity extends Activity {
 		String questionBody = bodyEditText.getText().toString();
 		User user = UserArrayList.getCurrentUser();
 		Question question = new Question(questionTitle, questionBody, user);
-		question.attachImage(Drawable.createFromPath(imageFileUri.getPath()));
 		QuestionsController.addQuestion(question);
 		onBackPressed();
 	}
