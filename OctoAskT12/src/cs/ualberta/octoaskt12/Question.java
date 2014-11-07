@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+
 public class Question implements Serializable {
 
 	/**
@@ -133,8 +136,8 @@ public class Question implements Serializable {
 		}		
 	}
 
-	public Object getImage() {
-		return customImage;
+	public CustomImage getImage() {
+		return this.customImage;
 	}
 
 }

@@ -79,7 +79,7 @@ public class MainActivity extends FragmentActivity implements
 //		}
 		
 		
-		ES.sendRequest();
+		//ES.sendRequest();
 
 		String userName = "Ivan";
 		User currentUser = new User(userName);
