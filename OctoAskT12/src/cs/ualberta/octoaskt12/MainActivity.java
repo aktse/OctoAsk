@@ -10,7 +10,6 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 import org.apache.http.client.ClientProtocolException;
 
-
 import cs.ualberta.octoaskt12.ES.ES;
 import cs.ualberta.octoaskt12.ES.ESClient;
 import cs.ualberta.octoaskt12.adapters.CustomArrayAdapter;
@@ -39,6 +38,9 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -48,15 +50,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 public class MainActivity extends FragmentActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks {
-	
+
 	ESClient esc = new ESClient();
-//	esc.getQuestions();
-//	public static QuestionArrayList questionArrayList = QuestionsController.getAllQuestions();
-//
-//	public static QuestionArrayList sortedQuestionArrayList = questionArrayList;
+	// esc.getQuestions();
+	// public static QuestionArrayList questionArrayList =
+	// QuestionsController.getAllQuestions();
+	//
+	// public static QuestionArrayList sortedQuestionArrayList =
+	// questionArrayList;
 	public static QuestionArrayList questionArrayList;
 	public static QuestionArrayList sortedQuestionArrayList;
 
@@ -69,35 +72,35 @@ public class MainActivity extends FragmentActivity implements
 	private static String MyQuestionFilename;
 	private static Context context;
 
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
-		StrictMode.ThreadPolicy p = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+		StrictMode.ThreadPolicy p = new StrictMode.ThreadPolicy.Builder()
+				.permitAll().build();
 		StrictMode.setThreadPolicy(p);
-		
-//		ThreadPoolExecutor tpe = new ThreadPoolExecutor();
-		
-//		ESRequests req = new ESRequests();
-//		try {
-//			req.getQuestions();
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		
-//		questionArrayList = QuestionsController.getAllQuestions();
-//		try {
-//			questionArrayList = esc.getQuestions();
-//		} catch (ClientProtocolException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		} catch (IOException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
+
+		// ThreadPoolExecutor tpe = new ThreadPoolExecutor();
+
+		// ESRequests req = new ESRequests();
+		// try {
+		// req.getQuestions();
+		// } catch (Exception e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+
+		// questionArrayList = QuestionsController.getAllQuestions();
+		// try {
+		// questionArrayList = esc.getQuestions();
+		// } catch (ClientProtocolException e1) {
+		// // TODO Auto-generated catch block
+		// e1.printStackTrace();
+		// } catch (IOException e1) {
+		// // TODO Auto-generated catch block
+		// e1.printStackTrace();
+		// }
 		try {
 			questionArrayList = QuestionsController.getAllQuestions();
 		} catch (ClientProtocolException e1) {
@@ -107,18 +110,19 @@ public class MainActivity extends FragmentActivity implements
 		}
 
 		sortedQuestionArrayList = questionArrayList;
+
+//		ESClient esclient = new ESClient();
+//		try {
+//			esclient.getQuestions();
+//		} catch (ClientProtocolException e) {
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 		
-		ESClient esclient = new ESClient();
-		try {
-			esclient.getQuestions();
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		
-		//ES.sendRequest();
+		updateQuestions();
+
+		// ES.sendRequest();
 
 		String userName = "Ivan";
 		User currentUser = new User(userName);
@@ -136,9 +140,20 @@ public class MainActivity extends FragmentActivity implements
 				(DrawerLayout) findViewById(R.id.drawer_layout));
 
 		MyQuestionFilename = "ChrisFile";
-		
-		//ElasticSearchAddQuestion.AddToDatabase();
 
+		// ElasticSearchAddQuestion.AddToDatabase();
+
+	}
+	
+	public static void updateQuestions() {
+		ESClient esclient = new ESClient();
+		try {
+			esclient.getQuestions();
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch(IOException e){
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -280,6 +295,21 @@ public class MainActivity extends FragmentActivity implements
 					questionArrayList);
 			View rootView = inflater.inflate(R.layout.fragment_question,
 					container, false);
+
+			final SwipeRefreshLayout swipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_container);
+			swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+				@Override
+				public void onRefresh() {
+					swipeLayout.setRefreshing(true);
+					updateQuestions();
+					swipeLayout.setRefreshing(false);
+				}
+			});
+			swipeLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+					android.R.color.holo_green_light,
+					android.R.color.holo_orange_light,
+					android.R.color.holo_red_light);
+			
 			ListView lv = (ListView) rootView.findViewById(R.id.question_list);
 			lv.setAdapter(questionsViewAdapter);
 			questionsViewAdapter.notifyDataSetChanged();
@@ -302,9 +332,38 @@ public class MainActivity extends FragmentActivity implements
 
 			});
 
+		    lv.setOnScrollListener(new AbsListView.OnScrollListener() {
+		        @Override
+		        public void onScrollStateChanged(AbsListView absListView, int i) {
+		 
+		        }
+		 
+		        @Override
+		        public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+		                if (firstVisibleItem == 0)
+		                    swipeLayout.setEnabled(true);
+		                else
+		                    swipeLayout.setEnabled(false);
+		        }	
+		    });
+			
 			return rootView;
 		}
 
+		// @Override public void onRefresh() {
+		// new Handler().postDelayed(new Runnable() {
+		// @Override public void run() {
+		// swipeLayout.setRefreshing(false);
+		// }
+		// }, 5000);
+		// }
+
+//		@Override
+//		public void onRefresh() {
+//			updateQuestions();
+//		}
+		
+		
 		@Override
 		public void onResume() {
 			super.onResume();
@@ -392,12 +451,9 @@ public class MainActivity extends FragmentActivity implements
 		OfflineDataManager.LoadMyQuestions(context, questions);
 	}
 
-
-
 	public static class MyQuestionsFragment extends Fragment {
-		
-		public CustomArrayAdapter MyQuestionAdapter = null;
 
+		public CustomArrayAdapter MyQuestionAdapter = null;
 
 		public static MyQuestionsFragment newInstance() {
 			MyQuestionsFragment fragment = new MyQuestionsFragment();
@@ -410,16 +466,15 @@ public class MainActivity extends FragmentActivity implements
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			
-			
+
 			this.MyQuestionAdapter = new CustomArrayAdapter(getActivity(),
 					questionArrayList);
-			
+
 			View rootView = inflater.inflate(R.layout.fragment_myquestions,
 					container, false);
-			
 
-			ListView lv = (ListView) rootView.findViewById(R.id.myquestion_list);
+			ListView lv = (ListView) rootView
+					.findViewById(R.id.myquestion_list);
 			lv.setAdapter(MyQuestionAdapter);
 			lv.setOnItemClickListener(new OnItemClickListener() {
 
@@ -439,7 +494,7 @@ public class MainActivity extends FragmentActivity implements
 				}
 
 			});
-			
+
 			return rootView;
 		}
 
@@ -450,9 +505,9 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
-	//===
+	// ===
 	public static class FavoriteFragment extends Fragment {
-		
+
 		public CustomArrayAdapter FavouriteAdapter = null;
 
 		public static FavoriteFragment newInstance() {
@@ -466,14 +521,14 @@ public class MainActivity extends FragmentActivity implements
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			
+
 			this.FavouriteAdapter = new CustomArrayAdapter(getActivity(),
 					questionArrayList);
-			
+
 			View rootView = inflater.inflate(R.layout.fragment_favorite,
 					container, false);
-			
-			//==
+
+			// ==
 			ListView lv = (ListView) rootView.findViewById(R.id.favourite_list);
 			lv.setAdapter(FavouriteAdapter);
 			lv.setOnItemClickListener(new OnItemClickListener() {
@@ -494,7 +549,7 @@ public class MainActivity extends FragmentActivity implements
 				}
 
 			});
-			//==
+			// ==
 			return rootView;
 		}
 
@@ -504,9 +559,10 @@ public class MainActivity extends FragmentActivity implements
 			((MainActivity) activity).onSectionAttached(3);
 		}
 	}
-//====
+
+	// ====
 	public static class LaterFragment extends Fragment {
-		
+
 		public CustomArrayAdapter LaterAdapter = null;
 
 		public static LaterFragment newInstance() {
@@ -522,7 +578,7 @@ public class MainActivity extends FragmentActivity implements
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.fragment_later,
 					container, false);
-			
+
 			ListView lv = (ListView) rootView.findViewById(R.id.later_list);
 			lv.setAdapter(LaterAdapter);
 			lv.setOnItemClickListener(new OnItemClickListener() {
@@ -554,8 +610,6 @@ public class MainActivity extends FragmentActivity implements
 	}
 
 	public static class ProfileFragment extends Fragment {
-		
-		
 
 		private static ProfileFragment newInstance() {
 			ProfileFragment fragment = new ProfileFragment();
@@ -580,29 +634,26 @@ public class MainActivity extends FragmentActivity implements
 			((MainActivity) activity).onSectionAttached(5);
 		}
 	}
-	
-	//======
-	
+
+	// ======
 
 	public static class HistoryFragment extends Fragment {
-		
+
 		public CustomArrayAdapter HistoryViewAdapter = null;
 
-
 		public static HistoryFragment newInstance() {
-			HistoryFragment fragment = new HistoryFragment();		
+			HistoryFragment fragment = new HistoryFragment();
 			return fragment;
 		}
 
 		public HistoryFragment() {
-			
-			
+
 		}
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			
+
 			this.HistoryViewAdapter = new CustomArrayAdapter(getActivity(),
 					questionArrayList);
 			View rootView = inflater.inflate(R.layout.fragment_history,
@@ -637,7 +688,8 @@ public class MainActivity extends FragmentActivity implements
 			((MainActivity) activity).onSectionAttached(6);
 		}
 	}
-	//=========
+
+	// =========
 
 	public static class QuestionDetailFragment extends Fragment {
 		protected static final int CREATE_ANSWER_ACTIVITY_CODE = 1234;
@@ -657,8 +709,10 @@ public class MainActivity extends FragmentActivity implements
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 
-			View rootView = inflater.inflate(R.layout.detail_view, container,false);
-			View detailView = inflater.inflate(R.layout.detail_answer_replies_button, container, false);
+			View rootView = inflater.inflate(R.layout.detail_view, container,
+					false);
+			View detailView = inflater.inflate(
+					R.layout.detail_answer_replies_button, container, false);
 			question = (Question) getArguments().getSerializable("question");
 			ExpandableListView questionExpandable = (ExpandableListView) rootView
 					.findViewById(R.id.view_question_detail);
@@ -666,8 +720,9 @@ public class MainActivity extends FragmentActivity implements
 			this.detailViewAdapter = new DetailViewAdapter(getActivity(),
 					question);
 			detailViewAdapter.notifyDataSetChanged();
-			Button addAnswerButtton = (Button) rootView.findViewById(R.id.add_answer_button);
-		
+			Button addAnswerButtton = (Button) rootView
+					.findViewById(R.id.add_answer_button);
+
 			addAnswerButtton.setOnClickListener(new View.OnClickListener() {
 
 				@Override
@@ -677,14 +732,14 @@ public class MainActivity extends FragmentActivity implements
 					startActivityForResult(intent, CREATE_ANSWER_ACTIVITY_CODE);
 				}
 			});
-			
-		
+
 			questionExpandable.setAdapter(detailViewAdapter);
 
 			return rootView;
 		}
-		
-		public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+		public void onActivityResult(int requestCode, int resultCode,
+				Intent data) {
 			if (requestCode == CREATE_ANSWER_ACTIVITY_CODE) {
 				if (resultCode == RESULT_OK) {
 					String answerBodyText = data.getStringExtra("answerBody");
@@ -693,7 +748,7 @@ public class MainActivity extends FragmentActivity implements
 					question.addAnswer(answer);
 				}
 			}
-			
+
 		}
 
 		public void onResume() {
