@@ -101,10 +101,8 @@ public class MainActivity extends FragmentActivity implements
 		try {
 			questionArrayList = QuestionsController.getAllQuestions();
 		} catch (ClientProtocolException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
@@ -114,10 +112,8 @@ public class MainActivity extends FragmentActivity implements
 		try {
 			esclient.getQuestions();
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

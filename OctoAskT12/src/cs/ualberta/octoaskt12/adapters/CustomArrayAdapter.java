@@ -52,7 +52,7 @@ public class CustomArrayAdapter extends ArrayAdapter<Question>{
 		long date = questions.get(position).getTime();
 		long now = System.currentTimeMillis() / 1000L;
 //		long difference = now.getTime().getTime() - gc.getTime().getTime();
-		System.out.println("Org:" + date + " Now: " + now);
+//		System.out.println("Org:" + date + " Now: " + now);
 		long difference = now - date;
 //		long timeInSeconds = difference/1000;
 		long timeInSeconds = difference;
@@ -68,9 +68,9 @@ public class CustomArrayAdapter extends ArrayAdapter<Question>{
 		} else {
 			time.setText(DateFormat.getDateInstance().format(date));
 		}
-		System.out.println(difference);
-		System.out.println(timeInSeconds);
-		System.out.println(timeInHours);
+//		System.out.println(difference);
+//		System.out.println(timeInSeconds);
+//		System.out.println(timeInHours);
 
 		TextView upvotes = (TextView) view.findViewById(R.id.list_question_upvote_caption);
 		upvotes.setText(questions.get(position).getVotes() + " upvotes");
