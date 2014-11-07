@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+
 public class Question implements Serializable {
 
 	/**
@@ -26,7 +29,7 @@ public class Question implements Serializable {
 	
 	private ArrayList<User> upvotedUsers = new ArrayList<User>();
 	
-	private CustomImage customImage = null;
+	private Drawable questionImage = null;
 	
 	
 	// Constructor
@@ -120,21 +123,21 @@ public class Question implements Serializable {
 		return dateCreated;
 	}
 
-	public void attachImage(CustomImage customImage) {
-		this.customImage = customImage;
+	public void attachImage(Drawable questionImage) {
+		this.questionImage = questionImage;
 	}
 
 	public int imageExists() {
 		
-		if (this.customImage == null) {
+		if (this.questionImage == null) {
 			return 0;
 		} else {
 			return 1;
 		}		
 	}
 
-	public Object getImage() {
-		return customImage;
+	public Drawable getImage() {
+		return this.questionImage;
 	}
 
 }

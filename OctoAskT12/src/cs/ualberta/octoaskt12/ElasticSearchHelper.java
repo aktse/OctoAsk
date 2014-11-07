@@ -23,69 +23,69 @@ import com.google.gson.GsonBuilder;
 
 import android.content.Context;
 import android.util.Log;
-
-public class ElasticSearchHelper {
-		
-<<<<<<< HEAD
-=======
+//
+//public class ElasticSearchHelper {
+//		
+////<<<<<<< HEAD
+//=======
 	
-	private static Gson gson;
-	private static final String RESOURCE_URL = "http://cmput301.softwareprocess.es:8080/cmput301f14t12/abc/def";
-	private static final String TAG = "Add suff";
-
-
-	//call this first
-	public ElasticSearchHelper(){
-		gson = new Gson();
-		
-	}
-	
-	
-	//private static HttpClient client;
-	
-	//public static void SaveToDatabase(final QuestionArrayList qal){
-	public static void SaveToDatabase(Question question){
-
-		HttpClient httpClient = new DefaultHttpClient();
-
-		try {
-			System.out.println("1");
-			HttpPost addRequest = new HttpPost(RESOURCE_URL);
-
-			
-			System.out.println("2");
-			StringEntity stringEntity = new StringEntity(gson.toJson(question));
-			
-			System.out.println("3");
-			addRequest.setEntity(stringEntity);
-			System.out.println("4");
-			addRequest.setHeader("Accept", "application/json");
-			
-			System.out.println("5");
-			
-			System.out.println(addRequest);
-			HttpResponse response = httpClient.execute(addRequest);
-			System.out.println("6");
-
-			String status = response.getStatusLine().toString();
-			
-			System.out.println("7");
-
-			Log.i(TAG, status);
-			System.out.println("finish try");
-			System.out.println("finish try");
-
-			System.out.println("finish try");
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println(e);
-			
-			System.out.println("fail");
-
-		}		
-	}}
-		
+//	private static Gson gson;
+//	private static final String RESOURCE_URL = "http://cmput301.softwareprocess.es:8080/cmput301f14t12/abc/def";
+//	private static final String TAG = "Add suff";
+//
+//
+//	//call this first
+//	public ElasticSearchHelper(){
+//		gson = new Gson();
+//		
+//	}
+//	
+//	
+//	//private static HttpClient client;
+//	
+//	//public static void SaveToDatabase(final QuestionArrayList qal){
+//	public static void SaveToDatabase(Question question){
+//
+//		HttpClient httpClient = new DefaultHttpClient();
+//
+//		try {
+//			System.out.println("1");
+//			HttpPost addRequest = new HttpPost(RESOURCE_URL);
+//
+//			
+//			System.out.println("2");
+//			StringEntity stringEntity = new StringEntity(gson.toJson(question));
+//			
+//			System.out.println("3");
+//			addRequest.setEntity(stringEntity);
+//			System.out.println("4");
+//			addRequest.setHeader("Accept", "application/json");
+//			
+//			System.out.println("5");
+//			
+//			System.out.println(addRequest);
+//			HttpResponse response = httpClient.execute(addRequest);
+//			System.out.println("6");
+//
+//			String status = response.getStatusLine().toString();
+//			
+//			System.out.println("7");
+//
+//			Log.i(TAG, status);
+//			System.out.println("finish try");
+//			System.out.println("finish try");
+//
+//			System.out.println("finish try");
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			System.out.println(e);
+//			
+//			System.out.println("fail");
+//
+//		}		
+//	}
+//		
 		/*
 		if (gson == null){
 			GsonFactory();
@@ -365,13 +365,13 @@ public class ElasticSearchHelper {
 	
 		//input
 		
-		 {
-    	"query": {
-        	"match_all": {}
-    			}
-		}
-		 returns everything 
-		
+//		 {
+//    	"query": {
+//        	"match_all": {}
+//    			}
+//		}
+//		 returns everything 
+//		
 		//theyre using "query" : *
 		
 	/*
@@ -385,10 +385,10 @@ public class ElasticSearchHelper {
 		return null;
 	}*/
 	
-<<<<<<< HEAD
+//<<<<<<< HEAD
+////}
+//=======
 //}
-=======
-}
-
-	*/
->>>>>>> 84fe715f02a52b2180093b02c7590549e04a2028
+//
+//	*/
+//>>>>>>> 84fe715f02a52b2180093b02c7590549e04a2028
