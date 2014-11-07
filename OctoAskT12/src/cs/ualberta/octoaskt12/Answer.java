@@ -16,6 +16,8 @@ public class Answer implements Serializable {
 	private int numVotes;
 	// the replies for this answer
 	private ArrayList<Reply> replies = new ArrayList<Reply>();
+	// users that upvoted the answer
+	private ArrayList<User> upvotedUsers = new ArrayList<User>();
 	// the date the answer was created
 	private GregorianCalendar dateCreated;
 	
@@ -99,6 +101,14 @@ public class Answer implements Serializable {
 	public Object getImage() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public ArrayList<User> getUpvotedUsers() {
+		return this.upvotedUsers;
+	}
+
+	public void addUpvotedUser(User user) {
+		this.upvotedUsers.add(user);
 	}
 	
 }

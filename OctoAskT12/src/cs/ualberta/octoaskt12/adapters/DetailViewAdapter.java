@@ -58,8 +58,6 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 		return childPosition;
 	}
 	
-	
-	
 	// return view for each item row
 	@Override
 	public View getChildView(final int groupPosition, int childPosition,
@@ -210,7 +208,7 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 
 	// retrun a view for each section header
 	@Override
-	public View getGroupView(int groupPosition, boolean isExpanded,
+	public View getGroupView(final int groupPosition, boolean isExpanded,
 			View convertView, ViewGroup parent) {
 		if (groupPosition == 0) {
 			String questionTitle = question.getTitle();
@@ -238,7 +236,6 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 						question.incrementVotes();
 						question.addUpvotedUser(UserArrayList.getCurrentUser());
 						notifyDataSetChanged();
-						
 					}
 				}
 			});
@@ -256,10 +253,27 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 				System.out.println("null");
 			}
 			answerBodyTextView.setText(answerBody);
+			
+			ImageView image = (ImageView) convertView.findViewById(R.id.upvote_answer_button);
+			image.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					if (answers.get(groupPosition - 1).getUpvotedUsers().contains(UserArrayList.getCurrentUser())) {
+						Toast.makeText(context, "You already upvoted this question!", Toast.LENGTH_SHORT).show();
+					}
+					else {
+						answers.get(groupPosition - 1).incrementVotes();
+						answers.get(groupPosition - 1).addUpvotedUser(UserArrayList.getCurrentUser());
+						notifyDataSetChanged();
+					}
+				}
+			});
+			TextView upvoteCaption = (TextView) convertView.findViewById(R.id.answer_upvote_caption);
+			upvoteCaption.setText(answers.get(groupPosition - 1).getVotes() + " upvotes");
 
 			return convertView;
 		}
-
 	}
 
 	@Override
@@ -271,5 +285,4 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 	public boolean isChildSelectable(int groupPosition, int childPosition) {
 		return false;
 	}
-
 }
