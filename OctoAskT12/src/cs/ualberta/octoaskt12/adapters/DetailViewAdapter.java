@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView.FindListener;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -224,8 +225,8 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 					.findViewById(R.id.detail_question_header);
 			questionBodyTextView.setText(questionBody);
 			questionTitleTextView.setText(questionTitle);
-			ImageView image = (ImageView) convertView.findViewById(R.id.upvote_question_button);
-			image.setOnClickListener(new View.OnClickListener() {
+			ImageView upvoteButton = (ImageView) convertView.findViewById(R.id.upvote_question_button);
+			upvoteButton.setOnClickListener(new View.OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
@@ -241,6 +242,10 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 			});
 			TextView upvoteCaption = (TextView) convertView.findViewById(R.id.question_upvote_caption);
 			upvoteCaption.setText(question.getVotes() + " upvotes");
+			ImageView questionPicture = (ImageView) convertView.findViewById(R.id.question_ImageViewFinal);
+			if (question.getQuestionImage() != null) {
+				questionPicture.setImageBitmap(question.getQuestionImage());
+			}
 			return convertView;
 		} else {
 			String answerBody = answers.get(groupPosition - 1).getBody();

@@ -31,6 +31,8 @@ public class Question implements Serializable {
 	
 	private CustomImage customImage = null;
 	
+	private transient Bitmap image = null;
+	
 	
 	// Constructor
 	public Question(String questionTitle, String questionBody, User user) {
@@ -146,6 +148,14 @@ public class Question implements Serializable {
 	
 	public ArrayList<User> getUpvotedUsers() {
 		return this.upvotedUsers;
+	}
+	
+	public void setImage(Bitmap bitmap) {
+		this.image = bitmap;
+	}
+	
+	public Bitmap getQuestionImage() {
+		return this.image;
 	}
 
 }
