@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -224,6 +225,21 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 					.findViewById(R.id.detail_question_header);
 			questionBodyTextView.setText(questionBody);
 			questionTitleTextView.setText(questionTitle);
+			ImageView image = (ImageView) convertView.findViewById(R.id.upvote_question_button);
+			image.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					if (question.getUpvotedUsers().contains(UserArrayList.getCurrentUser())) {
+						Toast.makeText(context, "You already upvoted this question!", Toast.LENGTH_SHORT).show();
+					}
+					else {
+						question.incrementVotes();
+						question.addUpvotedUser(UserArrayList.getCurrentUser());
+						
+					}
+				}
+			});
 			return convertView;
 		} else {
 			String answerBody = answers.get(groupPosition - 1).getBody();
