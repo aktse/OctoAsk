@@ -63,8 +63,6 @@ public class CreateQuestionActivity extends Activity {
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
 		
-		Log.v("sdfsd","sdfsdfsdf");
-		Toast.makeText(getBaseContext(), "captured", Toast.LENGTH_SHORT).show();
 		if(requestCode == CAMERA_ACTIVITY_REQUEST_CODE){
 			if(resultCode == RESULT_OK){
 				ImageView iv = (ImageView) findViewById(R.id.question_ImageView);

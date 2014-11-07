@@ -84,10 +84,6 @@ public class MainActivity extends FragmentActivity implements
 		MyQuestionFilename = "ChrisFile";
 		
 		ElasticSearchAddQuestion.AddToDatabase();
-//<<<<<<< HEAD
-//=======
-//
-//>>>>>>> 84fe715f02a52b2180093b02c7590549e04a2028
 
 	}
 
