@@ -139,5 +139,13 @@ public class Question implements Serializable {
 	public CustomImage getImage() {
 		return this.customImage;
 	}
+	
+	public void addUpvotedUser(User user) {
+		this.upvotedUsers.add(user);
+	}
+	
+	public ArrayList<User> getUpvotedUsers() {
+		return this.upvotedUsers;
+	}
 
 }

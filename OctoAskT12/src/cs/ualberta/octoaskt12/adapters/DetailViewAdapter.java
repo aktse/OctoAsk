@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,8 +57,6 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 	public long getChildId(int groupPosition, int childPosition) {
 		return childPosition;
 	}
-	
-	
 	
 	// return view for each item row
 	@Override
@@ -209,10 +208,11 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 
 	// retrun a view for each section header
 	@Override
-	public View getGroupView(int groupPosition, boolean isExpanded,
+	public View getGroupView(final int groupPosition, boolean isExpanded,
 			View convertView, ViewGroup parent) {
 		if (groupPosition == 0) {
 			String questionTitle = question.getTitle();
+			System.out.println("Title: " + questionTitle);
 			String questionBody = question.getBody();
 			LayoutInflater inflater = (LayoutInflater) this.context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -224,6 +224,23 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 					.findViewById(R.id.detail_question_header);
 			questionBodyTextView.setText(questionBody);
 			questionTitleTextView.setText(questionTitle);
+			ImageView image = (ImageView) convertView.findViewById(R.id.upvote_question_button);
+			image.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					if (question.getUpvotedUsers().contains(UserArrayList.getCurrentUser())) {
+						Toast.makeText(context, "You already upvoted this question!", Toast.LENGTH_SHORT).show();
+					}
+					else {
+						question.incrementVotes();
+						question.addUpvotedUser(UserArrayList.getCurrentUser());
+						notifyDataSetChanged();
+					}
+				}
+			});
+			TextView upvoteCaption = (TextView) convertView.findViewById(R.id.question_upvote_caption);
+			upvoteCaption.setText(question.getVotes() + " upvotes");
 			return convertView;
 		} else {
 			String answerBody = answers.get(groupPosition - 1).getBody();
@@ -236,29 +253,36 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 				System.out.println("null");
 			}
 			answerBodyTextView.setText(answerBody);
+			
+			ImageView image = (ImageView) convertView.findViewById(R.id.upvote_answer_button);
+			image.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					if (answers.get(groupPosition - 1).getUpvotedUsers().contains(UserArrayList.getCurrentUser())) {
+						Toast.makeText(context, "You already upvoted this question!", Toast.LENGTH_SHORT).show();
+					}
+					else {
+						answers.get(groupPosition - 1).incrementVotes();
+						answers.get(groupPosition - 1).addUpvotedUser(UserArrayList.getCurrentUser());
+						notifyDataSetChanged();
+					}
+				}
+			});
+			TextView upvoteCaption = (TextView) convertView.findViewById(R.id.answer_upvote_caption);
+			upvoteCaption.setText(answers.get(groupPosition - 1).getVotes() + " upvotes");
 
 			return convertView;
 		}
-
 	}
-
-
-	
-
-
-
-
 
 	@Override
 	public boolean hasStableIds() {
 		return false;
 	}
 
-	
-
 	@Override
 	public boolean isChildSelectable(int groupPosition, int childPosition) {
 		return false;
 	}
-
 }
