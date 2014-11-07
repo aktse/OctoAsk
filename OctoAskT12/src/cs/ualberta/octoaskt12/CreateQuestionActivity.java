@@ -4,6 +4,10 @@ import java.io.File;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -54,27 +58,44 @@ public class CreateQuestionActivity extends Activity {
 		imageFileUri = Uri.fromFile(imageFile);
 		
 		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		Intent getPictureIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 		takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageFileUri);
-	    startActivityForResult(takePictureIntent, CAMERA_ACTIVITY_REQUEST_CODE);
+	    startActivityForResult(getPictureIntent, CAMERA_ACTIVITY_REQUEST_CODE);
 	    
 		
 		}
 	
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
-		
-		if(requestCode == CAMERA_ACTIVITY_REQUEST_CODE){
-			if(resultCode == RESULT_OK){
+		if (requestCode == CAMERA_ACTIVITY_REQUEST_CODE) {
+			if (resultCode == RESULT_OK) {
+				/*
+				 * partial inspiration from http://viralpatel.net/blogs/pick-image-from-galary-android-app/
+				 * but mostly from the Android API Developer Guides
+				 */
+				Uri image = data.getData();
+				String [] filePath = {MediaStore.Images.Media.DATA};
+				Cursor cursor = getContentResolver().query(image, filePath, null, null, null);
+				cursor.moveToFirst();
+				int columnIndex = cursor.getColumnIndex(filePath[0]);
+				String picturePath = cursor.getString(columnIndex);
 				ImageView iv = (ImageView) findViewById(R.id.question_ImageView);
-				iv.setImageDrawable(Drawable.createFromPath(imageFileUri.getPath()));
-				
-			}
-			else{
-				if(resultCode == RESULT_CANCELED){
-					// do nothing
-				}
+				iv.setImageBitmap(BitmapFactory.decodeFile(picturePath));
 			}
 		}
+		
+//		if(requestCode == CAMERA_ACTIVITY_REQUEST_CODE){
+//			if(resultCode == RESULT_OK){
+//				ImageView iv = (ImageView) findViewById(R.id.question_ImageView);
+//				iv.setImageDrawable(Drawable.createFromPath(imageFileUri.getPath()));
+//				
+//			}
+//			else{
+//				if(resultCode == RESULT_CANCELED){
+//					// do nothing
+//				}
+//			}
+//		}
 			
 	}
 
@@ -112,6 +133,13 @@ public class CreateQuestionActivity extends Activity {
 		String questionBody = bodyEditText.getText().toString();
 		User user = UserArrayList.getCurrentUser();
 		Question question = new Question(questionTitle, questionBody, user);
+		ImageView iv = (ImageView) findViewById(R.id.question_ImageView);
+		if (iv.getDrawable() != null) {
+			Bitmap picture = ((BitmapDrawable)iv.getDrawable()).getBitmap();
+			if (picture != null) {
+				question.setImage(picture);	
+			}
+		}
 		QuestionsController.addQuestion(question);
 		onBackPressed();
 	}

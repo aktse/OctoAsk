@@ -47,10 +47,15 @@ public class CustomArrayAdapter extends ArrayAdapter<Question>{
 		answers.setText(questions.get(position).getAnswers().size() + " answers");
 		
 		TextView time = (TextView) view.findViewById(R.id.list_question_time);
-		GregorianCalendar gc = questions.get(position).getTime();
-		GregorianCalendar now = new GregorianCalendar();
-		long difference = now.getTime().getTime() - gc.getTime().getTime();
-		long timeInSeconds = difference/1000;
+//		GregorianCalendar gc = questions.get(position).getTime();
+//		GregorianCalendar now = new GregorianCalendar();
+		long date = questions.get(position).getTime();
+		long now = System.currentTimeMillis() / 1000L;
+//		long difference = now.getTime().getTime() - gc.getTime().getTime();
+		System.out.println("Org:" + date + " Now: " + now);
+		long difference = now - date;
+//		long timeInSeconds = difference/1000;
+		long timeInSeconds = difference;
 		long timeInMinutes = timeInSeconds/60;
 		long timeInHours = timeInMinutes/60;
 		
@@ -61,7 +66,7 @@ public class CustomArrayAdapter extends ArrayAdapter<Question>{
 		} else if (timeInHours < 24) {
 			time.setText(timeInHours + " hours ago");
 		} else {
-			time.setText(DateFormat.getDateInstance().format(gc.getTime()));
+			time.setText(DateFormat.getDateInstance().format(date));
 		}
 		System.out.println(difference);
 		System.out.println(timeInSeconds);

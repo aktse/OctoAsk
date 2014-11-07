@@ -36,8 +36,8 @@ public final class R {
         public static final int upvote=0x7f020005;
     }
     public static final class id {
-        public static final int action_settings=0x7f080028;
-        public static final int add_answer_button=0x7f08001c;
+        public static final int action_settings=0x7f080029;
+        public static final int add_answer_button=0x7f08001d;
         public static final int answerBodyText=0x7f080000;
         public static final int answer_upvote_caption=0x7f080011;
         public static final int cancelAnswerButton=0x7f080001;
@@ -49,36 +49,37 @@ public final class R {
         public static final int detail_answer_replies_add=0x7f080014;
         public static final int detail_question_body=0x7f080018;
         public static final int detail_question_header=0x7f080017;
-        public static final int detail_question_replies=0x7f080019;
-        public static final int detail_question_replies_add=0x7f08001a;
+        public static final int detail_question_replies=0x7f08001a;
+        public static final int detail_question_replies_add=0x7f08001b;
         public static final int drawer_layout=0x7f08000c;
-        public static final int favourite_list=0x7f08001d;
-        public static final int history_list=0x7f08001e;
-        public static final int item1=0x7f080029;
-        public static final int later_list=0x7f08001f;
-        public static final int layout_bottom=0x7f080025;
-        public static final int list_question_answer=0x7f080026;
-        public static final int list_question_time=0x7f080027;
-        public static final int list_question_title=0x7f080023;
-        public static final int list_question_upvote=0x7f080022;
-        public static final int list_question_upvote_caption=0x7f080024;
+        public static final int favourite_list=0x7f08001e;
+        public static final int history_list=0x7f08001f;
+        public static final int item1=0x7f08002a;
+        public static final int later_list=0x7f080020;
+        public static final int layout_bottom=0x7f080026;
+        public static final int list_question_answer=0x7f080027;
+        public static final int list_question_time=0x7f080028;
+        public static final int list_question_title=0x7f080024;
+        public static final int list_question_upvote=0x7f080023;
+        public static final int list_question_upvote_caption=0x7f080025;
         public static final int loginText=0x7f08000f;
-        public static final int myquestion_list=0x7f080020;
+        public static final int myquestion_list=0x7f080021;
         public static final int navigation_drawer=0x7f08000e;
         public static final int questionBodyText=0x7f080006;
         public static final int questionTitleText=0x7f080005;
         public static final int question_ImageButton=0x7f080004;
         public static final int question_ImageView=0x7f080003;
-        public static final int question_list=0x7f080021;
+        public static final int question_ImageViewFinal=0x7f080019;
+        public static final int question_list=0x7f080022;
         public static final int question_upvote_caption=0x7f080016;
         public static final int replyBodyText=0x7f080009;
-        public static final int sort=0x7f08002a;
+        public static final int sort=0x7f08002b;
         public static final int submitAnswerButton=0x7f080002;
         public static final int submitQuestionButton=0x7f080008;
         public static final int submitReplyButton=0x7f08000b;
         public static final int upvote_answer_button=0x7f080010;
         public static final int upvote_question_button=0x7f080015;
-        public static final int view_question_detail=0x7f08001b;
+        public static final int view_question_detail=0x7f08001c;
     }
     public static final class layout {
         public static final int activity_create_answer=0x7f030000;
