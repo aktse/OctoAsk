@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+
 public class Question implements Serializable {
 
 	/**
@@ -16,9 +19,11 @@ public class Question implements Serializable {
 	// number of upVotes this question has
 	private int numVotes;
 	// the date the question was created at
-	private GregorianCalendar dateCreated;
+//	private GregorianCalendar dateCreated;
+	private long dateCreated;
 	// the user who asked this question
 	private User user;
+	private String userName;
 	// the answers for this question
 	private ArrayList<Answer> answers = new ArrayList<Answer>();
 	// the replies for this question
@@ -26,7 +31,11 @@ public class Question implements Serializable {
 	
 	private ArrayList<User> upvotedUsers = new ArrayList<User>();
 	
-	private CustomImage customImage = null;
+	private ArrayList<String> favoritedUsers = new ArrayList<String>();
+	
+//	private CustomImage customImage = null;
+	
+	private transient Bitmap image = null;
 	
 	
 	// Constructor
@@ -35,7 +44,8 @@ public class Question implements Serializable {
 		this.questionTitle = questionTitle;
 		this.questionBody = questionBody;
 		// associate this question with the date when it is asked
-		this.dateCreated = new GregorianCalendar();
+//		this.dateCreated = new GregorianCalendar();
+		this.dateCreated = System.currentTimeMillis() / 1000L;
 		// associate this question with a user
 		this.user = user;
 	}
@@ -116,25 +126,41 @@ public class Question implements Serializable {
 		return user.getName();
 	}
 	// get the date the question was created
-	public GregorianCalendar getTime() {
+	public long getTime() {
 		return dateCreated;
 	}
 
-	public void attachImage(CustomImage customImage) {
-		this.customImage = customImage;
-	}
+//	public void attachImage(CustomImage customImage) {
+//		this.customImage = customImage;
+//	}
 
 	public int imageExists() {
 		
-		if (this.customImage == null) {
+		if (this.image == null) {
 			return 0;
 		} else {
 			return 1;
 		}		
 	}
 
-	public Object getImage() {
-		return customImage;
+//	public CustomImage getImage() {
+//		return this.customImage;
+//	}
+	
+	public void addUpvotedUser(User user) {
+		this.upvotedUsers.add(user);
+	}
+	
+	public ArrayList<User> getUpvotedUsers() {
+		return this.upvotedUsers;
+	}
+	
+	public void setImage(Bitmap bitmap) {
+		this.image = bitmap;
+	}
+	
+	public Bitmap getQuestionImage() {
+		return this.image;
 	}
 
 }

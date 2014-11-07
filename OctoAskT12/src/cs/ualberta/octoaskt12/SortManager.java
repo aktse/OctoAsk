@@ -3,6 +3,8 @@ package cs.ualberta.octoaskt12;
 import java.util.Collections;
 import java.util.Comparator;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
+
 
 public class SortManager {
 	
@@ -17,7 +19,9 @@ public class SortManager {
 			@Override
 			public int compare(Question question1, Question question2) {
 				
-				return question2.getTime().compareTo(question1.getTime());
+//				return question2.getTime().compareTo(question1.getTime());
+				return Long.valueOf(question2.getTime()).compareTo(Long.valueOf(question1.getTime()));
+				
 						
 			}
 		});

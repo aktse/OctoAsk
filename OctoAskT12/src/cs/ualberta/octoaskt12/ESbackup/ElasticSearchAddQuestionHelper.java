@@ -1,4 +1,4 @@
-package cs.ualberta.octoaskt12;
+package cs.ualberta.octoaskt12.ESbackup;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -21,10 +21,12 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import cs.ualberta.octoaskt12.Question;
+
 import android.content.Context;
 import android.util.Log;
 
-public class ElasticSearchHelper {
+public class ElasticSearchAddQuestionHelper {
 	
 	private static Gson gson;
 	private static final String RESOURCE_URL = "http://cmput301.softwareprocess.es:8080/cmput301f14t12/abc/def";
@@ -32,7 +34,7 @@ public class ElasticSearchHelper {
 
 
 	//call this first
-	public ElasticSearchHelper(){
+	public ElasticSearchAddQuestionHelper(){
 		gson = new Gson();
 		
 	}
@@ -41,6 +43,13 @@ public class ElasticSearchHelper {
 	//private static HttpClient client;
 	
 	//public static void SaveToDatabase(final QuestionArrayList qal){
+	
+	public static void LoadFromDatabase(){
+		HttpClient httpClient = new DefaultHttpClient();
+
+		
+		
+	}
 	public static void SaveToDatabase(Question question){
 
 		HttpClient httpClient = new DefaultHttpClient();

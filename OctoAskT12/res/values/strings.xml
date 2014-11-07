@@ -20,5 +20,6 @@
     <string name="title_activity_question_detailed_view">QuestionDetailedViewActivity</string>
     <string name="title_activity_create_answer">CreateAnswerActivity</string>
     <string name="title_activity_create_reply">Reply</string>
+    <string name="captureImage">Capture!</string>
 
 </resources>
