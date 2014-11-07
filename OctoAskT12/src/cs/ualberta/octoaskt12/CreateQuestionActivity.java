@@ -1,20 +1,82 @@
 package cs.ualberta.octoaskt12;
 
+import java.io.File;
+
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 public class CreateQuestionActivity extends Activity {
-
+	Uri imageFileUri;
+	private final int CAMERA_ACTIVITY_REQUEST_CODE =  12345;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_question);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
+		ImageButton button = (ImageButton) findViewById(R.id.question_ImageButton);
+		button.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				takePicture();
+				
+			}
+		});
+	}
+	
+	public void takePicture(){
+		
+		String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/MyCameraTest";
+		File folder = new File(path);
+		if(!folder.exists()){
+			folder.mkdir();
+		}
+		
+		String imagePathAndFileName = path + File.separator + 
+				String.valueOf(System.currentTimeMillis()) + ".jpg";
+		
+		File imageFile = new File(imagePathAndFileName);
+		imageFileUri = Uri.fromFile(imageFile);
+		
+		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageFileUri);
+	    startActivityForResult(takePictureIntent, CAMERA_ACTIVITY_REQUEST_CODE);
+	    
+		
+		}
+	
+	
+	protected void onActivityResult(int requestCode, int resultCode, Intent data){
+		
+		Log.v("sdfsd","sdfsdfsdf");
+		Toast.makeText(getBaseContext(), "captured", Toast.LENGTH_SHORT).show();
+		if(requestCode == CAMERA_ACTIVITY_REQUEST_CODE){
+			if(resultCode == RESULT_OK){
+				ImageView iv = (ImageView) findViewById(R.id.question_ImageView);
+				iv.setImageDrawable(Drawable.createFromPath(imageFileUri.getPath()));
+			}
+			else{
+				if(resultCode == RESULT_CANCELED){
+					// do nothing
+				}
+			}
+		}
+			
 	}
 
 	@Override
