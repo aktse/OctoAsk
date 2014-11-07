@@ -39,6 +39,8 @@ public class QuestionsController {
 
 	public static void addQuestion(Question question){
 		allQuestions.addQuestion(question);
+		ESClient esc = new ESClient();
+		esc.addQuestion(question);
 	}
 	/* when a user favourites a question, add this question into user
 	 * favourite list.
