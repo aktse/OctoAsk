@@ -214,6 +214,7 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 			View convertView, ViewGroup parent) {
 		if (groupPosition == 0) {
 			String questionTitle = question.getTitle();
+			System.out.println("Title: " + questionTitle);
 			String questionBody = question.getBody();
 			LayoutInflater inflater = (LayoutInflater) this.context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -236,10 +237,13 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 					else {
 						question.incrementVotes();
 						question.addUpvotedUser(UserArrayList.getCurrentUser());
+						notifyDataSetChanged();
 						
 					}
 				}
 			});
+			TextView upvoteCaption = (TextView) convertView.findViewById(R.id.question_upvote_caption);
+			upvoteCaption.setText(question.getVotes() + " upvotes");
 			return convertView;
 		} else {
 			String answerBody = answers.get(groupPosition - 1).getBody();
@@ -258,19 +262,10 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 
 	}
 
-
-	
-
-
-
-
-
 	@Override
 	public boolean hasStableIds() {
 		return false;
 	}
-
-	
 
 	@Override
 	public boolean isChildSelectable(int groupPosition, int childPosition) {
