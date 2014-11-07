@@ -8,8 +8,11 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadPoolExecutor;
 
+import org.apache.http.client.ClientProtocolException;
+
 
 import cs.ualberta.octoaskt12.ES.ES;
+import cs.ualberta.octoaskt12.ES.ESClient;
 import cs.ualberta.octoaskt12.adapters.CustomArrayAdapter;
 import cs.ualberta.octoaskt12.adapters.DetailViewAdapter;
 import android.app.Activity;
@@ -24,6 +27,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -47,11 +51,14 @@ import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks {
-
-	public static QuestionArrayList questionArrayList = QuestionsController
-			.getAllQuestions();;
-
-	public static QuestionArrayList sortedQuestionArrayList = questionArrayList;
+	
+	ESClient esc = new ESClient();
+//	esc.getQuestions();
+//	public static QuestionArrayList questionArrayList = QuestionsController.getAllQuestions();
+//
+//	public static QuestionArrayList sortedQuestionArrayList = questionArrayList;
+	public static QuestionArrayList questionArrayList;
+	public static QuestionArrayList sortedQuestionArrayList;
 
 	private NavigationDrawerFragment mNavigationDrawerFragment;
 
@@ -68,6 +75,9 @@ public class MainActivity extends FragmentActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
+		StrictMode.ThreadPolicy p = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+		StrictMode.setThreadPolicy(p);
+		
 //		ThreadPoolExecutor tpe = new ThreadPoolExecutor();
 		
 //		ESRequests req = new ESRequests();
@@ -77,6 +87,39 @@ public class MainActivity extends FragmentActivity implements
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
+		
+//		questionArrayList = QuestionsController.getAllQuestions();
+//		try {
+//			questionArrayList = esc.getQuestions();
+//		} catch (ClientProtocolException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		} catch (IOException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+		try {
+			questionArrayList = QuestionsController.getAllQuestions();
+		} catch (ClientProtocolException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		sortedQuestionArrayList = questionArrayList;
+		
+		ESClient esclient = new ESClient();
+		try {
+			esclient.getQuestions();
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 		//ES.sendRequest();
