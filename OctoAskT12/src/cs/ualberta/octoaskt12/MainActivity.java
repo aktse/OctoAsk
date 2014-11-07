@@ -98,7 +98,7 @@ public class MainActivity extends FragmentActivity implements
 
 		MyQuestionFilename = "ChrisFile";
 		
-		ElasticSearchAddQuestion.AddToDatabase();
+		//ElasticSearchAddQuestion.AddToDatabase();
 
 	}
 
