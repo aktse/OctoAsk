@@ -67,11 +67,9 @@ public class ESClient {
 		QuestionArrayList qal = new QuestionArrayList();
 		for (ESResponse<Question> r : esResponse.getHits()) {
 			Question question = r.getSource();
-//			System.out.println(question.getTitle());
 			qal.addQuestion(question);
 		}
 		return qal;
-//		searchRequest.releaseConnection();
 	}
 	
 	public void addQuestion(Question question) {
