@@ -119,7 +119,7 @@ public class MainActivity extends FragmentActivity implements
 //			e.printStackTrace();
 //		}
 		
-//		updateQuestions();
+		updateQuestions();
 
 //		sortedQuestionArrayList = questionArrayList;
 
@@ -297,7 +297,7 @@ public class MainActivity extends FragmentActivity implements
 			View rootView = inflater.inflate(R.layout.fragment_question,
 					container, false);
 
-			ListView lv = (ListView) rootView.findViewById(R.id.question_list);
+			final ListView lv = (ListView) rootView.findViewById(R.id.question_list);
 			lv.setAdapter(questionsViewAdapter);
 			questionsViewAdapter.notifyDataSetChanged();
 			lv.setOnItemClickListener(new OnItemClickListener() {
@@ -326,10 +326,13 @@ public class MainActivity extends FragmentActivity implements
 					swipeLayout.setRefreshing(true);
 					updateQuestions();
 					swipeLayout.setRefreshing(false);
+					questionsViewAdapter = new CustomArrayAdapter(getActivity(), questionArrayList);
+					lv.setAdapter(questionsViewAdapter);
 					onResume();
 					questionsViewAdapter.notifyDataSetChanged();
 				}
 			});
+			
 			swipeLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
 					android.R.color.holo_green_light,
 					android.R.color.holo_orange_light,
@@ -363,7 +366,6 @@ public class MainActivity extends FragmentActivity implements
 		@Override
 		public void onResume() {
 			super.onResume();
-			System.out.println("needy");
 			SortManager sortManager = new SortManager();
 			if (sortIndex == 0) {
 				questionArrayList = sortManager.SortByDate(questionArrayList);
