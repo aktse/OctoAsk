@@ -60,7 +60,7 @@ public class MainActivity extends FragmentActivity implements
 	//
 	// public static QuestionArrayList sortedQuestionArrayList =
 	// questionArrayList;
-	public static QuestionArrayList questionArrayList;
+	public static QuestionArrayList questionArrayList = new QuestionArrayList();
 	public static QuestionArrayList sortedQuestionArrayList;
 
 	private NavigationDrawerFragment mNavigationDrawerFragment;
@@ -101,15 +101,14 @@ public class MainActivity extends FragmentActivity implements
 		// // TODO Auto-generated catch block
 		// e1.printStackTrace();
 		// }
-		try {
-			questionArrayList = QuestionsController.getAllQuestions();
-		} catch (ClientProtocolException e1) {
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
+//		try {
+//			questionArrayList = QuestionsController.getAllQuestions();
+//		} catch (ClientProtocolException e1) {
+//			e1.printStackTrace();
+//		} catch (IOException e1) {
+//			e1.printStackTrace();
+//		}
 
-		sortedQuestionArrayList = questionArrayList;
 
 //		ESClient esclient = new ESClient();
 //		try {
@@ -120,8 +119,11 @@ public class MainActivity extends FragmentActivity implements
 //			e.printStackTrace();
 //		}
 		
-		updateQuestions();
+//		updateQuestions();
 
+//		sortedQuestionArrayList = questionArrayList;
+
+		
 		// ES.sendRequest();
 
 		String userName = "Ivan";
@@ -146,13 +148,12 @@ public class MainActivity extends FragmentActivity implements
 	}
 	
 	public static void updateQuestions() {
-		ESClient esclient = new ESClient();
 		try {
-			esclient.getQuestions();
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch(IOException e){
-			e.printStackTrace();
+			questionArrayList = QuestionsController.getAllQuestions();
+		} catch (ClientProtocolException e1) {
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
 	}
 
@@ -296,20 +297,6 @@ public class MainActivity extends FragmentActivity implements
 			View rootView = inflater.inflate(R.layout.fragment_question,
 					container, false);
 
-			final SwipeRefreshLayout swipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_container);
-			swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-				@Override
-				public void onRefresh() {
-					swipeLayout.setRefreshing(true);
-					updateQuestions();
-					swipeLayout.setRefreshing(false);
-				}
-			});
-			swipeLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
-					android.R.color.holo_green_light,
-					android.R.color.holo_orange_light,
-					android.R.color.holo_red_light);
-			
 			ListView lv = (ListView) rootView.findViewById(R.id.question_list);
 			lv.setAdapter(questionsViewAdapter);
 			questionsViewAdapter.notifyDataSetChanged();
@@ -332,6 +319,23 @@ public class MainActivity extends FragmentActivity implements
 
 			});
 
+			final SwipeRefreshLayout swipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_container);
+			swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+				@Override
+				public void onRefresh() {
+					swipeLayout.setRefreshing(true);
+					updateQuestions();
+					swipeLayout.setRefreshing(false);
+					onResume();
+					questionsViewAdapter.notifyDataSetChanged();
+				}
+			});
+			swipeLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+					android.R.color.holo_green_light,
+					android.R.color.holo_orange_light,
+					android.R.color.holo_red_light);
+			
+
 		    lv.setOnScrollListener(new AbsListView.OnScrollListener() {
 		        @Override
 		        public void onScrollStateChanged(AbsListView absListView, int i) {
@@ -350,14 +354,6 @@ public class MainActivity extends FragmentActivity implements
 			return rootView;
 		}
 
-		// @Override public void onRefresh() {
-		// new Handler().postDelayed(new Runnable() {
-		// @Override public void run() {
-		// swipeLayout.setRefreshing(false);
-		// }
-		// }, 5000);
-		// }
-
 //		@Override
 //		public void onRefresh() {
 //			updateQuestions();
@@ -367,7 +363,7 @@ public class MainActivity extends FragmentActivity implements
 		@Override
 		public void onResume() {
 			super.onResume();
-			questionsViewAdapter.notifyDataSetChanged();
+			System.out.println("needy");
 			SortManager sortManager = new SortManager();
 			if (sortIndex == 0) {
 				questionArrayList = sortManager.SortByDate(questionArrayList);
@@ -376,6 +372,7 @@ public class MainActivity extends FragmentActivity implements
 			} else {
 				questionArrayList = sortManager.SortByImages(questionArrayList);
 			}
+			questionsViewAdapter.notifyDataSetChanged();
 		}
 
 		@Override
