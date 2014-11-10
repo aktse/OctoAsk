@@ -54,12 +54,7 @@ public class MainActivity extends FragmentActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks {
 
 	ESClient esc = new ESClient();
-	// esc.getQuestions();
-	// public static QuestionArrayList questionArrayList =
-	// QuestionsController.getAllQuestions();
-	//
-	// public static QuestionArrayList sortedQuestionArrayList =
-	// questionArrayList;
+
 	public static QuestionArrayList questionArrayList = new QuestionArrayList();
 	public static QuestionArrayList sortedQuestionArrayList;
 
@@ -81,55 +76,9 @@ public class MainActivity extends FragmentActivity implements
 				.permitAll().build();
 		StrictMode.setThreadPolicy(p);
 
-		// ThreadPoolExecutor tpe = new ThreadPoolExecutor();
-
-		// ESRequests req = new ESRequests();
-		// try {
-		// req.getQuestions();
-		// } catch (Exception e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-
-		// questionArrayList = QuestionsController.getAllQuestions();
-		// try {
-		// questionArrayList = esc.getQuestions();
-		// } catch (ClientProtocolException e1) {
-		// // TODO Auto-generated catch block
-		// e1.printStackTrace();
-		// } catch (IOException e1) {
-		// // TODO Auto-generated catch block
-		// e1.printStackTrace();
-		// }
-//		try {
-//			questionArrayList = QuestionsController.getAllQuestions();
-//		} catch (ClientProtocolException e1) {
-//			e1.printStackTrace();
-//		} catch (IOException e1) {
-//			e1.printStackTrace();
-//		}
-
-
-//		ESClient esclient = new ESClient();
-//		try {
-//			esclient.getQuestions();
-//		} catch (ClientProtocolException e) {
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-		
 		updateQuestions();
 
-//		sortedQuestionArrayList = questionArrayList;
-
-		
-		// ES.sendRequest();
-
-		String userName = "Ivan";
-		User currentUser = new User(userName);
-		UserArrayList.addUser(currentUser);
-		UserArrayList.setCurrentUser(currentUser);
+		User currentUser = UserController.getCurrentUser();
 
 		context = this;
 
@@ -146,7 +95,7 @@ public class MainActivity extends FragmentActivity implements
 		// ElasticSearchAddQuestion.AddToDatabase();
 
 	}
-	
+
 	public static void updateQuestions() {
 		try {
 			questionArrayList = QuestionsController.getAllQuestions();
@@ -297,7 +246,8 @@ public class MainActivity extends FragmentActivity implements
 			View rootView = inflater.inflate(R.layout.fragment_question,
 					container, false);
 
-			final ListView lv = (ListView) rootView.findViewById(R.id.question_list);
+			final ListView lv = (ListView) rootView
+					.findViewById(R.id.question_list);
 			lv.setAdapter(questionsViewAdapter);
 			questionsViewAdapter.notifyDataSetChanged();
 			lv.setOnItemClickListener(new OnItemClickListener() {
@@ -319,50 +269,54 @@ public class MainActivity extends FragmentActivity implements
 
 			});
 
-			final SwipeRefreshLayout swipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_container);
-			swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-				@Override
-				public void onRefresh() {
-					swipeLayout.setRefreshing(true);
-					updateQuestions();
-					swipeLayout.setRefreshing(false);
-					questionsViewAdapter = new CustomArrayAdapter(getActivity(), questionArrayList);
-					lv.setAdapter(questionsViewAdapter);
-					onResume();
-					questionsViewAdapter.notifyDataSetChanged();
-				}
-			});
-			
-			swipeLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+			final SwipeRefreshLayout swipeLayout = (SwipeRefreshLayout) rootView
+					.findViewById(R.id.swipe_container);
+			swipeLayout
+					.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+						@Override
+						public void onRefresh() {
+							swipeLayout.setRefreshing(true);
+							updateQuestions();
+							swipeLayout.setRefreshing(false);
+							questionsViewAdapter = new CustomArrayAdapter(
+									getActivity(), questionArrayList);
+							lv.setAdapter(questionsViewAdapter);
+							onResume();
+							questionsViewAdapter.notifyDataSetChanged();
+						}
+					});
+
+			swipeLayout.setColorSchemeResources(
+					android.R.color.holo_blue_bright,
 					android.R.color.holo_green_light,
 					android.R.color.holo_orange_light,
 					android.R.color.holo_red_light);
-			
 
-		    lv.setOnScrollListener(new AbsListView.OnScrollListener() {
-		        @Override
-		        public void onScrollStateChanged(AbsListView absListView, int i) {
-		 
-		        }
-		 
-		        @Override
-		        public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-		                if (firstVisibleItem == 0)
-		                    swipeLayout.setEnabled(true);
-		                else
-		                    swipeLayout.setEnabled(false);
-		        }	
-		    });
-			
+			lv.setOnScrollListener(new AbsListView.OnScrollListener() {
+				@Override
+				public void onScrollStateChanged(AbsListView absListView, int i) {
+
+				}
+
+				@Override
+				public void onScroll(AbsListView absListView,
+						int firstVisibleItem, int visibleItemCount,
+						int totalItemCount) {
+					if (firstVisibleItem == 0)
+						swipeLayout.setEnabled(true);
+					else
+						swipeLayout.setEnabled(false);
+				}
+			});
+
 			return rootView;
 		}
 
-//		@Override
-//		public void onRefresh() {
-//			updateQuestions();
-//		}
-		
-		
+		// @Override
+		// public void onRefresh() {
+		// updateQuestions();
+		// }
+
 		@Override
 		public void onResume() {
 			super.onResume();
@@ -385,9 +339,15 @@ public class MainActivity extends FragmentActivity implements
 	}
 
 	public void createQuestion(MenuItem menu) {
-		Intent intent = new Intent(MainActivity.this,
-				CreateQuestionActivity.class);
-		startActivity(intent);
+		if (UserController.getCurrentUser() == null) {
+			Intent intent = new Intent(MainActivity.this,
+					UserLoginActivity.class);
+			startActivity(intent);
+		} else {
+			Intent intent = new Intent(MainActivity.this,
+					CreateQuestionActivity.class);
+			startActivity(intent);
+		}
 	}
 
 	public static void EditUsername() {
@@ -726,9 +686,16 @@ public class MainActivity extends FragmentActivity implements
 
 				@Override
 				public void onClick(View v) {
-					Intent intent = new Intent(getActivity(),
-							CreateAnswerActivity.class);
-					startActivityForResult(intent, CREATE_ANSWER_ACTIVITY_CODE);
+					if (UserController.getCurrentUser() == null) {
+						Intent intent = new Intent(getActivity(),
+								UserLoginActivity.class);
+						startActivity(intent);
+					} else {
+						Intent intent = new Intent(getActivity(),
+								CreateAnswerActivity.class);
+						startActivityForResult(intent,
+								CREATE_ANSWER_ACTIVITY_CODE);
+					}
 				}
 			});
 
@@ -743,7 +710,7 @@ public class MainActivity extends FragmentActivity implements
 				if (resultCode == RESULT_OK) {
 					String answerBodyText = data.getStringExtra("answerBody");
 					Answer answer = new Answer(answerBodyText,
-							UserArrayList.getCurrentUser());
+							UserController.getCurrentUser());
 					question.addAnswer(answer);
 				}
 			}

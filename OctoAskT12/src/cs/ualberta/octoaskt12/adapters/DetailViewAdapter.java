@@ -12,7 +12,7 @@ import cs.ualberta.octoaskt12.Question;
 import cs.ualberta.octoaskt12.QuestionHolder;
 import cs.ualberta.octoaskt12.R;
 import cs.ualberta.octoaskt12.Reply;
-import cs.ualberta.octoaskt12.UserArrayList;
+import cs.ualberta.octoaskt12.UserController;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -230,12 +230,12 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 				
 				@Override
 				public void onClick(View v) {
-					if (question.getUpvotedUsers().contains(UserArrayList.getCurrentUser())) {
+					if (question.getUpvotedUsers().contains(UserController.getCurrentUser())) {
 						Toast.makeText(context, "You already upvoted this question!", Toast.LENGTH_SHORT).show();
 					}
 					else {
 						question.incrementVotes();
-						question.addUpvotedUser(UserArrayList.getCurrentUser());
+						question.addUpvotedUser(UserController.getCurrentUser());
 						notifyDataSetChanged();
 					}
 				}
@@ -264,12 +264,12 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 				
 				@Override
 				public void onClick(View v) {
-					if (answers.get(groupPosition - 1).getUpvotedUsers().contains(UserArrayList.getCurrentUser())) {
+					if (answers.get(groupPosition - 1).getUpvotedUsers().contains(UserController.getCurrentUser())) {
 						Toast.makeText(context, "You already upvoted this question!", Toast.LENGTH_SHORT).show();
 					}
 					else {
 						answers.get(groupPosition - 1).incrementVotes();
-						answers.get(groupPosition - 1).addUpvotedUser(UserArrayList.getCurrentUser());
+						answers.get(groupPosition - 1).addUpvotedUser(UserController.getCurrentUser());
 						notifyDataSetChanged();
 					}
 				}

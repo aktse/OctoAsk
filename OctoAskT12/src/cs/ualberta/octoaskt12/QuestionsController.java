@@ -22,13 +22,13 @@ public class QuestionsController {
 	}
 	
 	// return the user's questions, in the form of an ArrayList.
-	public static ArrayList<Question> getUserQuestions(User user){
-		return user.getUserQuestions();
-	}
+//	public static ArrayList<Question> getUserQuestions(User user){
+//		return user.getUserQuestions();
+//	}
 	// return the user's favourited questions, in the form of an ArrayList.
-	public static ArrayList<Question> getUserFavouriteQuestions(User user){
-		return user.getFavouriteQuestions();
-	}
+//	public static ArrayList<Question> getUserFavouriteQuestions(User user){
+//		return user.getFavouriteQuestions();
+//	}
 	
 	/* add a question to the user's questions list, and also add it into 
 	 * list of all questions.
@@ -42,8 +42,8 @@ public class QuestionsController {
 	/* when a user favourites a question, add this question into user
 	 * favourite list.
 	 */
-	public static void addUserFavouriteQuestion(User user, Question question){
-		getUserFavouriteQuestions(user).add(question);
-	}
+//	public static void addUserFavouriteQuestion(User user, Question question){
+//		getUserFavouriteQuestions(user).add(question);
+//	}
 	
 }

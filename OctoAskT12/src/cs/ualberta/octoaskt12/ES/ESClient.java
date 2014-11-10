@@ -30,50 +30,56 @@ import cs.ualberta.octoaskt12.QuestionArrayList;
  */
 public class ESClient {
 	private HttpClient httpClient = new DefaultHttpClient();
-	
+
 	private Gson gson = new Gson();
-	
-	public QuestionArrayList getQuestions() throws ClientProtocolException, IOException {
-		HttpPost searchRequest = new HttpPost("http://cmput301.softwareprocess.es:8080/cmput301f14t12/_search?size=150");
-		
-		String SEARCH_USER_FAV = 
-				"{\n" +
-						   "\"query\":{\n" +
-						        "\"match_all\":{}\n" +
-						   "}\n" +
-				"}";
-//				"{\n" +
-//					   "\"query\":{\n" +
-//					        "\"term\":{\"favoritedUsers\":\"23\"}\n" +
-//					   "}\n" +
-//				"}";
-		
+
+	public QuestionArrayList getQuestions() throws ClientProtocolException,
+			IOException {
+		HttpPost searchRequest = new HttpPost(
+				"http://cmput301.softwareprocess.es:8080/cmput301f14t12/_search?size=150");
+
+		String SEARCH_USER_FAV = "{\n" + "\"query\":{\n" + "\"match_all\":{}\n"
+				+ "}\n" + "}";
+		// "{\n" +
+		// "\"query\":{\n" +
+		// "\"term\":{\"favoritedUsers\":\"23\"}\n" +
+		// "}\n" +
+		// "}";
+
 		StringEntity stringEntity = new StringEntity(SEARCH_USER_FAV);
-		
+
 		searchRequest.setHeader("Accept", "application/json");
 		searchRequest.setEntity(stringEntity);
-		
+
 		HttpResponse response = httpClient.execute(searchRequest);
-		
+
 		String status = response.getStatusLine().toString();
 		System.out.println("Status: " + status);
-		
+
 		String json = getEntityContent(response);
-		
-		Type esResponseType = new TypeToken<ESSearchSearchResponse<Question>>(){}.getType();
-		ESSearchSearchResponse<Question> esResponse = gson.fromJson(json, esResponseType);
-		
-		System.out.println("Response: " + esResponse);
+
+		Type esResponseType = new TypeToken<ESSearchSearchResponse<Question>>() {
+		}.getType();
+		ESSearchSearchResponse<Question> esResponse = gson.fromJson(json,
+				esResponseType);
+
+		// System.out.println("Response: " + esResponse);
 		QuestionArrayList qal = new QuestionArrayList();
 		for (ESResponse<Question> r : esResponse.getHits()) {
 			Question question = r.getSource();
+			// System.out.println(question.getTitle());
+			if (question.getImageBase64() != null) {
+				question.setImage(question.decodeBase64(question
+						.getImageBase64()));
+			}
 			qal.addQuestion(question);
 		}
 		return qal;
 	}
-	
+
 	public void addQuestion(Question question) {
-		HttpPost httpPost = new HttpPost("http://cmput301.softwareprocess.es:8080/cmput301f14t12/question");
+		HttpPost httpPost = new HttpPost(
+				"http://cmput301.softwareprocess.es:8080/cmput301f14t12/question");
 		StringEntity stringEntity = null;
 		try {
 			stringEntity = new StringEntity(gson.toJson(question));
@@ -81,44 +87,45 @@ public class ESClient {
 			e.printStackTrace();
 		}
 		httpPost.setHeader("Accept", "application/json");
-		
+
 		httpPost.setEntity(stringEntity);
 		HttpResponse response = null;
 		try {
 			response = httpClient.execute(httpPost);
-		} catch (ClientProtocolException e){
+		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		String status = response.getStatusLine().toString();
 		System.out.println(status);
 		HttpEntity entity = response.getEntity();
-//		BufferedReader br = new BufferedReader(new InputStreamReader(entity.getContent()));
-//		String output;
-//		while ((output = br.readLine()) != null) {
-//			System.out.println(output);
-//		}
-//		try {
-//			EntityUtils.;
-//		} catch (IOException e){
-//			e.printStackTrace();
-//		}
-//		httpPost.releaseConnection();
+		// BufferedReader br = new BufferedReader(new
+		// InputStreamReader(entity.getContent()));
+		// String output;
+		// while ((output = br.readLine()) != null) {
+		// System.out.println(output);
+		// }
+		// try {
+		// EntityUtils.;
+		// } catch (IOException e){
+		// e.printStackTrace();
+		// }
+		// httpPost.releaseConnection();
 	}
-	
+
 	public String getEntityContent(HttpResponse response) throws IOException {
-		BufferedReader br = new BufferedReader(
-				new InputStreamReader((response.getEntity().getContent())));
+		BufferedReader br = new BufferedReader(new InputStreamReader(
+				(response.getEntity().getContent())));
 		String output;
-//		System.out.println("Output from Server -> ");
+		// System.out.println("Output from Server -> ");
 		String json = "";
 		while ((output = br.readLine()) != null) {
-//			System.err.println(output);
+			// System.err.println(output);
 			json += output;
 		}
-//		System.out.println("JSON:"+json);
+		// System.out.println("JSON:"+json);
 		return json;
 	}
 }

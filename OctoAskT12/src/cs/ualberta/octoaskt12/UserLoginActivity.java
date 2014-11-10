@@ -8,11 +8,15 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 public class UserLoginActivity extends Activity {
 	ArrayList<User> userList;
-	User loggedInUser; 
+	User loggedInUser;
+	String username;
+	EditText usernameText;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -22,35 +26,38 @@ public class UserLoginActivity extends Activity {
 		ActionBar actionBar = getActionBar();
 		actionBar.hide();
 		// get the username text entered by the user in login screen
-		EditText textView = (EditText) findViewById(R.id.loginText);
-		String username = textView.getText().toString();
-		
-		
-		userList = UserArrayList.getUserList();
-		// check if the username is already in our list of users
-		if (!userAlreadyKnown(username)){
-			// user doesnt exist, so make this user
-			User newUser = new User(username);
-			// add this user into our user list
-			UserArrayList.addUser(newUser);
-			// set this user as the one that is currently logged in
-			loggedInUser = newUser;
-		}
-		else{ 
-			// do nothing
-			// the userAlreadyKnown method will set the loggedInUser. 
-		}
-		// set the loggedInUser
-		UserArrayList.setCurrentUser(loggedInUser);
-		
+		usernameText = (EditText) findViewById(R.id.loginText);
+		Button setUsernameButton = (Button) findViewById(R.id.setUsernameButton);
+		setUsernameButton.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				String username = usernameText.getText().toString();
+				userList = UserController.getUserList();
+				// check if the username is already in our list of users
+				if (!userAlreadyKnown(username)) {
+					// user doesnt exist, so make this user
+					User newUser = new User(username);
+					// add this user into our user list
+					UserController.addUser(newUser);
+					// set this user as the one that is currently logged in
+					loggedInUser = newUser;
+				} else {
+					// do nothing
+					// the userAlreadyKnown method will set the loggedInUser.
+				}
+				// set the loggedInUser
+				UserController.setCurrentUser(loggedInUser);
+				finish();
+			}
+		});
+
 		/*
-		 *  the next thing to implment is to show this user as logged in
-		 *  in the navigation drawer:
-		 *  
-		 *  |___Logged In As: <username>__|  <--- shows this user is logged in
-		 *  |			.				  |
-		 *  |			.				  |
-		 *  |_________Logout?-------------|  <---- option to logout
+		 * the next thing to implment is to show this user as logged in in the
+		 * navigation drawer:
+		 * 
+		 * |___Logged In As: <username>__| <--- shows this user is logged in | .
+		 * | | . | |_________Logout?-------------| <---- option to logout
 		 */
 
 	}
@@ -73,23 +80,25 @@ public class UserLoginActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
-	/* this method will iterate through the list of all user objects
-	 * if a known user already has the name of the username current login in
-	 * then set the variable loggedInUser as this known user.
+
+	/*
+	 * this method will iterate through the list of all user objects if a known
+	 * user already has the name of the username current login in then set the
+	 * variable loggedInUser as this known user.
 	 */
-	public boolean userAlreadyKnown(String username){
+	public boolean userAlreadyKnown(String username) {
 		boolean userKnown = false;
 		Iterator<User> user_itr = userList.iterator();
-		while(user_itr.hasNext()){
+		while (user_itr.hasNext()) {
 			User user = user_itr.next();
 			// if the entered username is already a name of a known user
-			if(user.getName() == username){
+			if (user.getName() == username) {
 				// user is found in our user list
 				userKnown = true;
 				loggedInUser = user;
-				/* no need to iterate through the rest of the user objects
-				 * so, break out of the while loop.
+				/*
+				 * no need to iterate through the rest of the user objects so,
+				 * break out of the while loop.
 				 */
 				break;
 			}

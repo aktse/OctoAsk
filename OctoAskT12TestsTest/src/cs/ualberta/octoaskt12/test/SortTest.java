@@ -2,6 +2,9 @@ package cs.ualberta.octoaskt12.test;
 
 import java.util.Random;
 
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+
 import cs.ualberta.octoaskt12.CustomImage;
 import cs.ualberta.octoaskt12.Question;
 import cs.ualberta.octoaskt12.QuestionArrayList;
@@ -100,7 +103,7 @@ public class SortTest extends TestCase {
 			// attach image if True
 			if (rn == 1)
 			{
-				temp_question.attachImage(new CustomImage());
+				temp_question.setImage(Bitmap.createBitmap(50, 50, Config.RGB_565));
 			}
 			question_list.addQuestion(temp_question);
 		}

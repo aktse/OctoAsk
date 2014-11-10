@@ -20,11 +20,11 @@
         android:inputType="textPersonName" />
 
     <Button
-        android:id="@+id/cancelQuestionButton"
+        android:id="@+id/setUsernameButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/loginText"
         android:layout_below="@+id/loginText"
-        android:text="Button" />
+        android:text="Set" />
 
 </RelativeLayout>
