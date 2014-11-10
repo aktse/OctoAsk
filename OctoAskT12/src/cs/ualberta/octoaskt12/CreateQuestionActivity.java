@@ -131,7 +131,7 @@ public class CreateQuestionActivity extends Activity {
 		EditText bodyEditText = (EditText) findViewById(R.id.questionBodyText);
 		String questionTitle = titleEditText.getText().toString();
 		String questionBody = bodyEditText.getText().toString();
-		User user = UserArrayList.getCurrentUser();
+		User user = UserController.getCurrentUser();
 		Question question = new Question(questionTitle, questionBody, user);
 		ImageView iv = (ImageView) findViewById(R.id.question_ImageView);
 		if (iv.getDrawable() != null) {
