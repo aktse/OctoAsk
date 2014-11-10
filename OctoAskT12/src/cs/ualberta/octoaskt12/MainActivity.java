@@ -686,9 +686,16 @@ public class MainActivity extends FragmentActivity implements
 
 				@Override
 				public void onClick(View v) {
-					Intent intent = new Intent(getActivity(),
-							CreateAnswerActivity.class);
-					startActivityForResult(intent, CREATE_ANSWER_ACTIVITY_CODE);
+					if (UserController.getCurrentUser() == null) {
+						Intent intent = new Intent(getActivity(),
+								UserLoginActivity.class);
+						startActivity(intent);
+					} else {
+						Intent intent = new Intent(getActivity(),
+								CreateAnswerActivity.class);
+						startActivityForResult(intent,
+								CREATE_ANSWER_ACTIVITY_CODE);
+					}
 				}
 			});
 
