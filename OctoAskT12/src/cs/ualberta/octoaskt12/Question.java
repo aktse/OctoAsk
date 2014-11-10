@@ -22,8 +22,7 @@ public class Question implements Serializable {
 	// number of upVotes this question has
 	private int numVotes;
 	// the date the question was created at
-	// private GregorianCalendar dateCreated;
-	private long dateCreated;
+	private GregorianCalendar dateCreated;
 	// the user who asked this question
 	private User user;
 	private String userName;
@@ -36,20 +35,14 @@ public class Question implements Serializable {
 
 	private ArrayList<String> favoritedUsers = new ArrayList<String>();
 
-	// private CustomImage customImage = null;
-
 	private transient Bitmap image = null;
 	private String imageBase64;
 
 	// Constructor
 	public Question(String questionTitle, String questionBody, User user) {
-		// set the title and body of the question
 		this.questionTitle = questionTitle;
 		this.questionBody = questionBody;
-		// associate this question with the date when it is asked
-		// this.dateCreated = new GregorianCalendar();
-		this.dateCreated = System.currentTimeMillis() / 1000L;
-		// associate this question with a user
+		this.dateCreated = new GregorianCalendar();
 		this.user = user;
 	}
 
@@ -75,10 +68,10 @@ public class Question implements Serializable {
 		return questionBody;
 	}
 
-	/***************************************************************************
+	/**
 	 * These methods are responsible for getting the up votes of the question
 	 * and incrementing up vote whenever a user votes up a question.
-	 ***************************************************************************/
+	 */
 
 	public int getVotes() {
 		return numVotes;
@@ -88,9 +81,9 @@ public class Question implements Serializable {
 		numVotes++;
 	}
 
-	/***************************************************************************
+	/**
 	 * These methods concerns the answers associated with the question.
-	 ***************************************************************************/
+	 */
 	// get the number of answers for this question
 	public int getNumAnswers() {
 		return answers.size();
@@ -106,9 +99,9 @@ public class Question implements Serializable {
 		answers.add(answer);
 	}
 
-	/***************************************************************************
+	/**
 	 * These methods concerns the replies associated with the question.
-	 ***************************************************************************/
+	 */
 	// get the number of replies the question has.
 	public int getNumReplies() {
 		return replies.size();
@@ -124,17 +117,17 @@ public class Question implements Serializable {
 		replies.add(reply);
 	}
 
-	/***************************************************************************
+	/**
 	 * Methods which get the user's name that asked the question and the date
 	 * the question was created.
-	 ***************************************************************************/
+	 */
 	// get the user's name
 	public String getUser() {
 		return user.getName();
 	}
 
 	// get the date the question was created
-	public long getTime() {
+	public GregorianCalendar getTime() {
 		return dateCreated;
 	}
 
@@ -143,17 +136,12 @@ public class Question implements Serializable {
 	// }
 
 	public int imageExists() {
-
 		if (this.image == null) {
 			return 0;
 		} else {
 			return 1;
 		}
 	}
-
-	// public CustomImage getImage() {
-	// return this.customImage;
-	// }
 
 	public void addUpvotedUser(User user) {
 		this.upvotedUsers.add(user);
@@ -171,14 +159,15 @@ public class Question implements Serializable {
 	public Bitmap getQuestionImage() {
 		return this.image;
 	}
-	
+
 	public String getImageBase64() {
 		return this.imageBase64;
 	}
 
 	/*
 	 * Author: Roman Truba
-	 * http://stackoverflow.com/questions/9768611/encode-and-decode-bitmap-object-in-base64-string-in-android
+	 * http://stackoverflow.com/questions/9768611/encode-and-
+	 * decode-bitmap-object-in-base64-string-in-android
 	 */
 	public String encodeToBase64(Bitmap image) {
 		Bitmap pic = image;

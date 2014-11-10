@@ -15,11 +15,8 @@ public class QuestionsController {
 	 * If allQuestions is already instantiated, then this method will simply return it.
 	 */
 	public static QuestionArrayList getAllQuestions() throws ClientProtocolException, IOException{
-		if(allQuestions == null){
-			ESClient esc= new ESClient();
-			allQuestions = esc.getQuestions();
-//			allQuestions = new QuestionArrayList();
-		}
+		ESClient esc= new ESClient();
+		allQuestions = esc.getQuestions();
 		
 		return allQuestions;
 	}

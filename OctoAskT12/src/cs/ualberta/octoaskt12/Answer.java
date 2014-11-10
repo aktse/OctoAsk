@@ -1,8 +1,13 @@
 package cs.ualberta.octoaskt12;
 
+import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 
 public class Answer implements Serializable {
 	/**
@@ -12,7 +17,7 @@ public class Answer implements Serializable {
 	private String answerBody;
 	// user who answered the question
 	private User user;
-	// number of up votes on this  answer
+	// number of up votes on this answer
 	private int numVotes;
 	// the replies for this answer
 	private ArrayList<Reply> replies = new ArrayList<Reply>();
@@ -20,7 +25,9 @@ public class Answer implements Serializable {
 	private ArrayList<User> upvotedUsers = new ArrayList<User>();
 	// the date the answer was created
 	private GregorianCalendar dateCreated;
-	
+	private transient Bitmap image = null;
+	private String imageBase64;
+
 	// constructor
 	public Answer(String answerBody, User user) {
 		// set the answer body
@@ -30,77 +37,73 @@ public class Answer implements Serializable {
 		// set the user who answered the question
 		this.user = user;
 	}
-	
+
 	/***************************************************************************
- 	* This method concerns the body of the answer.
- 	***************************************************************************/
+	 * This method concerns the body of the answer.
+	 ***************************************************************************/
 	// get the answer body
 	public String getBody() {
 		return answerBody;
 	}
-	
+
 	// set the answer body
 	public void setBody(String answerBody) {
 		this.answerBody = answerBody;
 	}
-	
+
 	/***************************************************************************
- 	* These methods are responsible for getting the up votes of the answer and
-	* incrementing up vote whenever a user votes up an answer.
- 	***************************************************************************/
-	
+	 * These methods are responsible for getting the up votes of the answer and
+	 * incrementing up vote whenever a user votes up an answer.
+	 ***************************************************************************/
+
 	// get the number of up votes for this answer
 	public int getVotes() {
 		return numVotes;
 	}
-	
+
 	// increment the up votes for an answer
 	public void incrementVotes() {
 		numVotes++;
 	}
-	
+
 	/***************************************************************************
- 	*These methods concerns the replies associated with the answer.
- 	***************************************************************************/
+	 * These methods concerns the replies associated with the answer.
+	 ***************************************************************************/
 	// get the number of replies the answer has.
 	public int getNumReplies() {
 		return replies.size();
 	}
+
 	// get all the replies for this answer, in the form of an array
 	public ArrayList<Reply> getReplies() {
 		return replies;
 	}
+
 	// add a reply to the reply array list
 	public void addReply(Reply reply) {
 		replies.add(reply);
 	}
-	
+
 	/***************************************************************************
- 	* Methods which get the user's name that answered the question and the date
- 	* the answer was created.
- 	***************************************************************************/
+	 * Methods which get the user's name that answered the question and the date
+	 * the answer was created.
+	 ***************************************************************************/
 	// get the user that created the answer
 	public String getUser() {
 		return user.getName();
 	}
+
 	// get the date the question was created
-	public GregorianCalendar getTime(){	
+	public GregorianCalendar getTime() {
 		return dateCreated;
 	}
 
-	public void attachImage(CustomImage temp_image) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public boolean imageExists() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public Object getImage() {
-		// TODO Auto-generated method stub
-		return null;
+	public int imageExists() {
+		if (this.image == null) {
+			return 0;
+		} else {
+			return 1;
+		}
 	}
 
 	public ArrayList<User> getUpvotedUsers() {
@@ -110,5 +113,38 @@ public class Answer implements Serializable {
 	public void addUpvotedUser(User user) {
 		this.upvotedUsers.add(user);
 	}
-	
+
+	public void setImage(Bitmap bitmap) {
+		this.image = bitmap;
+		this.imageBase64 = encodeToBase64(bitmap);
+	}
+
+	public Bitmap getAnswerImage() {
+		return this.image;
+	}
+
+	public String getImageBase64() {
+		return this.imageBase64;
+	}
+
+	/*
+	 * Author: Roman Truba
+	 * http://stackoverflow.com/questions/9768611/encode-and-
+	 * decode-bitmap-object-in-base64-string-in-android
+	 */
+	public String encodeToBase64(Bitmap image) {
+		Bitmap pic = image;
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		pic.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+		byte[] ba = baos.toByteArray();
+		String imageEncoded = Base64.encodeToString(ba, Base64.DEFAULT);
+		return imageEncoded;
+	}
+
+	public Bitmap decodeBase64(String input) {
+		byte[] decodedByte = Base64.decode(input, 0);
+		return BitmapFactory
+				.decodeByteArray(decodedByte, 0, decodedByte.length);
+	}
+
 }

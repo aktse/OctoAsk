@@ -75,7 +75,6 @@ public class ESClient {
 			qal.addQuestion(question);
 		}
 		return qal;
-		// searchRequest.releaseConnection();
 	}
 
 	public void addQuestion(Question question) {
