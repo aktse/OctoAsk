@@ -10,7 +10,6 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 import org.apache.http.client.ClientProtocolException;
 
-import cs.ualberta.octoaskt12.ES.ES;
 import cs.ualberta.octoaskt12.ES.ESClient;
 import cs.ualberta.octoaskt12.adapters.CustomArrayAdapter;
 import cs.ualberta.octoaskt12.adapters.DetailViewAdapter;
@@ -712,6 +711,8 @@ public class MainActivity extends FragmentActivity implements
 					Answer answer = new Answer(answerBodyText,
 							UserController.getCurrentUser());
 					question.addAnswer(answer);
+					QuestionsController.updateQuestion(question);
+					
 				}
 			}
 

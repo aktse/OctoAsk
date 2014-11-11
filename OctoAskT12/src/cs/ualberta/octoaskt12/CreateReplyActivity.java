@@ -35,11 +35,13 @@ public class CreateReplyActivity extends Activity {
 					AnswerHolder answerHolder = AnswerHolder.getInstance();
 					Answer answer = answerHolder.getAnswer();
 					answer.addReply(new Reply(replyBody, UserController.getCurrentUser()));		
+					
 				}
 				if (extraKey.equals("1")){
 					QuestionHolder questionHolder = QuestionHolder.getInstance();
 					Question question = questionHolder.getQuestion();
 					question.addReply(new Reply(replyBody, UserController.getCurrentUser()));
+					QuestionsController.updateQuestion(question);
 				}
 				onBackPressed();
 			}
