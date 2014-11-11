@@ -152,6 +152,7 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 						Intent intent = new Intent(context,
 								CreateReplyActivity.class);
 						intent.putExtra("replyFor", "0");
+//						intent.putExtra("answerPos", )
 						AnswerHolder answerHolder = AnswerHolder.getInstance();
 						answerHolder.setAnswer(answers.get(groupPosition - 1));
 						((Activity) context).startActivity(intent);

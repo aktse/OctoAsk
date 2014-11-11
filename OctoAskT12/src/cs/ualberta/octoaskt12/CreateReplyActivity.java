@@ -34,7 +34,8 @@ public class CreateReplyActivity extends Activity {
 				if (extraKey.equals("0")){
 					AnswerHolder answerHolder = AnswerHolder.getInstance();
 					Answer answer = answerHolder.getAnswer();
-					answer.addReply(new Reply(replyBody, UserController.getCurrentUser()));		
+					answer.addReply(new Reply(replyBody, UserController.getCurrentUser()));
+//					QuestionsController.updateQuestion(QuestionsController.getAllQuestions().getQuestion(position))
 					
 				}
 				if (extraKey.equals("1")){
