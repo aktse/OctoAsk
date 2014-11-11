@@ -1,0 +1,39 @@
+# view res/layout/activity_main.xml #generated:2
+-keep class android.support.v4.widget.DrawerLayout { <init>(...); }
+
+# view res/layout/fragment_question.xml #generated:1
+-keep class android.support.v4.widget.SwipeRefreshLayout { <init>(...); }
+
+# view AndroidManifest.xml #generated:44
+-keep class cs.ualberta.octoaskt12.CreateAnswerActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:36
+-keep class cs.ualberta.octoaskt12.CreateQuestionActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:48
+-keep class cs.ualberta.octoaskt12.CreateReplyActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:23
+-keep class cs.ualberta.octoaskt12.MainActivity { <init>(...); }
+
+# view res/layout/activity_main.xml #generated:31
+-keep class cs.ualberta.octoaskt12.NavigationDrawerFragment { <init>(...); }
+
+# view AndroidManifest.xml #generated:40
+-keep class cs.ualberta.octoaskt12.QuestionDetailedViewActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:32
+-keep class cs.ualberta.octoaskt12.UserLoginActivity { <init>(...); }
+
+# onClick res/layout/activity_create_question.xml #generated:86
+-keepclassmembers class * { *** cancelQuestionAction(...); }
+
+# onClick res/menu/main.xml #generated:13
+-keepclassmembers class * { *** createDialog(...); }
+
+# onClick res/menu/main.xml #generated:5
+-keepclassmembers class * { *** createQuestion(...); }
+
+# onClick res/layout/activity_create_question.xml #generated:93
+-keepclassmembers class * { *** submitQuestionAction(...); }
+
