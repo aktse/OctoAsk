@@ -37,6 +37,8 @@ public class Question implements Serializable {
 
 	private transient Bitmap image = null;
 	private String imageBase64;
+	
+	private String questionId = null;
 
 	// Constructor
 	public Question(String questionTitle, String questionBody, User user) {
@@ -182,6 +184,14 @@ public class Question implements Serializable {
 		byte[] decodedByte = Base64.decode(input, 0);
 		return BitmapFactory
 				.decodeByteArray(decodedByte, 0, decodedByte.length);
+	}
+	
+	public void setId(String id) {
+		this.questionId = id;
+	}
+	
+	public String getId() {
+		return this.questionId;
 	}
 
 }

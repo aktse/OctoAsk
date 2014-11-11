@@ -40,11 +40,6 @@ public class ESClient {
 
 		String SEARCH_USER_FAV = "{\n" + "\"query\":{\n" + "\"match_all\":{}\n"
 				+ "}\n" + "}";
-		// "{\n" +
-		// "\"query\":{\n" +
-		// "\"term\":{\"favoritedUsers\":\"23\"}\n" +
-		// "}\n" +
-		// "}";
 
 		StringEntity stringEntity = new StringEntity(SEARCH_USER_FAV);
 
@@ -71,6 +66,10 @@ public class ESClient {
 			if (question.getImageBase64() != null) {
 				question.setImage(question.decodeBase64(question
 						.getImageBase64()));
+			}
+			if (question.getId() == null) {
+				question.setId(r.getId());
+				System.out.println("ID: " + question.getId());
 			}
 			qal.addQuestion(question);
 		}
@@ -101,18 +100,53 @@ public class ESClient {
 		String status = response.getStatusLine().toString();
 		System.out.println(status);
 		HttpEntity entity = response.getEntity();
-		// BufferedReader br = new BufferedReader(new
-		// InputStreamReader(entity.getContent()));
-		// String output;
-		// while ((output = br.readLine()) != null) {
-		// System.out.println(output);
-		// }
-		// try {
-		// EntityUtils.;
-		// } catch (IOException e){
-		// e.printStackTrace();
-		// }
-		// httpPost.releaseConnection();
+	}
+
+	public void updateQuestion(Question question) {
+		HttpPost updateRequest = new HttpPost(
+				"http://cmput301.softwareprocess.es:8080/cmput301f14t12/question/"
+						+ question.getId());
+		StringEntity stringEntity = null;
+		try {
+			stringEntity = new StringEntity(gson.toJson(question));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		updateRequest.setHeader("Accept", "application/json");
+
+		updateRequest.setEntity(stringEntity);
+		HttpResponse response = null;
+		try {
+			response = httpClient.execute(updateRequest);
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		String status = response.getStatusLine().toString();
+		System.out.println(status);
+		HttpEntity entity = response.getEntity();
+		// HttpPost updateRequest = new HttpPost(
+		// "http://cmput301.softwareprocess.es:8080/cmput301f14t12/question/"
+		// + question.getId() + "/_update");
+		//
+		// String UPDATE_UPVOTE = "{\n" + "\"doc\":{\n" + "\"numVotes\":"
+		// + question.getVotes() + "}\n" + "}";
+		//
+		// String UPDATE_ANSWER = "{\n" + "\"doc\":{\n" + "\answer"
+		//
+		// StringEntity stringEntity = new StringEntity(UPDATE_UPVOTE);
+		//
+		// updateRequest.setHeader("Accept", "application/json");
+		// updateRequest.setEntity(stringEntity);
+		//
+		// HttpResponse response = httpClient.execute(updateRequest);
+		//
+		// String status = response.getStatusLine().toString();
+		// System.out.println("Status: " + status);
+		//
+		// String json = getEntityContent(response);
 	}
 
 	public String getEntityContent(HttpResponse response) throws IOException {
