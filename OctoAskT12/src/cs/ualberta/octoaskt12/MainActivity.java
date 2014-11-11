@@ -721,6 +721,7 @@ public class MainActivity extends FragmentActivity implements
 		public void onResume() {
 			super.onResume();
 			detailViewAdapter.notifyDataSetChanged();
+			QuestionsController.updateQuestion(question);
 		}
 	}
 }
