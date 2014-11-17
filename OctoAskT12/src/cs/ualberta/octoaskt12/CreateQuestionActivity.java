@@ -3,12 +3,15 @@ package cs.ualberta.octoaskt12;
 import java.io.File;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -140,6 +143,47 @@ public class CreateQuestionActivity extends Activity {
 				question.setImage(picture);	
 			}
 		}
+		
+		// new
+		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo ni = cm.getActiveNetworkInfo();
+
+		if (ni != null && ni.isConnected())
+		{
+			Log.i("Here 1", "Here 1");
+			Log.i("Here 1", "Here 1");
+			Log.i("Here 1", "Here 1");
+			Log.i("Here 1", "Here 1");
+			Log.i("Here 1", "Here 1");
+
+			/*
+			QuestionsCacheManager qcm = new QuestionsCacheManager();
+			//qcm.loadQuestions();
+			qcm.addQuestion(question);
+			qcm.saveQuestion();
+			*/
+		}
+		else
+		{
+			Log.i("Here 2", "Here 2");
+			Log.i("Here 2", "Here 2");
+			Log.i("Here 2", "Here 2");
+			Log.i("Here 2", "Here 2");
+			Log.i("Here 2", "Here 2");
+
+			/*
+			QuestionsCacheManager qcm = new QuestionsCacheManager();
+			qcm.loadQuestions();
+			*/
+			
+			/*
+			for (Question cachedQuestion : qcm.loadQuestions())
+			{
+				allQuestions.addQuestion(cachedQuestion);
+			}
+			*/
+		}
+		
 		QuestionsController.addQuestion(question);
 		onBackPressed();
 	}

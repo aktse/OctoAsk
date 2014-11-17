@@ -1,6 +1,6 @@
 package cs.ualberta.octoaskt12.geol;
 
-import com.google.android.gms.common.GooglePlayServicesUtil;
+//import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import android.content.Context;
 
@@ -10,7 +10,7 @@ public class version {
 		
 		
 		
-		int t = GooglePlayServicesUtil.isGooglePlayServicesAvailable(cntxt);
+		// int t = GooglePlayServicesUtil.isGooglePlayServicesAvailable(cntxt);
 		
 		
 		//if

@@ -1,15 +1,15 @@
 package cs.ualberta.octoaskt12;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import org.apache.http.client.ClientProtocolException;
 
+import android.content.Context;
 import cs.ualberta.octoaskt12.ES.ESClient;
 
 public class QuestionsController {
 	private static QuestionArrayList allQuestions = null;
-
+	public static Context cntxt;
+	
 	/*
 	 * If allQuestions hasn't been instantiated, then this method will make that
 	 * instance. If allQuestions is already instantiated, then this method will
