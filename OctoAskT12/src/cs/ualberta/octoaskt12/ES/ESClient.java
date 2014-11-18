@@ -58,7 +58,7 @@ public class ESClient {
 		ESSearchSearchResponse<Question> esResponse = gson.fromJson(json,
 				esResponseType);
 
-		// System.out.println("Response: " + esResponse);
+		System.out.println("Response: " + esResponse);
 		QuestionArrayList qal = new QuestionArrayList();
 		for (ESResponse<Question> r : esResponse.getHits()) {
 			Question question = r.getSource();
@@ -161,5 +161,51 @@ public class ESClient {
 		}
 		// System.out.println("JSON:"+json);
 		return json;
+	}
+
+	public QuestionArrayList searchQuestions(String searchString)
+			throws ClientProtocolException, IOException {
+
+		HttpPost searchRequest = new HttpPost(
+				"http://cmput301.softwareprocess.es:8080/cmput301f14t12/_search?size=150");
+
+		String SEARCH_USER_FAV = "{\n" + "\"query\":{\n"
+				+ "\"fuzzy_like_this\":{\n" + "\"fields\": [" + "\"questionBody\", \"questionTitle\", \"answers.answerBody\"],\n"
+				+ "\"like_text\":" + "\"" + searchString + "\"" + "\n}\n}\n}\n}";
+
+		System.out.println(SEARCH_USER_FAV);
+		StringEntity stringEntity = new StringEntity(SEARCH_USER_FAV);
+
+		searchRequest.setHeader("Accept", "application/json");
+		searchRequest.setEntity(stringEntity);
+
+		HttpResponse response = httpClient.execute(searchRequest);
+
+		String status = response.getStatusLine().toString();
+		System.out.println("Status: " + status);
+
+		String json = getEntityContent(response);
+
+		Type esResponseType = new TypeToken<ESSearchSearchResponse<Question>>() {
+		}.getType();
+		ESSearchSearchResponse<Question> esResponse = gson.fromJson(json,
+				esResponseType);
+
+		//System.out.println("Response: " + esResponse);
+		QuestionArrayList qal = new QuestionArrayList();
+		for (ESResponse<Question> r : esResponse.getHits()) {
+			Question question = r.getSource();
+			// System.out.println(question.getTitle());
+			if (question.getImageBase64() != null) {
+				question.setImage(question.decodeBase64(question
+						.getImageBase64()));
+			}
+			if (question.getId() == null) {
+				question.setId(r.getId());
+				System.out.println("ID: " + question.getId());
+			}
+			qal.addQuestion(question);
+		}
+		return qal;
 	}
 }
