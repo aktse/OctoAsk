@@ -81,28 +81,20 @@ public class MainActivity extends FragmentActivity implements
 
 		context = this;
 
+		// Set up the drawer.
+		// -----------------------------------------------------
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
 				.findFragmentById(R.id.navigation_drawer);
 		mTitle = getTitle();
 
-		// Set up the drawer.
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
 				(DrawerLayout) findViewById(R.id.drawer_layout));
+		// -------------------------------------------------------------------------
 
 		MyQuestionFilename = "ChrisFile";
 
 		// ElasticSearchAddQuestion.AddToDatabase();
 
-	}
-
-	public static void updateQuestions() {
-		try {
-			questionArrayList = QuestionsController.getAllQuestions();
-		} catch (ClientProtocolException e1) {
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
 	}
 
 	@Override
@@ -197,13 +189,22 @@ public class MainActivity extends FragmentActivity implements
 		return super.onOptionsItemSelected(item);
 	}
 
-	public void createDialog(MenuItem menu) {
+	public void createSortDialog(MenuItem menu) {
+		// Creates a dialog fragment to prompt user into making a selection to
+		// sort view
 		SortFragment sortFragment = SortFragment.newInstance(sortIndex);
 		sortFragment.show(getSupportFragmentManager(), "Sort");
 	}
 
-	public void doPositiveClick(String string, int sortIndex) {
+	public void createSearchDialog(MenuItem menu) {
+		SearchFragment searchFragment = SearchFragment.newInstance();
+		searchFragment.show(getSupportFragmentManager(), "Search");
+	}
 
+	public void doPositiveClick(String string, int sortIndex) {
+		// Positive click of sorting dialog fragment
+		// Calls a SortManager and sorts the current array based on user
+		// selection
 		SortManager sortManager = new SortManager();
 		this.sortIndex = sortIndex;
 		if (string == "Date") {
@@ -215,6 +216,7 @@ public class MainActivity extends FragmentActivity implements
 		} else {
 			System.out.println("invalid selection");
 		}
+		// Refresh display
 		FragmentManager fragmentManager = getFragmentManager();
 		fragmentManager.beginTransaction()
 				.replace(R.id.container, QuestionFragment.newInstance())
@@ -222,119 +224,32 @@ public class MainActivity extends FragmentActivity implements
 	}
 
 	public void doNegativeClick() {
-
+		// Cancels dialog fragments
 	}
 
-	public static class QuestionFragment extends Fragment {
-
-		public CustomArrayAdapter questionsViewAdapter = null;
-
-		public static QuestionFragment newInstance() {
-			QuestionFragment fragment = new QuestionFragment();
-			return fragment;
+	public static void updateQuestions() {
+		// Updates questions by querying server
+		try {
+			questionArrayList = QuestionsController.getAllQuestions();
+		} catch (ClientProtocolException e1) {
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
+	}
 
-		public QuestionFragment() {
+	public void searchQuestions(String searchString) {
+		try {
+			questionArrayList = SearchController.searchQuestions(searchString);
+		} catch (ClientProtocolException e1) {
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			this.questionsViewAdapter = new CustomArrayAdapter(getActivity(),
-					questionArrayList);
-			View rootView = inflater.inflate(R.layout.fragment_question,
-					container, false);
-
-			final ListView lv = (ListView) rootView
-					.findViewById(R.id.question_list);
-			lv.setAdapter(questionsViewAdapter);
-			questionsViewAdapter.notifyDataSetChanged();
-			lv.setOnItemClickListener(new OnItemClickListener() {
-
-				@Override
-				public void onItemClick(AdapterView<?> parent, View view,
-						int position, long id) {
-					FragmentManager fragmentManager = getFragmentManager();
-					fragmentManager
-							.beginTransaction()
-							.replace(
-									R.id.container,
-									QuestionDetailFragment
-											.newInstance(questionArrayList
-													.getQuestions().get(
-															position)))
-							.commit();
-				}
-
-			});
-
-			final SwipeRefreshLayout swipeLayout = (SwipeRefreshLayout) rootView
-					.findViewById(R.id.swipe_container);
-			swipeLayout
-					.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-						@Override
-						public void onRefresh() {
-							swipeLayout.setRefreshing(true);
-							updateQuestions();
-							swipeLayout.setRefreshing(false);
-							questionsViewAdapter = new CustomArrayAdapter(
-									getActivity(), questionArrayList);
-							lv.setAdapter(questionsViewAdapter);
-							onResume();
-							questionsViewAdapter.notifyDataSetChanged();
-						}
-					});
-
-			swipeLayout.setColorSchemeResources(
-					android.R.color.holo_blue_bright,
-					android.R.color.holo_green_light,
-					android.R.color.holo_orange_light,
-					android.R.color.holo_red_light);
-
-			lv.setOnScrollListener(new AbsListView.OnScrollListener() {
-				@Override
-				public void onScrollStateChanged(AbsListView absListView, int i) {
-
-				}
-
-				@Override
-				public void onScroll(AbsListView absListView,
-						int firstVisibleItem, int visibleItemCount,
-						int totalItemCount) {
-					if (firstVisibleItem == 0)
-						swipeLayout.setEnabled(true);
-					else
-						swipeLayout.setEnabled(false);
-				}
-			});
-
-			return rootView;
-		}
-
-		// @Override
-		// public void onRefresh() {
-		// updateQuestions();
-		// }
-
-		@Override
-		public void onResume() {
-			super.onResume();
-			SortManager sortManager = new SortManager();
-			if (sortIndex == 0) {
-				questionArrayList = sortManager.SortByDate(questionArrayList);
-			} else if (sortIndex == 1) {
-				questionArrayList = sortManager.SortByVotes(questionArrayList);
-			} else {
-				questionArrayList = sortManager.SortByImages(questionArrayList);
-			}
-			questionsViewAdapter.notifyDataSetChanged();
-		}
-
-		@Override
-		public void onAttach(Activity activity) {
-			super.onAttach(activity);
-			((MainActivity) activity).onSectionAttached(1);
-		}
+		FragmentManager fragmentManager = getFragmentManager();
+		fragmentManager.beginTransaction()
+				.replace(R.id.container, QuestionFragment.newInstance())
+				.commit();
 	}
 
 	public void createQuestion(MenuItem menu) {
@@ -409,6 +324,121 @@ public class MainActivity extends FragmentActivity implements
 		OfflineDataManager.LoadMyQuestions(context, questions);
 	}
 
+	public static class QuestionFragment extends Fragment {
+
+		public CustomArrayAdapter questionsViewAdapter = null;
+
+		public static QuestionFragment newInstance() {
+			QuestionFragment fragment = new QuestionFragment();
+			return fragment;
+		}
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+				Bundle savedInstanceState) {
+			this.questionsViewAdapter = new CustomArrayAdapter(getActivity(),
+					questionArrayList);
+			View rootView = inflater.inflate(R.layout.fragment_question,
+					container, false);
+
+			final ListView lv = (ListView) rootView
+					.findViewById(R.id.question_list);
+			lv.setAdapter(questionsViewAdapter);
+			questionsViewAdapter.notifyDataSetChanged();
+			lv.setOnItemClickListener(new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+					FragmentManager fragmentManager = getFragmentManager();
+					fragmentManager
+							.beginTransaction()
+							.replace(
+									R.id.container,
+									QuestionDetailFragment
+											.newInstance(questionArrayList
+													.getQuestions().get(
+															position)))
+							.commit();
+				}
+
+			});
+
+			// Code which calls the update function to get new questions from
+			// the server
+			final SwipeRefreshLayout swipeLayout = (SwipeRefreshLayout) rootView
+					.findViewById(R.id.swipe_container);
+			swipeLayout
+					.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+						@Override
+						public void onRefresh() {
+							swipeLayout.setRefreshing(true);
+							updateQuestions();
+							swipeLayout.setRefreshing(false);
+							questionsViewAdapter = new CustomArrayAdapter(
+									getActivity(), questionArrayList);
+							lv.setAdapter(questionsViewAdapter);
+							onResume();
+							questionsViewAdapter.notifyDataSetChanged();
+						}
+					});
+
+			swipeLayout.setColorSchemeResources(
+					android.R.color.holo_blue_bright,
+					android.R.color.holo_green_light,
+					android.R.color.holo_orange_light,
+					android.R.color.holo_red_light);
+
+			// Listener for scrolling refresh
+			lv.setOnScrollListener(new AbsListView.OnScrollListener() {
+				@Override
+				public void onScrollStateChanged(AbsListView absListView, int i) {
+
+				}
+
+				// Disables scrolling refresh if view is not at the top of the
+				// screen
+				@Override
+				public void onScroll(AbsListView absListView,
+						int firstVisibleItem, int visibleItemCount,
+						int totalItemCount) {
+					if (firstVisibleItem == 0)
+						swipeLayout.setEnabled(true);
+					else
+						swipeLayout.setEnabled(false);
+				}
+			});
+
+			return rootView;
+		}
+
+		@Override
+		public void onResume() {
+			super.onResume();
+
+			// Re-sorts the array when app is closed and reopened
+			// Guarentees consistency in sorting (doesn't randomly unsort)
+			SortManager sortManager = new SortManager();
+			if (sortIndex == 0) {
+				questionArrayList = sortManager.SortByDate(questionArrayList);
+			} else if (sortIndex == 1) {
+				questionArrayList = sortManager.SortByVotes(questionArrayList);
+			} else {
+				questionArrayList = sortManager.SortByImages(questionArrayList);
+			}
+			questionsViewAdapter.notifyDataSetChanged();
+			// -----------------------------------------------------------------
+
+		}
+
+		@Override
+		public void onAttach(Activity activity) {
+			super.onAttach(activity);
+			((MainActivity) activity).onSectionAttached(1);
+		}
+
+	}
+
 	public static class MyQuestionsFragment extends Fragment {
 
 		public CustomArrayAdapter MyQuestionAdapter = null;
@@ -416,9 +446,6 @@ public class MainActivity extends FragmentActivity implements
 		public static MyQuestionsFragment newInstance() {
 			MyQuestionsFragment fragment = new MyQuestionsFragment();
 			return fragment;
-		}
-
-		public MyQuestionsFragment() {
 		}
 
 		@Override
@@ -471,9 +498,6 @@ public class MainActivity extends FragmentActivity implements
 		public static FavoriteFragment newInstance() {
 			FavoriteFragment fragment = new FavoriteFragment();
 			return fragment;
-		}
-
-		public FavoriteFragment() {
 		}
 
 		@Override
@@ -712,12 +736,12 @@ public class MainActivity extends FragmentActivity implements
 							UserController.getCurrentUser());
 					question.addAnswer(answer);
 					QuestionsController.updateQuestion(question);
-					
+
 				}
 			}
-
 		}
 
+		// Updates the displays with any new replies/answers
 		public void onResume() {
 			super.onResume();
 			detailViewAdapter.notifyDataSetChanged();

@@ -28,11 +28,14 @@
 # onClick res/layout/activity_create_question.xml #generated:86
 -keepclassmembers class * { *** cancelQuestionAction(...); }
 
-# onClick res/menu/main.xml #generated:13
--keepclassmembers class * { *** createDialog(...); }
-
 # onClick res/menu/main.xml #generated:5
 -keepclassmembers class * { *** createQuestion(...); }
+
+# onClick res/menu/main.xml #generated:17
+-keepclassmembers class * { *** createSearchDialog(...); }
+
+# onClick res/menu/main.xml #generated:11
+-keepclassmembers class * { *** createSortDialog(...); }
 
 # onClick res/layout/activity_create_question.xml #generated:93
 -keepclassmembers class * { *** submitQuestionAction(...); }

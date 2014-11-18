@@ -7,13 +7,17 @@
         android:onClick="createQuestion"
         android:title="Create Question">
     </item>
-
-
     
     <item
         android:id="@+id/sort"
-        android:onClick="createDialog"
+        android:onClick="createSortDialog"
         android:title="Sort">
+    </item>
+    
+    <item
+        android:id="@+id/search"
+        android:onClick="createSearchDialog"
+        android:title="Search">
     </item>
 
 </menu>
