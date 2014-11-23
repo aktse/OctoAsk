@@ -1,6 +1,7 @@
 package cs.ualberta.octoaskt12;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
@@ -145,47 +146,56 @@ public class CreateQuestionActivity extends Activity {
 		}
 		
 		// new
-		/*
+
+		
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo ni = cm.getActiveNetworkInfo();
 
+		// have connection
 		if (ni != null)
 		{
-			Log.i("Here 1", "Here 1");
-			Log.i("Here 1", "Here 1");
-			Log.i("Here 1", "Here 1");
-			Log.i("Here 1", "Here 1");
-			Log.i("Here 1", "Here 1");
-
 			
-			QuestionsCacheManager qcm = new QuestionsCacheManager();
-			//qcm.loadQuestions();
-			qcm.addQuestion(question);
-			qcm.saveQuestion();
+			//Log.i("Here 1", "Here 1");
+			//Log.i("Here 1", "Here 1");
+			//Log.i("Here 1", "Here 1");
+			//Log.i("Here 1", "Here 1");
+			//Log.i("Here 1", "Here 1");
+			
+			
+			QuestionsController.addQuestion(question);
+			Toast.makeText(getBaseContext(), "Have connection,  question added.", Toast.LENGTH_SHORT).show();
+			
+			
+			QuestionsCacheManager qcm = new QuestionsCacheManager(getApplicationContext());
+			qcm.loadQuestions();
+			ArrayList<Question> cachedQuestions = qcm.getQuestions();
+			
+			for (Question cachedQuestion : cachedQuestions)
+			{
+				QuestionsController.addQuestion(cachedQuestion);
+			}			
 			
 		}
 		else
 		{
-			Log.i("Here 2", "Here 2");
-			Log.i("Here 2", "Here 2");
-			Log.i("Here 2", "Here 2");
-			Log.i("Here 2", "Here 2");
-			Log.i("Here 2", "Here 2");
+			
 
+			//Log.i("Here 2", "Here 2");
+			//Log.i("Here 2", "Here 2");
+			//Log.i("Here 2", "Here 2");
+			//Log.i("Here 2", "Here 2");
+			//Log.i("Here 2", "Here 2");
 			
-			QuestionsCacheManager qcm = new QuestionsCacheManager();
+			
+			QuestionsCacheManager qcm = new QuestionsCacheManager(getApplicationContext());
 			qcm.loadQuestions();
+			qcm.addQuestion(question);
+			qcm.saveQuestion();
 			
-			
-			
-			for (Question cachedQuestion : qcm.loadQuestions())
-			{
-				allQuestions.addQuestion(cachedQuestion);
-			}
-			
+			Toast.makeText(getBaseContext(), "No onnection,  question cached.", Toast.LENGTH_SHORT).show();
 		}
-		*/
-		QuestionsController.addQuestion(question);
+
+		//QuestionsController.addQuestion(question);
 		onBackPressed();
 	}
 }

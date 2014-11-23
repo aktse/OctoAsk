@@ -3,13 +3,17 @@ package cs.ualberta.octoaskt12;
 import java.io.IOException;
 import org.apache.http.client.ClientProtocolException;
 
+import android.app.Activity;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.view.View;
+import android.widget.Toast;
 import cs.ualberta.octoaskt12.ES.ESClient;
 
 public class QuestionsController {
 	private static QuestionArrayList allQuestions = null;
-	public static Context cntxt;
-	
+
 	/*
 	 * If allQuestions hasn't been instantiated, then this method will make that
 	 * instance. If allQuestions is already instantiated, then this method will
@@ -17,10 +21,11 @@ public class QuestionsController {
 	 */
 	public static QuestionArrayList getAllQuestions()
 			throws ClientProtocolException, IOException {
+
 		ESClient esc = new ESClient();
 		allQuestions = esc.getQuestions();
-
 		return allQuestions;
+
 	}
 
 	// return the user's questions, in the form of an ArrayList.

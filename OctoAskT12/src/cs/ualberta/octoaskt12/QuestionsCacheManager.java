@@ -1,5 +1,6 @@
 package cs.ualberta.octoaskt12;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -13,20 +14,40 @@ public class QuestionsCacheManager {
 	private static final String FILENAME = "OfflineQuestions.sav";
 	private User user;
 	private Context context;
-	ArrayList<Question> qlist;
+	public ArrayList<Question> qlist;
 	
-	public QuestionsCacheManager()
+	public QuestionsCacheManager(Context context)
 	{
-		//this.context = context;
+		this.context = context;
 		qlist = new ArrayList<Question>();
+		
+		
 	}
 	
-	public ArrayList<Question> loadQuestions()
+	public void init()
+	{
+		try {
+			FileOutputStream fos = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(this.qlist);
+			Log.i("QCM", "file created.");
+			fos.close();
+			oos.close();
+		}
+		catch (Exception e) {
+			Log.i("QuestionsCacheManager", "Error creating");
+			e.printStackTrace();
+			File offlineData = new File(context.getFilesDir(), "OfflineQuestions.sav");
+		}
+	}
+	public void loadQuestions()
 	{		
 		try {
 			FileInputStream fis = context.openFileInput(FILENAME);
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			this.qlist = (ArrayList<Question>) ois.readObject();
+			
+			Log.i("QCM", "Loaded questions");
 
 			fis.close();
 			ois.close();
@@ -35,6 +56,10 @@ public class QuestionsCacheManager {
 			e.printStackTrace();
 		}
 
+	}
+	
+	public ArrayList<Question> getQuestions()
+	{
 		return this.qlist;
 	}
 	
@@ -49,6 +74,7 @@ public class QuestionsCacheManager {
 			FileOutputStream fos = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeObject(this.qlist);
+			Log.i("QCM", "Saved questions to cache");
 			fos.close();
 			oos.close();
 		}
