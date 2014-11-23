@@ -267,9 +267,10 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 				public void onClick(View v) {
 					if (question.getUpvotedUsers().contains(
 							UserController.getCurrentUser())) {
-						Toast.makeText(context,
-								"You already upvoted this question!",
-								Toast.LENGTH_SHORT).show();
+						question.decrementVotes();
+						question.removeUpvotedUser(UserController.getCurrentUser());
+						notifyDataSetChanged();
+						QuestionsController.updateQuestion(question);
 					} else {
 						if (UserController.getCurrentUser() == null) {
 							Intent intent = new Intent(context,

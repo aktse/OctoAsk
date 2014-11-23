@@ -8,6 +8,7 @@ public class version {
 	public void version(Context cntxt) {
 
 		//GooglePlayServicesUtil.isGooglePlayServicesAvailable(cntxt);
+
 		// if
 
 		// SUCCESS, 0

@@ -324,6 +324,20 @@ public class MainActivity extends FragmentActivity implements
 		return context;
 	}
 
+	@Override
+	public void onBackPressed() {
+		int count = getFragmentManager().getBackStackEntryCount();
+		if (count > 0) {
+			FragmentManager fragmentManager = getFragmentManager();
+			fragmentManager.popBackStackImmediate();
+			fragmentManager.beginTransaction()
+					.replace(R.id.container, QuestionFragment.newInstance())
+					.commit();
+		} else {
+			super.onBackPressed();
+		}
+	}
+
 	public static void LoadMyQuestions(Context context,
 			QuestionArrayList questions) throws ClassNotFoundException {
 		OfflineDataManager.LoadMyQuestions(context, questions);
@@ -363,8 +377,9 @@ public class MainActivity extends FragmentActivity implements
 									QuestionDetailFragment
 											.newInstance(questionArrayList
 													.getQuestions().get(
-															position)))
-							.commit();
+															position)),
+									"QuestionDetailFragment")
+							.addToBackStack("QuestionDetailFragment").commit();
 				}
 
 			});
