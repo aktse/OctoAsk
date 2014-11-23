@@ -418,6 +418,7 @@ containing a value of this type.
         public static final int question_button=0x7f020023;
         public static final int question_edit_text=0x7f020024;
         public static final int upvote=0x7f020025;
+        public static final int upvoterepresent=0x7f020026;
     }
     public static final class id {
         public static final int action_settings=0x7f070040;
