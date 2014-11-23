@@ -65,6 +65,10 @@ public class Answer implements Serializable {
 	public void incrementVotes() {
 		numVotes++;
 	}
+	
+	public void decrementVotes() {
+		numVotes--;
+	}
 
 	/***************************************************************************
 	 * These methods concerns the replies associated with the answer.
@@ -114,6 +118,10 @@ public class Answer implements Serializable {
 		this.upvotedUsers.add(user);
 	}
 
+	public void removeUpvotedUser(User user){
+		this.upvotedUsers.remove(user);
+	}
+	
 	public void setImage(Bitmap bitmap) {
 		this.image = bitmap;
 		this.imageBase64 = encodeToBase64(bitmap);

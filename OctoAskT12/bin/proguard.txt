@@ -37,6 +37,9 @@
 # onClick res/menu/main.xml #generated:11
 -keepclassmembers class * { *** createSortDialog(...); }
 
+# onClick res/layout/fragment_profile.xml #generated:16
+-keepclassmembers class * { *** setUsername(...); }
+
 # onClick res/layout/activity_create_question.xml #generated:93
 -keepclassmembers class * { *** submitQuestionAction(...); }
 
