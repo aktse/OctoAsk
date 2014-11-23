@@ -421,7 +421,7 @@ containing a value of this type.
         public static final int upvoterepresent=0x7f020026;
     }
     public static final class id {
-        public static final int action_settings=0x7f0a0040;
+        public static final int action_settings=0x7f0a0042;
         public static final int add_answer_button=0x7f0a0032;
         public static final int answerBodyText=0x7f0a0014;
         public static final int answer_upvote_caption=0x7f0a0026;
@@ -432,6 +432,7 @@ containing a value of this type.
         public static final int cancelAnswerButton=0x7f0a0015;
         public static final int cancelQuestionButton=0x7f0a001b;
         public static final int cancelReplyButton=0x7f0a001e;
+        public static final int changeUserButton=0x7f0a0038;
         public static final int classic=0x7f0a0011;
         public static final int container=0x7f0a0021;
         public static final int detail_answer_header=0x7f0a0027;
@@ -448,14 +449,14 @@ containing a value of this type.
         public static final int holo_dark=0x7f0a0005;
         public static final int holo_light=0x7f0a0006;
         public static final int hybrid=0x7f0a0000;
-        public static final int item1=0x7f0a0041;
+        public static final int item1=0x7f0a0043;
         public static final int later_list=0x7f0a0035;
-        public static final int layout_bottom=0x7f0a003c;
-        public static final int list_question_answer=0x7f0a003d;
-        public static final int list_question_time=0x7f0a003e;
-        public static final int list_question_title=0x7f0a003a;
-        public static final int list_question_upvote=0x7f0a0039;
-        public static final int list_question_upvote_caption=0x7f0a003b;
+        public static final int layout_bottom=0x7f0a003e;
+        public static final int list_question_answer=0x7f0a003f;
+        public static final int list_question_time=0x7f0a0040;
+        public static final int list_question_title=0x7f0a003c;
+        public static final int list_question_upvote=0x7f0a003b;
+        public static final int list_question_upvote_caption=0x7f0a003d;
         public static final int loginText=0x7f0a0023;
         public static final int match_parent=0x7f0a000c;
         public static final int monochrome=0x7f0a0013;
@@ -469,24 +470,25 @@ containing a value of this type.
         public static final int question_ImageButton=0x7f0a0018;
         public static final int question_ImageView=0x7f0a0017;
         public static final int question_ImageViewFinal=0x7f0a002e;
-        public static final int question_list=0x7f0a0038;
+        public static final int question_list=0x7f0a003a;
         public static final int question_upvote_caption=0x7f0a002b;
         public static final int replyBodyText=0x7f0a001d;
         public static final int sandbox=0x7f0a0008;
         public static final int satellite=0x7f0a0003;
-        public static final int search=0x7f0a0043;
-        public static final int search_dialog=0x7f0a003f;
+        public static final int search=0x7f0a0045;
+        public static final int search_dialog=0x7f0a0041;
         public static final int selectionDetails=0x7f0a000b;
         public static final int setUsernameButton=0x7f0a0024;
-        public static final int sort=0x7f0a0042;
+        public static final int sort=0x7f0a0044;
         public static final int strict_sandbox=0x7f0a0009;
         public static final int submitAnswerButton=0x7f0a0016;
         public static final int submitQuestionButton=0x7f0a001c;
         public static final int submitReplyButton=0x7f0a001f;
-        public static final int swipe_container=0x7f0a0037;
+        public static final int swipe_container=0x7f0a0039;
         public static final int terrain=0x7f0a0004;
         public static final int upvote_answer_button=0x7f0a0025;
         public static final int upvote_question_button=0x7f0a002a;
+        public static final int username=0x7f0a0037;
         public static final int view_question_detail=0x7f0a0031;
         public static final int wrap_content=0x7f0a000d;
     }
