@@ -125,12 +125,12 @@ public class MainActivity extends FragmentActivity implements
 			break;
 		case 5:
 			fragmentManager.beginTransaction()
-					.replace(R.id.container, ProfileFragment.newInstance())
+					.replace(R.id.container, HistoryFragment.newInstance())
 					.commit();
 			break;
 		case 6:
 			fragmentManager.beginTransaction()
-					.replace(R.id.container, HistoryFragment.newInstance())
+					.replace(R.id.container, ProfileFragment.newInstance())
 					.commit();
 			break;
 		}
@@ -626,57 +626,7 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
-	public static class ProfileFragment extends Fragment {
-
-		private static ProfileFragment newInstance() {
-			ProfileFragment fragment = new ProfileFragment();
-			return fragment;
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_profile,
-					container, false);
-
-			if (UserController.getCurrentUser() == null) {
-				Intent intent = new Intent(getActivity(),
-						UserLoginActivity.class);
-				startActivityForResult(intent, REQUEST_CODE_USERNAME);
-			} else {
-				TextView textView = (TextView) rootView
-						.findViewById(R.id.username);
-				textView.setText(UserController.getCurrentUser().getName());
-			}
-
-			return rootView;
-		}
-
-		@Override
-		public void onAttach(Activity activity) {
-			super.onAttach(activity);
-			((MainActivity) activity).onSectionAttached(5);
-		}
-
-		@Override
-		public void onActivityResult(int requestCode, int resultCode,
-				Intent data) {
-			if (requestCode == REQUEST_CODE_USERNAME) {
-				if (UserController.getCurrentUser() == null) {
-					mNavigationDrawerFragment.selectItem(0);
-				} else {
-					FragmentManager fragmentManager = getFragmentManager();
-					fragmentManager
-							.beginTransaction()
-							.replace(R.id.container,
-									ProfileFragment.newInstance()).commit();
-				}
-			}
-
-		}
-	}
-
-	// ======
+	// ========================================================================
 
 	public static class HistoryFragment extends Fragment {
 
@@ -730,7 +680,59 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
-	// =========
+	// ========================================================================
+	
+	public static class ProfileFragment extends Fragment {
+
+		private static ProfileFragment newInstance() {
+			ProfileFragment fragment = new ProfileFragment();
+			return fragment;
+		}
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+				Bundle savedInstanceState) {
+			View rootView = inflater.inflate(R.layout.fragment_profile,
+					container, false);
+
+			if (UserController.getCurrentUser() == null) {
+				Intent intent = new Intent(getActivity(),
+						UserLoginActivity.class);
+				startActivityForResult(intent, REQUEST_CODE_USERNAME);
+			} else {
+				TextView textView = (TextView) rootView
+						.findViewById(R.id.username);
+				textView.setText(UserController.getCurrentUser().getName());
+			}
+
+			return rootView;
+		}
+
+		@Override
+		public void onAttach(Activity activity) {
+			super.onAttach(activity);
+			((MainActivity) activity).onSectionAttached(5);
+		}
+
+		@Override
+		public void onActivityResult(int requestCode, int resultCode,
+				Intent data) {
+			if (requestCode == REQUEST_CODE_USERNAME) {
+				if (UserController.getCurrentUser() == null) {
+					mNavigationDrawerFragment.selectItem(0);
+				} else {
+					FragmentManager fragmentManager = getFragmentManager();
+					fragmentManager
+							.beginTransaction()
+							.replace(R.id.container,
+									ProfileFragment.newInstance()).commit();
+				}
+			}
+
+		}
+	}
+	
+	// ========================================================================
 
 	public static class QuestionDetailFragment extends Fragment {
 		protected static final int CREATE_ANSWER_ACTIVITY_CODE = 1234;
