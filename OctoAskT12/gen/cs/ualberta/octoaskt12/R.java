@@ -420,7 +420,7 @@ containing a value of this type.
         public static final int upvote=0x7f020025;
     }
     public static final class id {
-        public static final int action_settings=0x7f07003f;
+        public static final int action_settings=0x7f070040;
         public static final int add_answer_button=0x7f070032;
         public static final int answerBodyText=0x7f070014;
         public static final int answer_upvote_caption=0x7f070026;
@@ -447,7 +447,7 @@ containing a value of this type.
         public static final int holo_dark=0x7f070005;
         public static final int holo_light=0x7f070006;
         public static final int hybrid=0x7f070004;
-        public static final int item1=0x7f070040;
+        public static final int item1=0x7f070041;
         public static final int later_list=0x7f070035;
         public static final int layout_bottom=0x7f07003c;
         public static final int list_question_answer=0x7f07003d;
@@ -473,9 +473,11 @@ containing a value of this type.
         public static final int replyBodyText=0x7f07001d;
         public static final int sandbox=0x7f070008;
         public static final int satellite=0x7f070002;
+        public static final int search=0x7f070043;
+        public static final int search_dialog=0x7f07003f;
         public static final int selectionDetails=0x7f07000b;
         public static final int setUsernameButton=0x7f070024;
-        public static final int sort=0x7f070041;
+        public static final int sort=0x7f070042;
         public static final int strict_sandbox=0x7f070009;
         public static final int submitAnswerButton=0x7f070016;
         public static final int submitQuestionButton=0x7f07001c;
@@ -512,7 +514,8 @@ containing a value of this type.
         public static final int fragment_profile=0x7f030012;
         public static final int fragment_question=0x7f030013;
         public static final int fragment_question_list_item=0x7f030014;
-        public static final int sort_dialog=0x7f030015;
+        public static final int search_dialog=0x7f030015;
+        public static final int sort_dialog=0x7f030016;
     }
     public static final class menu {
         public static final int create_answer=0x7f0a0000;
