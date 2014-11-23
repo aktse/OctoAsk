@@ -145,10 +145,11 @@ public class CreateQuestionActivity extends Activity {
 		}
 		
 		// new
+		/*
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo ni = cm.getActiveNetworkInfo();
 
-		if (ni != null && ni.isConnected())
+		if (ni != null)
 		{
 			Log.i("Here 1", "Here 1");
 			Log.i("Here 1", "Here 1");
@@ -156,12 +157,12 @@ public class CreateQuestionActivity extends Activity {
 			Log.i("Here 1", "Here 1");
 			Log.i("Here 1", "Here 1");
 
-			/*
+			
 			QuestionsCacheManager qcm = new QuestionsCacheManager();
 			//qcm.loadQuestions();
 			qcm.addQuestion(question);
 			qcm.saveQuestion();
-			*/
+			
 		}
 		else
 		{
@@ -171,19 +172,19 @@ public class CreateQuestionActivity extends Activity {
 			Log.i("Here 2", "Here 2");
 			Log.i("Here 2", "Here 2");
 
-			/*
+			
 			QuestionsCacheManager qcm = new QuestionsCacheManager();
 			qcm.loadQuestions();
-			*/
 			
-			/*
+			
+			
 			for (Question cachedQuestion : qcm.loadQuestions())
 			{
 				allQuestions.addQuestion(cachedQuestion);
 			}
-			*/
+			
 		}
-		
+		*/
 		QuestionsController.addQuestion(question);
 		onBackPressed();
 	}
