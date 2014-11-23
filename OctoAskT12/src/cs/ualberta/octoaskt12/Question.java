@@ -83,6 +83,10 @@ public class Question implements Serializable {
 		numVotes++;
 	}
 
+	public void decrementVotes() {
+		numVotes--;
+	}
+	
 	/**
 	 * These methods concerns the answers associated with the question.
 	 */
@@ -147,6 +151,10 @@ public class Question implements Serializable {
 
 	public void addUpvotedUser(User user) {
 		this.upvotedUsers.add(user);
+	}
+	
+	public void removeUpvotedUser(User user) {
+		this.upvotedUsers.remove(user);
 	}
 
 	public ArrayList<User> getUpvotedUsers() {
