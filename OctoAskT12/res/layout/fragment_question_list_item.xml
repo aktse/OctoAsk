@@ -8,7 +8,7 @@
 	    android:id="@+id/list_question_upvote"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:src="@drawable/upvote"
+	    android:src="@drawable/upvoterepresent"
 	    android:layout_alignParentEnd="true"
 	    android:contentDescription="@string/upvote" />
 	    	
