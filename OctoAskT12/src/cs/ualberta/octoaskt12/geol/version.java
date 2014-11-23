@@ -10,7 +10,11 @@ public class version {
 		
 		
 		
+
 		// int t = GooglePlayServicesUtil.isGooglePlayServicesAvailable(cntxt);
+
+//		int t = GooglePlayServicesUtil.isGooglePlayServicesAvailable(cntxt);
+
 		
 		
 		//if
