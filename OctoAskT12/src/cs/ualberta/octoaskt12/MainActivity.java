@@ -40,6 +40,7 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+import android.webkit.WebView.FindListener;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -58,9 +59,11 @@ public class MainActivity extends FragmentActivity implements
 	public static QuestionArrayList questionArrayList = new QuestionArrayList();
 	public static QuestionArrayList sortedQuestionArrayList;
 
-	private NavigationDrawerFragment mNavigationDrawerFragment;
+	private static NavigationDrawerFragment mNavigationDrawerFragment;
 
 	private CharSequence mTitle;
+
+	private static int REQUEST_CODE_USERNAME = 1521;
 
 	private static int sortIndex = 0;
 
@@ -94,7 +97,6 @@ public class MainActivity extends FragmentActivity implements
 		// -------------------------------------------------------------------------
 
 		MyQuestionFilename = "ChrisFile";
-
 		// ElasticSearchAddQuestion.AddToDatabase();
 
 		// create new .sav data
@@ -202,6 +204,8 @@ public class MainActivity extends FragmentActivity implements
 	}
 
 	public void createSearchDialog(MenuItem menu) {
+		// Creates a dialog fragment to prompt user into entering keywords to
+		// search the database
 		SearchFragment searchFragment = SearchFragment.newInstance();
 		searchFragment.show(getSupportFragmentManager(), "Search");
 	}
@@ -269,6 +273,22 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
+	public void setUsername(View view) {
+		Intent intent = new Intent(this, UserLoginActivity.class);
+		startActivityForResult(intent, REQUEST_CODE_USERNAME);
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == REQUEST_CODE_USERNAME) {
+			FragmentManager fragmentManager = getFragmentManager();
+			fragmentManager.beginTransaction()
+					.replace(R.id.container, ProfileFragment.newInstance())
+					.commit();
+		}
+
+	}
+
 	public static void EditUsername() {
 		// TestCase 23
 		// waiting for implementation of other methods
@@ -327,6 +347,7 @@ public class MainActivity extends FragmentActivity implements
 	@Override
 	public void onBackPressed() {
 		int count = getFragmentManager().getBackStackEntryCount();
+		System.out.println(count);
 		if (count > 0) {
 			FragmentManager fragmentManager = getFragmentManager();
 			fragmentManager.popBackStackImmediate();
@@ -618,15 +639,22 @@ public class MainActivity extends FragmentActivity implements
 			return fragment;
 		}
 
-		public ProfileFragment() {
-
-		}
-
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.fragment_profile,
 					container, false);
+
+			if (UserController.getCurrentUser() == null) {
+				Intent intent = new Intent(getActivity(),
+						UserLoginActivity.class);
+				startActivityForResult(intent, REQUEST_CODE_USERNAME);
+			} else {
+				TextView textView = (TextView) rootView
+						.findViewById(R.id.username);
+				textView.setText(UserController.getCurrentUser().getName());
+			}
+
 			return rootView;
 		}
 
@@ -634,6 +662,23 @@ public class MainActivity extends FragmentActivity implements
 		public void onAttach(Activity activity) {
 			super.onAttach(activity);
 			((MainActivity) activity).onSectionAttached(5);
+		}
+
+		@Override
+		public void onActivityResult(int requestCode, int resultCode,
+				Intent data) {
+			if (requestCode == REQUEST_CODE_USERNAME) {
+				if (UserController.getCurrentUser() == null) {
+					mNavigationDrawerFragment.selectItem(0);
+				} else {
+					FragmentManager fragmentManager = getFragmentManager();
+					fragmentManager
+							.beginTransaction()
+							.replace(R.id.container,
+									ProfileFragment.newInstance()).commit();
+				}
+			}
+
 		}
 	}
 
