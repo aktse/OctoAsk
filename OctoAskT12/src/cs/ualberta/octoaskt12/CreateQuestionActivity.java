@@ -1,14 +1,18 @@
 package cs.ualberta.octoaskt12;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -140,7 +144,58 @@ public class CreateQuestionActivity extends Activity {
 				question.setImage(picture);	
 			}
 		}
-		QuestionsController.addQuestion(question);
+		
+		// new
+
+		
+		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo ni = cm.getActiveNetworkInfo();
+
+		// have connection
+		if (ni != null)
+		{
+			
+			//Log.i("Here 1", "Here 1");
+			//Log.i("Here 1", "Here 1");
+			//Log.i("Here 1", "Here 1");
+			//Log.i("Here 1", "Here 1");
+			//Log.i("Here 1", "Here 1");
+			
+			
+			QuestionsController.addQuestion(question);
+			Toast.makeText(getBaseContext(), "Have connection,  question added.", Toast.LENGTH_SHORT).show();
+			
+			
+			QuestionsCacheManager qcm = new QuestionsCacheManager(getApplicationContext());
+			qcm.loadQuestions();
+			ArrayList<Question> cachedQuestions = qcm.getQuestions();
+			
+			for (Question cachedQuestion : cachedQuestions)
+			{
+				QuestionsController.addQuestion(cachedQuestion);
+			}			
+			
+		}
+		else
+		{
+			
+
+			//Log.i("Here 2", "Here 2");
+			//Log.i("Here 2", "Here 2");
+			//Log.i("Here 2", "Here 2");
+			//Log.i("Here 2", "Here 2");
+			//Log.i("Here 2", "Here 2");
+			
+			
+			QuestionsCacheManager qcm = new QuestionsCacheManager(getApplicationContext());
+			qcm.loadQuestions();
+			qcm.addQuestion(question);
+			qcm.saveQuestion();
+			
+			Toast.makeText(getBaseContext(), "No onnection,  question cached.", Toast.LENGTH_SHORT).show();
+		}
+
+		//QuestionsController.addQuestion(question);
 		onBackPressed();
 	}
 }

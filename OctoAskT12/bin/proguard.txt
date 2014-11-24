@@ -4,13 +4,13 @@
 # view res/layout/fragment_question.xml #generated:1
 -keep class android.support.v4.widget.SwipeRefreshLayout { <init>(...); }
 
-# view AndroidManifest.xml #generated:47
+# view AndroidManifest.xml #generated:48
 -keep class cs.ualberta.octoaskt12.CreateAnswerActivity { <init>(...); }
 
-# view AndroidManifest.xml #generated:39
+# view AndroidManifest.xml #generated:40
 -keep class cs.ualberta.octoaskt12.CreateQuestionActivity { <init>(...); }
 
-# view AndroidManifest.xml #generated:51
+# view AndroidManifest.xml #generated:52
 -keep class cs.ualberta.octoaskt12.CreateReplyActivity { <init>(...); }
 
 # view AndroidManifest.xml #generated:26
@@ -19,10 +19,10 @@
 # view res/layout/activity_main.xml #generated:31
 -keep class cs.ualberta.octoaskt12.NavigationDrawerFragment { <init>(...); }
 
-# view AndroidManifest.xml #generated:43
+# view AndroidManifest.xml #generated:44
 -keep class cs.ualberta.octoaskt12.QuestionDetailedViewActivity { <init>(...); }
 
-# view AndroidManifest.xml #generated:35
+# view AndroidManifest.xml #generated:36
 -keep class cs.ualberta.octoaskt12.UserLoginActivity { <init>(...); }
 
 # onClick res/layout/activity_create_question.xml #generated:86
@@ -36,6 +36,9 @@
 
 # onClick res/menu/main.xml #generated:11
 -keepclassmembers class * { *** createSortDialog(...); }
+
+# onClick res/layout/fragment_profile.xml #generated:16
+-keepclassmembers class * { *** setUsername(...); }
 
 # onClick res/layout/activity_create_question.xml #generated:93
 -keepclassmembers class * { *** submitQuestionAction(...); }

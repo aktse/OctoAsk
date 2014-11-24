@@ -1,12 +1,15 @@
 package cs.ualberta.octoaskt12.geol;
 
 //import com.google.android.gms.common.GooglePlayServicesUtil;
-//import android.content.Context;
 
-//public class version {
+import android.content.Context;
 
-	//public void version(Context cntxt) {
+public class version {
+
+	public void version(Context cntxt) {
+
 		//GooglePlayServicesUtil.isGooglePlayServicesAvailable(cntxt);
+
 		// if
 
 		// SUCCESS, 0
@@ -29,5 +32,5 @@ package cs.ualberta.octoaskt12.geol;
 		// else
 
 		// return
-//	}
-//}
+	}
+}

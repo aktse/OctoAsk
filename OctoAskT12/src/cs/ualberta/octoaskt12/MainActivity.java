@@ -1,5 +1,6 @@
 package cs.ualberta.octoaskt12;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -39,6 +40,7 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+import android.webkit.WebView.FindListener;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -57,9 +59,11 @@ public class MainActivity extends FragmentActivity implements
 	public static QuestionArrayList questionArrayList = new QuestionArrayList();
 	public static QuestionArrayList sortedQuestionArrayList;
 
-	private NavigationDrawerFragment mNavigationDrawerFragment;
+	private static NavigationDrawerFragment mNavigationDrawerFragment;
 
 	private CharSequence mTitle;
+
+	private static int REQUEST_CODE_USERNAME = 1521;
 
 	private static int sortIndex = 0;
 
@@ -70,6 +74,7 @@ public class MainActivity extends FragmentActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
 
 		StrictMode.ThreadPolicy p = new StrictMode.ThreadPolicy.Builder()
 				.permitAll().build();
@@ -92,9 +97,11 @@ public class MainActivity extends FragmentActivity implements
 		// -------------------------------------------------------------------------
 
 		MyQuestionFilename = "ChrisFile";
-
 		// ElasticSearchAddQuestion.AddToDatabase();
 
+		// create new .sav data
+		QuestionsCacheManager qcm = new QuestionsCacheManager(getApplicationContext());
+		qcm.init();
 	}
 
 	@Override
@@ -124,12 +131,12 @@ public class MainActivity extends FragmentActivity implements
 			break;
 		case 5:
 			fragmentManager.beginTransaction()
-					.replace(R.id.container, ProfileFragment.newInstance())
+					.replace(R.id.container, HistoryFragment.newInstance())
 					.commit();
 			break;
 		case 6:
 			fragmentManager.beginTransaction()
-					.replace(R.id.container, HistoryFragment.newInstance())
+					.replace(R.id.container, ProfileFragment.newInstance())
 					.commit();
 			break;
 		}
@@ -197,6 +204,8 @@ public class MainActivity extends FragmentActivity implements
 	}
 
 	public void createSearchDialog(MenuItem menu) {
+		// Creates a dialog fragment to prompt user into entering keywords to
+		// search the database
 		SearchFragment searchFragment = SearchFragment.newInstance();
 		searchFragment.show(getSupportFragmentManager(), "Search");
 	}
@@ -264,6 +273,22 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
+	public void setUsername(View view) {
+		Intent intent = new Intent(this, UserLoginActivity.class);
+		startActivityForResult(intent, REQUEST_CODE_USERNAME);
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == REQUEST_CODE_USERNAME) {
+			FragmentManager fragmentManager = getFragmentManager();
+			fragmentManager.beginTransaction()
+					.replace(R.id.container, ProfileFragment.newInstance())
+					.commit();
+		}
+
+	}
+
 	public static void EditUsername() {
 		// TestCase 23
 		// waiting for implementation of other methods
@@ -319,6 +344,21 @@ public class MainActivity extends FragmentActivity implements
 		return context;
 	}
 
+	@Override
+	public void onBackPressed() {
+		int count = getFragmentManager().getBackStackEntryCount();
+		System.out.println(count);
+		if (count > 0) {
+			FragmentManager fragmentManager = getFragmentManager();
+			fragmentManager.popBackStackImmediate();
+			fragmentManager.beginTransaction()
+					.replace(R.id.container, QuestionFragment.newInstance())
+					.commit();
+		} else {
+			super.onBackPressed();
+		}
+	}
+
 	public static void LoadMyQuestions(Context context,
 			QuestionArrayList questions) throws ClassNotFoundException {
 		OfflineDataManager.LoadMyQuestions(context, questions);
@@ -358,8 +398,9 @@ public class MainActivity extends FragmentActivity implements
 									QuestionDetailFragment
 											.newInstance(questionArrayList
 													.getQuestions().get(
-															position)))
-							.commit();
+															position)),
+									"QuestionDetailFragment")
+							.addToBackStack("QuestionDetailFragment").commit();
 				}
 
 			});
@@ -591,33 +632,7 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
-	public static class ProfileFragment extends Fragment {
-
-		private static ProfileFragment newInstance() {
-			ProfileFragment fragment = new ProfileFragment();
-			return fragment;
-		}
-
-		public ProfileFragment() {
-
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_profile,
-					container, false);
-			return rootView;
-		}
-
-		@Override
-		public void onAttach(Activity activity) {
-			super.onAttach(activity);
-			((MainActivity) activity).onSectionAttached(5);
-		}
-	}
-
-	// ======
+	// ========================================================================
 
 	public static class HistoryFragment extends Fragment {
 
@@ -671,7 +686,59 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
-	// =========
+	// ========================================================================
+	
+	public static class ProfileFragment extends Fragment {
+
+		private static ProfileFragment newInstance() {
+			ProfileFragment fragment = new ProfileFragment();
+			return fragment;
+		}
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+				Bundle savedInstanceState) {
+			View rootView = inflater.inflate(R.layout.fragment_profile,
+					container, false);
+
+			if (UserController.getCurrentUser() == null) {
+				Intent intent = new Intent(getActivity(),
+						UserLoginActivity.class);
+				startActivityForResult(intent, REQUEST_CODE_USERNAME);
+			} else {
+				TextView textView = (TextView) rootView
+						.findViewById(R.id.username);
+				textView.setText(UserController.getCurrentUser().getName());
+			}
+
+			return rootView;
+		}
+
+		@Override
+		public void onAttach(Activity activity) {
+			super.onAttach(activity);
+			((MainActivity) activity).onSectionAttached(5);
+		}
+
+		@Override
+		public void onActivityResult(int requestCode, int resultCode,
+				Intent data) {
+			if (requestCode == REQUEST_CODE_USERNAME) {
+				if (UserController.getCurrentUser() == null) {
+					mNavigationDrawerFragment.selectItem(0);
+				} else {
+					FragmentManager fragmentManager = getFragmentManager();
+					fragmentManager
+							.beginTransaction()
+							.replace(R.id.container,
+									ProfileFragment.newInstance()).commit();
+				}
+			}
+
+		}
+	}
+	
+	// ========================================================================
 
 	public static class QuestionDetailFragment extends Fragment {
 		protected static final int CREATE_ANSWER_ACTIVITY_CODE = 1234;

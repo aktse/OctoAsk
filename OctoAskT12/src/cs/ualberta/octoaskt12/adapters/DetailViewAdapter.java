@@ -152,7 +152,7 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 						Intent intent = new Intent(context,
 								CreateReplyActivity.class);
 						intent.putExtra("replyFor", "0");
-//						intent.putExtra("answerPos", )
+						// intent.putExtra("answerPos", )
 						AnswerHolder answerHolder = AnswerHolder.getInstance();
 						answerHolder.setAnswer(answers.get(groupPosition - 1));
 						((Activity) context).startActivity(intent);
@@ -267,9 +267,11 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 				public void onClick(View v) {
 					if (question.getUpvotedUsers().contains(
 							UserController.getCurrentUser())) {
-						Toast.makeText(context,
-								"You already upvoted this question!",
-								Toast.LENGTH_SHORT).show();
+						question.decrementVotes();
+						question.removeUpvotedUser(UserController
+								.getCurrentUser());
+						notifyDataSetChanged();
+						QuestionsController.updateQuestion(question);
 					} else {
 						if (UserController.getCurrentUser() == null) {
 							Intent intent = new Intent(context,
@@ -314,9 +316,11 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 				public void onClick(View v) {
 					if (answers.get(groupPosition - 1).getUpvotedUsers()
 							.contains(UserController.getCurrentUser())) {
-						Toast.makeText(context,
-								"You already upvoted this question!",
-								Toast.LENGTH_SHORT).show();
+						answers.get(groupPosition - 1).decrementVotes();
+						answers.get(groupPosition - 1).removeUpvotedUser(
+								UserController.getCurrentUser());
+						notifyDataSetChanged();
+						QuestionsController.updateQuestion(question);
 					} else {
 						if (UserController.getCurrentUser() == null) {
 							Intent intent = new Intent(context,
