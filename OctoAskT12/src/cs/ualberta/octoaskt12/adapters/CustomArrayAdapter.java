@@ -34,11 +34,11 @@ public class CustomArrayAdapter extends ArrayAdapter<Question> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View view = convertView;
-		if (view == null) {
-			LayoutInflater inflater = (LayoutInflater) getContext()
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			view = inflater.inflate(R.layout.fragment_question_list_item, null);
-		}
+		
+		LayoutInflater inflater = (LayoutInflater) getContext()
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		view = inflater.inflate(R.layout.fragment_question_list_item, null);
+		
 
 		TextView question = (TextView) view
 				.findViewById(R.id.list_question_title);

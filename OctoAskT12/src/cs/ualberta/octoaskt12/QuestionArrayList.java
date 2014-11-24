@@ -42,6 +42,10 @@ public class QuestionArrayList implements Serializable {
 	}
 	*/
 
+	public boolean has(Question question) {
+		return questions.contains(question);
+	}
+	
 	public ArrayList<Question> searchQuestion(String searchTerm) {
 		return null;
 		// TODO Auto-generated method stub
