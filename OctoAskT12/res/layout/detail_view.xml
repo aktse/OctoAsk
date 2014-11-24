@@ -24,7 +24,7 @@
 	        android:text="Add Reply"
 	        android:textSize="10sp" /> -->
 	
-	    <Button
+	<!--	 <Button
 	        android:id="@+id/add_answer_button"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
@@ -32,6 +32,16 @@
 	        android:text="Add Answer"
 	        android:textColor="#ffffff"
 	        android:textSize="10sp"
-	        android:layout_alignParentBottom="true" />
+	        android:layout_alignParentBottom="true" /> -->
+
+	    <Button
+	        android:id="@+id/add_answer_button"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:text="Add Answer"
+	        android:layout_alignLeft="@+id/view_question_detail"
+	        android:layout_alignParentBottom="true"
+	        android:layout_alignRight="@+id/view_question_detail" />
+
 		</RelativeLayout>
 </LinearLayout>

@@ -1,5 +1,6 @@
 package cs.ualberta.octoaskt12;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -79,6 +80,7 @@ public class MainActivity extends FragmentActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
 
 		StrictMode.ThreadPolicy p = new StrictMode.ThreadPolicy.Builder()
 				.permitAll().build();
@@ -101,7 +103,11 @@ public class MainActivity extends FragmentActivity implements
 		// -------------------------------------------------------------------------
 
 		MyQuestionFilename = "ChrisFile";
+		// ElasticSearchAddQuestion.AddToDatabase();
 
+		// create new .sav data
+		QuestionsCacheManager qcm = new QuestionsCacheManager(getApplicationContext());
+		qcm.init();
 	}
 
 	@Override
