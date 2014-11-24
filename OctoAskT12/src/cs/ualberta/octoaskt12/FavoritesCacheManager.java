@@ -1,5 +1,6 @@
 package cs.ualberta.octoaskt12;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -13,13 +14,31 @@ public class FavoritesCacheManager {
 	private static final String FILENAME = "favorites.sav";
 	private User user;
 	private Context context;
-	
+	public ArrayList<Question> flist;
+
 	public FavoritesCacheManager(Context context)
 	{
 		this.context = context;
 	}
 	
-	public Favorites loadFavorites()
+	public void init()
+	{
+		try {
+			FileOutputStream fos = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(this.flist);
+			Log.i("QCM", "favourites file opened.");
+			fos.close();
+			oos.close();
+		}
+		catch (Exception e) {
+			Log.i("FavouritesCacheManager", "Error creating");
+			e.printStackTrace();
+			File offlineData = new File(context.getFilesDir(), "favorites.sav");
+		}
+	}
+	
+	public void loadFavorites()
 	{
 		ArrayList<Question> favoritesList = new ArrayList<Question>();
 		Favorites fav = null;
@@ -34,8 +53,11 @@ public class FavoritesCacheManager {
 			Log.i("FavoritesCacheManager", "Error loading");
 			e.printStackTrace();
 		}
-
-		return fav;
+	}
+	
+	public ArrayList<Question> getFavourites()
+	{
+		return this.flist;
 	}
 	
 	public void saveFavorites(Favorites fav, User user) {

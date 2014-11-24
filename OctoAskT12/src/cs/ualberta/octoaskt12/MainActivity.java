@@ -24,6 +24,8 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -102,6 +104,8 @@ public class MainActivity extends FragmentActivity implements
 		// create new .sav data
 		QuestionsCacheManager qcm = new QuestionsCacheManager(getApplicationContext());
 		qcm.init();
+		FavoritesCacheManager fcm = new FavoritesCacheManager(getApplicationContext());
+		fcm.init();
 	}
 
 	@Override
@@ -457,6 +461,24 @@ public class MainActivity extends FragmentActivity implements
 		public void onResume() {
 			super.onResume();
 
+			ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(CallContext().CONNECTIVITY_SERVICE);
+			NetworkInfo ni = cm.getActiveNetworkInfo();
+
+			// have connection
+			if (ni != null)
+			{
+				
+				QuestionsCacheManager qcm = new QuestionsCacheManager(CallContext());
+				qcm.loadQuestions();
+				ArrayList<Question> cachedQuestions = qcm.getQuestions();
+				
+				for (Question cachedQuestion : cachedQuestions)
+				{
+					QuestionsController.addQuestion(cachedQuestion);
+				}			
+				
+			}		
+			
 			// Re-sorts the array when app is closed and reopened
 			// Guarentees consistency in sorting (doesn't randomly unsort)
 			SortManager sortManager = new SortManager();

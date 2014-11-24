@@ -165,7 +165,7 @@ public class CreateQuestionActivity extends Activity {
 			QuestionsController.addQuestion(question);
 			Toast.makeText(getBaseContext(), "Have connection,  question added.", Toast.LENGTH_SHORT).show();
 			
-			
+			/*
 			QuestionsCacheManager qcm = new QuestionsCacheManager(getApplicationContext());
 			qcm.loadQuestions();
 			ArrayList<Question> cachedQuestions = qcm.getQuestions();
@@ -174,6 +174,7 @@ public class CreateQuestionActivity extends Activity {
 			{
 				QuestionsController.addQuestion(cachedQuestion);
 			}			
+			*/
 			
 		}
 		else
