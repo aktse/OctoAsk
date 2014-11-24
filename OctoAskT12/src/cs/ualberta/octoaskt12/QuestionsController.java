@@ -1,10 +1,14 @@
 package cs.ualberta.octoaskt12;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import org.apache.http.client.ClientProtocolException;
 
+import android.app.Activity;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.view.View;
+import android.widget.Toast;
 import cs.ualberta.octoaskt12.ES.ESClient;
 
 public class QuestionsController {
@@ -17,10 +21,11 @@ public class QuestionsController {
 	 */
 	public static QuestionArrayList getAllQuestions()
 			throws ClientProtocolException, IOException {
+
 		ESClient esc = new ESClient();
 		allQuestions = esc.getQuestions();
-
 		return allQuestions;
+
 	}
 
 	// return the user's questions, in the form of an ArrayList.
