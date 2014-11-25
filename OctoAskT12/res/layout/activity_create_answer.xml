@@ -24,7 +24,7 @@
         android:padding="10dp" >
     </EditText>
 
-    <Button
+<!--    <Button
         android:id="@+id/cancelAnswerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,9 +34,18 @@
         android:background="@drawable/question_button"
         android:padding="10dp"
         android:text="Cancel"
-        android:textColor="#ffffff" />
-
+        android:textColor="#ffffff" /> -->
+        
     <Button
+        android:id="@+id/cancelAnswerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/answerBodyText"
+        android:layout_below="@+id/answerBodyText"
+        android:layout_marginTop="120dp"
+        android:text="Cancel" />
+
+<!--    <Button
         android:id="@+id/submitAnswerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,6 +55,15 @@
         android:background="@drawable/question_button"
         android:padding="10dp"
         android:text="Submit"
-        android:textColor="#ffffff" />
+        android:textColor="#ffffff" /> -->
+
+    <Button
+        android:id="@+id/submitAnswerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/cancelAnswerButton"
+        android:layout_alignBottom="@+id/cancelAnswerButton"
+        android:layout_alignRight="@+id/answerBodyText"
+        android:text="Submit" />
 
 </RelativeLayout>
