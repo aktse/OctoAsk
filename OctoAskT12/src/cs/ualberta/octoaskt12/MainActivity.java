@@ -443,9 +443,9 @@ public class MainActivity extends FragmentActivity implements
 					Question question = questionArrayList.getQuestions().get(position);
 					if (historyArrayList.has(question)) {
 						historyArrayList.remove(question);
-						historyArrayList.addQuestion(question);
+						historyArrayList.addToFront(question);
 					} else {
-						historyArrayList.addQuestion(question);
+						historyArrayList.addToFront(question);
 					}
 					FragmentManager fragmentManager = getFragmentManager();
 					fragmentManager
@@ -752,23 +752,6 @@ public class MainActivity extends FragmentActivity implements
 
 			});
 			return rootView;
-		}
-
-		@Override
-		public void onResume() {
-			super.onResume();
-
-			// Re-sorts the array when app is closed and reopened
-			// Guarentees consistency in sorting (doesn't randomly unsort)
-			SortManager sortManager = new SortManager();
-			if (sortIndex == 0) {
-				historyArrayList = sortManager.SortByDate(historyArrayList);
-			} else if (sortIndex == 1) {
-				historyArrayList = sortManager.SortByVotes(historyArrayList);
-			} else {
-				historyArrayList = sortManager.SortByImages(historyArrayList);
-			}
-			historyViewAdapter.notifyDataSetChanged();
 		}
 		
 		@Override
