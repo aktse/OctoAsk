@@ -12,6 +12,7 @@
         android:layout_alignParentTop="true"
         android:contentDescription="@string/upvote"
         android:src="@drawable/upvote" />
+ 
 
     <TextView
         android:id="@+id/question_upvote_caption"
