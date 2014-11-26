@@ -100,11 +100,15 @@ public class MainActivity extends FragmentActivity implements
 			aqcm.init(); // create sav file
 			aqcm.load();
 			questionArrayList = aqcm.get();
+			// !!!!!!!!!!!!!!!!!!!!!! this is new, test this!!!
+			aqcm.clear();
 		}
 		// have connection
 		else
 		{
 			updateQuestions();
+			QuestionsCacheManager qcm = new QuestionsCacheManager(getApplicationContext());
+			qcm.clear();
 		}
 		
 		User currentUser = UserController.getCurrentUser();
@@ -127,8 +131,12 @@ public class MainActivity extends FragmentActivity implements
 		// create new .sav data
 		QuestionsCacheManager qcm = new QuestionsCacheManager(getApplicationContext());
 		qcm.init();
-		FavoritesCacheManager fcm = new FavoritesCacheManager(getApplicationContext());
+		HistoryCacheManager hcm = new HistoryCacheManager(getApplicationContext());
+		hcm.init();
+		historyArrayList = hcm.get();
+		FavouritesCacheManager fcm = new FavouritesCacheManager(getApplicationContext());
 		fcm.init();
+		favoritesArrayList = fcm.get();
 	}
 
 	@Override
@@ -227,9 +235,35 @@ public class MainActivity extends FragmentActivity implements
 	public void onPause()
 	{
 		super.onPause();
+		
+		// save all viewable questions
 		AllQuestionsCacheManager aqcm = new AllQuestionsCacheManager(getApplicationContext());
+		aqcm.clear();
 		aqcm.set(questionArrayList);
 		aqcm.save();
+
+		// save history
+		HistoryCacheManager hcm = new HistoryCacheManager(getApplicationContext());
+		//Log.i("Len of this list", Integer.valueOf(historyArrayList.getSize()).toString());
+		/*
+		Log.i("LOOK HERE", "HEEEEEEEEEERE");
+		Log.i("LOOK HERE", "HEEEEEEEEEERE");
+		Log.i("LOOK HERE", "HEEEEEEEEEERE");
+		Log.i("LOOK HERE", "HEEEEEEEEEERE");
+		Log.i("LOOK HERE", "HEEEEEEEEEERE");
+		*/
+		hcm.clear();
+		hcm.set(historyArrayList);
+		hcm.save();
+		
+		// save favourites
+		FavouritesCacheManager fcm = new FavouritesCacheManager(getApplicationContext());
+		fcm.clear();
+		fcm.set(favoritesArrayList);
+		fcm.save();
+		
+		// save read laters
+		
 	}
 	public void createSortDialog(MenuItem menu) {
 		// Creates a dialog fragment to prompt user into making a selection to
@@ -306,6 +340,10 @@ public class MainActivity extends FragmentActivity implements
 					CreateQuestionActivity.class);
 			startActivity(intent);
 		}
+	}
+	
+	public void addFavorite(View view) {
+		;
 	}
 
 	public void setUsername(View view) {
@@ -529,6 +567,10 @@ public class MainActivity extends FragmentActivity implements
 					QuestionsController.addQuestion(cachedQuestion);
 				}			
 				
+				ArrayList<Question> emptyQuestionList = new ArrayList<Question>();
+				qcm.set(emptyQuestionList);
+				qcm.clear();
+				qcm.saveQuestion();
 			}		
 			
 			// Re-sorts the array when app is closed and reopened
@@ -887,7 +929,16 @@ public class MainActivity extends FragmentActivity implements
 		public void onResume() {
 			super.onResume();
 			detailViewAdapter.notifyDataSetChanged();
-			QuestionsController.updateQuestion(question);
+			ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+			NetworkInfo ni = cm.getActiveNetworkInfo();
+
+			// no connection
+			if (ni == null)
+			{
+				;
+			} else {
+				QuestionsController.updateQuestion(question);
+			}
 		}
 	}
 }

@@ -163,7 +163,7 @@ public class CreateQuestionActivity extends Activity {
 			
 			
 			QuestionsController.addQuestion(question);
-			Toast.makeText(getBaseContext(), "Have connection,  question added.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getBaseContext(), "Connected to internet,  question added.", Toast.LENGTH_SHORT).show();
 			
 			/*
 			QuestionsCacheManager qcm = new QuestionsCacheManager(getApplicationContext());
@@ -177,6 +177,7 @@ public class CreateQuestionActivity extends Activity {
 			*/
 			
 		}
+		// no connection
 		else
 		{
 			
@@ -191,9 +192,10 @@ public class CreateQuestionActivity extends Activity {
 			QuestionsCacheManager qcm = new QuestionsCacheManager(getApplicationContext());
 			qcm.loadQuestions();
 			qcm.addQuestion(question);
+			qcm.clear();
 			qcm.saveQuestion();
 			
-			Toast.makeText(getBaseContext(), "No onnection,  question cached.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getBaseContext(), "No onnection found,  question cached.", Toast.LENGTH_SHORT).show();
 		}
 
 		//QuestionsController.addQuestion(question);

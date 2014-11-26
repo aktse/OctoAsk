@@ -25,6 +25,9 @@
 # view AndroidManifest.xml #generated:36
 -keep class cs.ualberta.octoaskt12.UserLoginActivity { <init>(...); }
 
+# onClick res/layout/detail_question_header.xml #generated:61
+-keepclassmembers class * { *** addFavorite(...); }
+
 # onClick res/layout/activity_create_question.xml #generated:86
 -keepclassmembers class * { *** cancelQuestionAction(...); }
 
