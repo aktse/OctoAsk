@@ -3,6 +3,7 @@ package cs.ualberta.octoaskt12;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
@@ -29,15 +30,21 @@ public class HistoryCacheManager {
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			this.qal = (QuestionArrayList) ois.readObject();
 			
-			Log.i("QAL history", "Loaded history");
+			Log.i("HCM", "History initialized");
 
 			fis.close();
 			ois.close();
 		}
 		catch (Exception e) {
-			Log.i("HistoryCacheManager", "Error creating");
+			Log.i("HCM", "Error initializing");
 			e.printStackTrace();
-			File offlineData = new File(context.getFilesDir(), "history.sav");
+			File offlineData = new File(context.getFilesDir(), FILENAME);
+			try {
+				offlineData.createNewFile();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
 	public void load()
@@ -47,12 +54,12 @@ public class HistoryCacheManager {
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			this.qal = (QuestionArrayList) ois.readObject();
 			
-			Log.i("QAL history", "Loaded history");
+			Log.i("HCM", "Loaded history");
 
 			fis.close();
 			ois.close();
 		} catch (Exception e) {
-			Log.i("HistoryCacheManager", "Error loading history");
+			Log.i("HCM", "Error loading history");
 			e.printStackTrace();
 		}
 	}
@@ -80,18 +87,34 @@ public class HistoryCacheManager {
 			FileOutputStream fos = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeObject(this.qal);
-			Log.i("QAL history", "All history saved to cache");
+			Log.i("HCM", "All history saved to cache");
 			fos.close();
 			oos.close();
 		}
 		catch (Exception e) {
-			Log.i("HistoryCacheManager", "Error saving history");
+			Log.i("HCM", "Error saving history");
 			e.printStackTrace();
 		}
 	}
 	
 	public void clear()
 	{
-		
+		try
+		{
+			context.deleteFile(FILENAME);
+			
+			File offlineData = new File(context.getFilesDir(), FILENAME);
+			try {
+				offlineData.createNewFile();
+				Log.i("Created new file", FILENAME);
+			} catch (IOException e1) {
+				Log.i("Error creating", FILENAME);
+				e1.printStackTrace();
+			}
+		}
+		catch (Exception e)
+		{
+			Log.i("HCM", "Error deleting");
+		}
 	}
 }

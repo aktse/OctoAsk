@@ -193,7 +193,7 @@ public class CreateQuestionActivity extends Activity {
 			qcm.loadQuestions();
 			qcm.addQuestion(question);
 			qcm.clear();
-			qcm.saveQuestion();
+			qcm.saveQuestions();
 			
 			Toast.makeText(getBaseContext(), "No onnection found,  question cached.", Toast.LENGTH_SHORT).show();
 		}

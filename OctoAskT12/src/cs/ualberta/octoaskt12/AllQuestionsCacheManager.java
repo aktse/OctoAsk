@@ -30,13 +30,13 @@ public class AllQuestionsCacheManager {
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			this.qal = (QuestionArrayList) ois.readObject();
 			
-			Log.i("QAL", "Loaded questions");
+			Log.i("AllQuestionsCacheManager", "Initialized all questions");
 
 			fis.close();
 			ois.close();
 		}
 		catch (Exception e) {
-			Log.i("AllQuestionsCacheManager", "Error writing");
+			Log.i("AllQuestionsCacheManager", "Error initializing");
 			e.printStackTrace();
 			File offlineData = new File(context.getFilesDir(), FILENAME);
 			try {
@@ -47,6 +47,7 @@ public class AllQuestionsCacheManager {
 			}
 		}
 	}
+	
 	public void load()
 	{		
 		try {
@@ -54,7 +55,7 @@ public class AllQuestionsCacheManager {
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			this.qal = (QuestionArrayList) ois.readObject();
 			
-			Log.i("QAL", "Loaded questions");
+			Log.i("AllQuestionsCacheManager", "Loaded all questions");
 
 			fis.close();
 			ois.close();
@@ -62,7 +63,6 @@ public class AllQuestionsCacheManager {
 			Log.i("AllQuestionsCacheManager", "Error loading");
 			e.printStackTrace();
 		}
-
 	}
 	
 	public QuestionArrayList get()
@@ -75,20 +75,13 @@ public class AllQuestionsCacheManager {
 		this.qal = qal_in;
 	}
 	
-	/*
-	public void addQuestion(Question question)
-	{
-		this.qlist.add(question);
-	}
-	*/
-	
 	public void save()
 	{
 		try {
 			FileOutputStream fos = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeObject(this.qal);
-			Log.i("QAL", "All questions saved to cache");
+			Log.i("AllQuestionsCacheManager", "All questions saved to cache");
 			fos.close();
 			oos.close();
 		}
@@ -102,6 +95,31 @@ public class AllQuestionsCacheManager {
 	{
 		try
 		{
+			context.deleteFile(FILENAME);
+			Log.i("AllQuestionsCacheManager", "file deleted");
+			Log.i("AllQuestionsCacheManager", "file deleted");
+			Log.i("AllQuestionsCacheManager", "file deleted");
+			Log.i("AllQuestionsCacheManager", "file deleted");
+			
+			File offlineData = new File(context.getFilesDir(), FILENAME);
+			try {
+				offlineData.createNewFile();
+				Log.i("Created new file", FILENAME);
+			} catch (IOException e1) {
+				Log.i("Error creating", FILENAME);
+				e1.printStackTrace();
+			}
+		}
+		catch (Exception e)
+		{
+			Log.i("AllQuestionsCacheManager", "Error deleting");
+			Log.i("AllQuestionsCacheManager", "Error deleting");
+			Log.i("AllQuestionsCacheManager", "Error deleting");
+			Log.i("AllQuestionsCacheManager", "Error deleting");
+		}
+		/*
+		try
+		{
 			File current_dir = this.context.getFilesDir();
 			File current_file = new File(current_dir, FILENAME);
 			current_file.delete();
@@ -112,5 +130,6 @@ public class AllQuestionsCacheManager {
 		{
 			Log.i("Clearing part", "clearing a non existent file.");
 		}
+		*/
 	}
 }
