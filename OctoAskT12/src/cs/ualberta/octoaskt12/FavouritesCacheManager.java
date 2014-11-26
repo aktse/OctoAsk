@@ -3,6 +3,7 @@ package cs.ualberta.octoaskt12;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class FavouritesCacheManager {
 	public FavouritesCacheManager(Context context)
 	{
 		this.context = context;
-		flist = new QuestionArrayList();
+		this.flist = new QuestionArrayList();
 	}
 	
 	public void init()
@@ -27,15 +28,22 @@ public class FavouritesCacheManager {
 		try {
 			FileInputStream fis = context.openFileInput(FILENAME);
 			ObjectInputStream ois = new ObjectInputStream(fis);
+
 			this.flist = (QuestionArrayList) ois.readObject();
-			Log.i("FCM", "favourites file opened.");
+			Log.i("FCM", "favourites initialized");
 			fis.close();
 			ois.close();
 		}
 		catch (Exception e) {
-			Log.i("FavouritesCacheManager", "Error creating");
+			Log.i("FavouritesCacheManager", "Error initializing");
 			e.printStackTrace();
-			File offlineData = new File(context.getFilesDir(), "favourites.sav");
+			File offlineData = new File(context.getFilesDir(), FILENAME);
+			try {
+				offlineData.createNewFile();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
 
@@ -54,7 +62,6 @@ public class FavouritesCacheManager {
 			Log.i("FavouritesCacheManager", "Error loading favourites");
 			e.printStackTrace();
 		}
-
 	}
 	
 	public QuestionArrayList get()
@@ -92,6 +99,22 @@ public class FavouritesCacheManager {
 	
 	public void clear()
 	{
-		
+		try
+		{
+			context.deleteFile(FILENAME);
+			
+			File offlineData = new File(context.getFilesDir(), FILENAME);
+			try {
+				offlineData.createNewFile();
+				Log.i("Created new file", FILENAME);
+			} catch (IOException e1) {
+				Log.i("Error creating", FILENAME);
+				e1.printStackTrace();
+			}
+		}
+		catch (Exception e)
+		{
+			Log.i("QuestionsCacheManager", "Error deleting");
+		}
 	}
 }

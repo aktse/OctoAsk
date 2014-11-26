@@ -59,6 +59,9 @@ public class MainActivity extends FragmentActivity implements
 	ESClient esc = new ESClient();
 
 	public static QuestionArrayList questionArrayList = new QuestionArrayList();
+	
+	public static QuestionArrayList myQuestionsList = new QuestionArrayList();
+	
 	public static QuestionArrayList sortedQuestionArrayList;
 
 	public static QuestionArrayList historyArrayList = new QuestionArrayList();
@@ -100,15 +103,40 @@ public class MainActivity extends FragmentActivity implements
 			aqcm.init(); // create sav file
 			aqcm.load();
 			questionArrayList = aqcm.get();
-			// !!!!!!!!!!!!!!!!!!!!!! this is new, test this!!!
 			aqcm.clear();
 		}
 		// have connection
 		else
-		{
+		{	
+			/*
 			updateQuestions();
+			
+			// may need to modify this part
+			// may need to modify this part
+			// may need to modify this part
+			// may need to modify this part
+			// may need to modify this part
+
 			QuestionsCacheManager qcm = new QuestionsCacheManager(getApplicationContext());
 			qcm.clear();
+			*/
+			
+			// new
+			QuestionsCacheManager qcm = new QuestionsCacheManager(CallContext());
+			qcm.loadQuestions();
+			ArrayList<Question> cachedQuestions = qcm.get();
+			
+			for (Question cachedQuestion : cachedQuestions)
+			{
+				QuestionsController.addQuestion(cachedQuestion);
+			}			
+			
+			ArrayList<Question> emptyQuestionList = new ArrayList<Question>();
+			qcm.set(emptyQuestionList);
+			qcm.clear();
+			qcm.saveQuestions();
+			
+			updateQuestions();
 		}
 		
 		User currentUser = UserController.getCurrentUser();
@@ -129,14 +157,34 @@ public class MainActivity extends FragmentActivity implements
 		// ElasticSearchAddQuestion.AddToDatabase();
 
 		// create new .sav data
+		
+		// may need to modify this part
+		// may need to modify this part
+		// may need to modify this part
+		// may need to modify this part
+		// may need to modify this part
 		QuestionsCacheManager qcm = new QuestionsCacheManager(getApplicationContext());
 		qcm.init();
+		
+		MyQuestionsCacheManager mqcm = new MyQuestionsCacheManager(getApplicationContext());
+		mqcm.init();
+		System.out.println(myQuestionsList);
+		myQuestionsList = mqcm.get();
+		System.out.println("after"+myQuestionsList);
+		
+		FavouritesCacheManager fcm = new FavouritesCacheManager(getApplicationContext());
+		fcm.init();
+		System.out.println(favoritesArrayList);
+		favoritesArrayList = fcm.get();
+		System.out.println("after"+favoritesArrayList);
+		
 		HistoryCacheManager hcm = new HistoryCacheManager(getApplicationContext());
 		hcm.init();
 		historyArrayList = hcm.get();
-		FavouritesCacheManager fcm = new FavouritesCacheManager(getApplicationContext());
-		fcm.init();
-		favoritesArrayList = fcm.get();
+		
+		ReadLaterCacheManager rlcm = new ReadLaterCacheManager(getApplicationContext());
+		rlcm.init();
+		laterArrayList = rlcm.get();
 	}
 
 	@Override
@@ -242,9 +290,19 @@ public class MainActivity extends FragmentActivity implements
 		aqcm.set(questionArrayList);
 		aqcm.save();
 
+		MyQuestionsCacheManager mqcm = new MyQuestionsCacheManager(getApplicationContext());
+		mqcm.clear();
+		mqcm.set(myQuestionsList);
+		mqcm.save();
+		
+		// save favourites
+		FavouritesCacheManager fcm = new FavouritesCacheManager(getApplicationContext());
+		fcm.clear();
+		fcm.set(favoritesArrayList);
+		fcm.save();
+		
 		// save history
 		HistoryCacheManager hcm = new HistoryCacheManager(getApplicationContext());
-		//Log.i("Len of this list", Integer.valueOf(historyArrayList.getSize()).toString());
 		/*
 		Log.i("LOOK HERE", "HEEEEEEEEEERE");
 		Log.i("LOOK HERE", "HEEEEEEEEEERE");
@@ -256,14 +314,11 @@ public class MainActivity extends FragmentActivity implements
 		hcm.set(historyArrayList);
 		hcm.save();
 		
-		// save favourites
-		FavouritesCacheManager fcm = new FavouritesCacheManager(getApplicationContext());
-		fcm.clear();
-		fcm.set(favoritesArrayList);
-		fcm.save();
-		
 		// save read laters
-		
+		ReadLaterCacheManager rlcm = new ReadLaterCacheManager(getApplicationContext());
+		rlcm.clear();
+		rlcm.set(laterArrayList);
+		rlcm.save();
 	}
 	public void createSortDialog(MenuItem menu) {
 		// Creates a dialog fragment to prompt user into making a selection to
@@ -560,7 +615,7 @@ public class MainActivity extends FragmentActivity implements
 				
 				QuestionsCacheManager qcm = new QuestionsCacheManager(CallContext());
 				qcm.loadQuestions();
-				ArrayList<Question> cachedQuestions = qcm.getQuestions();
+				ArrayList<Question> cachedQuestions = qcm.get();
 				
 				for (Question cachedQuestion : cachedQuestions)
 				{
@@ -570,7 +625,7 @@ public class MainActivity extends FragmentActivity implements
 				ArrayList<Question> emptyQuestionList = new ArrayList<Question>();
 				qcm.set(emptyQuestionList);
 				qcm.clear();
-				qcm.saveQuestion();
+				qcm.saveQuestions();
 			}		
 			
 			// Re-sorts the array when app is closed and reopened
@@ -612,7 +667,7 @@ public class MainActivity extends FragmentActivity implements
 				Bundle savedInstanceState) {
 
 			this.MyQuestionAdapter = new CustomArrayAdapter(getActivity(),
-					questionArrayList);
+					myQuestionsList);
 
 			View rootView = inflater.inflate(R.layout.fragment_myquestions,
 					container, false);
@@ -631,7 +686,7 @@ public class MainActivity extends FragmentActivity implements
 							.replace(
 									R.id.container,
 									QuestionDetailFragment
-											.newInstance(questionArrayList
+											.newInstance(myQuestionsList
 													.getQuestions().get(
 															position)))
 							.commit();
@@ -684,7 +739,7 @@ public class MainActivity extends FragmentActivity implements
 							.replace(
 									R.id.container,
 									QuestionDetailFragment
-											.newInstance(questionArrayList
+											.newInstance(favoritesArrayList
 													.getQuestions().get(
 															position)))
 							.commit();
@@ -735,7 +790,7 @@ public class MainActivity extends FragmentActivity implements
 							.replace(
 									R.id.container,
 									QuestionDetailFragment
-											.newInstance(questionArrayList
+											.newInstance(laterArrayList
 													.getQuestions().get(
 															position)))
 							.commit();
