@@ -19,6 +19,7 @@ public class FavouritesCacheManager {
 	public FavouritesCacheManager(Context context)
 	{
 		this.context = context;
+		flist = new QuestionArrayList();
 	}
 	
 	public void init()

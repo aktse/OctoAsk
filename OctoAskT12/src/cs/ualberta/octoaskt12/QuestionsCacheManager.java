@@ -42,6 +42,12 @@ public class QuestionsCacheManager {
 			File offlineData = new File(context.getFilesDir(), "OfflineQuestions.sav");
 		}
 	}
+	
+	public void set(ArrayList<Question> newQuestionList)
+	{
+		this.qlist = newQuestionList;
+	}
+	
 	public void loadQuestions()
 	{		
 		try {

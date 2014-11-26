@@ -3,6 +3,7 @@ package cs.ualberta.octoaskt12;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
@@ -35,9 +36,15 @@ public class AllQuestionsCacheManager {
 			ois.close();
 		}
 		catch (Exception e) {
-			Log.i("AllQuestionsCacheManager", "Error creating");
+			Log.i("AllQuestionsCacheManager", "Error writing");
 			e.printStackTrace();
-			File offlineData = new File(context.getFilesDir(), "AllQuestionsOffline.sav");
+			File offlineData = new File(context.getFilesDir(), FILENAME);
+			try {
+				offlineData.createNewFile();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
 	public void load()
@@ -99,6 +106,7 @@ public class AllQuestionsCacheManager {
 			File current_file = new File(current_dir, FILENAME);
 			current_file.delete();
 			File offlineData = new File(context.getFilesDir(), FILENAME);
+			offlineData.createNewFile();
 		}
 		catch (Exception e)
 		{

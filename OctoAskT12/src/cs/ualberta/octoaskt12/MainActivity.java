@@ -107,6 +107,8 @@ public class MainActivity extends FragmentActivity implements
 		else
 		{
 			updateQuestions();
+			QuestionsCacheManager qcm = new QuestionsCacheManager(getApplicationContext());
+			qcm.clear();
 		}
 		
 		User currentUser = UserController.getCurrentUser();
@@ -239,10 +241,17 @@ public class MainActivity extends FragmentActivity implements
 		aqcm.clear();
 		aqcm.set(questionArrayList);
 		aqcm.save();
-		
+
 		// save history
 		HistoryCacheManager hcm = new HistoryCacheManager(getApplicationContext());
-		Log.i("Len of this list", Integer.valueOf(historyArrayList.getSize()).toString());
+		//Log.i("Len of this list", Integer.valueOf(historyArrayList.getSize()).toString());
+		/*
+		Log.i("LOOK HERE", "HEEEEEEEEEERE");
+		Log.i("LOOK HERE", "HEEEEEEEEEERE");
+		Log.i("LOOK HERE", "HEEEEEEEEEERE");
+		Log.i("LOOK HERE", "HEEEEEEEEEERE");
+		Log.i("LOOK HERE", "HEEEEEEEEEERE");
+		*/
 		hcm.clear();
 		hcm.set(historyArrayList);
 		hcm.save();
@@ -558,6 +567,10 @@ public class MainActivity extends FragmentActivity implements
 					QuestionsController.addQuestion(cachedQuestion);
 				}			
 				
+				ArrayList<Question> emptyQuestionList = new ArrayList<Question>();
+				qcm.set(emptyQuestionList);
+				qcm.clear();
+				qcm.saveQuestion();
 			}		
 			
 			// Re-sorts the array when app is closed and reopened

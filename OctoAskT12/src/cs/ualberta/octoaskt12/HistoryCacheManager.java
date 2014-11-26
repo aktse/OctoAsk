@@ -19,6 +19,7 @@ public class HistoryCacheManager {
 	public HistoryCacheManager(Context context)
 	{
 		this.context = context;
+		qal = new QuestionArrayList();
 	}
 	
 	public void init()
