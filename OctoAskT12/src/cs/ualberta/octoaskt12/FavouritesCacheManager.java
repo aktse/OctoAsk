@@ -88,4 +88,9 @@ public class FavouritesCacheManager {
 			e.printStackTrace();
 		}
 	}
+	
+	public void clear()
+	{
+		
+	}
 }

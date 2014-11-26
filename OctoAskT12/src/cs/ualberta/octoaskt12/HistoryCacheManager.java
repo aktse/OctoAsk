@@ -88,4 +88,9 @@ public class HistoryCacheManager {
 			e.printStackTrace();
 		}
 	}
+	
+	public void clear()
+	{
+		
+	}
 }

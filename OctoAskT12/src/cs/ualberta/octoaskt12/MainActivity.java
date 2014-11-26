@@ -100,6 +100,8 @@ public class MainActivity extends FragmentActivity implements
 			aqcm.init(); // create sav file
 			aqcm.load();
 			questionArrayList = aqcm.get();
+			// !!!!!!!!!!!!!!!!!!!!!! this is new, test this!!!
+			aqcm.clear();
 		}
 		// have connection
 		else
@@ -234,17 +236,20 @@ public class MainActivity extends FragmentActivity implements
 		
 		// save all viewable questions
 		AllQuestionsCacheManager aqcm = new AllQuestionsCacheManager(getApplicationContext());
+		aqcm.clear();
 		aqcm.set(questionArrayList);
 		aqcm.save();
 		
 		// save history
 		HistoryCacheManager hcm = new HistoryCacheManager(getApplicationContext());
 		Log.i("Len of this list", Integer.valueOf(historyArrayList.getSize()).toString());
+		hcm.clear();
 		hcm.set(historyArrayList);
 		hcm.save();
 		
 		// save favourites
 		FavouritesCacheManager fcm = new FavouritesCacheManager(getApplicationContext());
+		fcm.clear();
 		fcm.set(favoritesArrayList);
 		fcm.save();
 		

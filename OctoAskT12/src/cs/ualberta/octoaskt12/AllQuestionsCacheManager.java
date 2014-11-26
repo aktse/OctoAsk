@@ -90,4 +90,19 @@ public class AllQuestionsCacheManager {
 			e.printStackTrace();
 		}
 	}
+	
+	public void clear()
+	{
+		try
+		{
+			File current_dir = this.context.getFilesDir();
+			File current_file = new File(current_dir, FILENAME);
+			current_file.delete();
+			File offlineData = new File(context.getFilesDir(), FILENAME);
+		}
+		catch (Exception e)
+		{
+			Log.i("Clearing part", "clearing a non existent file.");
+		}
+	}
 }
