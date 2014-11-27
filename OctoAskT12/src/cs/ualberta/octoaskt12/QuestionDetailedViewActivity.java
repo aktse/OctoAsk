@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 
 public class QuestionDetailedViewActivity extends Activity {
 
@@ -11,6 +13,17 @@ public class QuestionDetailedViewActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.detail_view);
+		
+		/*
+		ImageButton favButton = (ImageButton) findViewById(R.id.addfavoritebutton);
+		favButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				MainActivity.favoritesArrayList.addQuestion(question);
+			}
+		});
+		*/
 	}
 
 	@Override
@@ -31,4 +44,5 @@ public class QuestionDetailedViewActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+
 }
