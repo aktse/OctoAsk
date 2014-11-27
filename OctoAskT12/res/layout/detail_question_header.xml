@@ -26,12 +26,14 @@
         android:id="@+id/detail_question_header"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/question_upvote_caption"
+        android:layout_above="@+id/detail_question_body"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/upvote_question_button"
         android:padding="5dp"
         android:textColor="#000000"
-        android:textSize="30sp" />
+        android:textSize="21sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/detail_question_body"
