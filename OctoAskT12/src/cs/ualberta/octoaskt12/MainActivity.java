@@ -398,7 +398,7 @@ public class MainActivity extends FragmentActivity implements
 	}
 	
 	public void addFavorite(View view) {
-		;
+		//favoritesArrayList.addQuestion(question);
 	}
 
 	public void setUsername(View view) {

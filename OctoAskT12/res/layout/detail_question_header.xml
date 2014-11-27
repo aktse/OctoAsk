@@ -58,13 +58,21 @@
         android:maxWidth="150dp"
         android:scaleType="centerInside" />
 
-    <ImageButton
-        android:id="@+id/favouriteButton"
+    <ImageView
+        android:id="@+id/addfavoritebutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/upvote_question_button"
+        android:layout_below="@+id/question_upvote_caption"
+        android:src="@drawable/favorite" />
+
+    <ImageView
+        android:id="@+id/addreadlaterbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/detail_question_body"
-        android:src="@drawable/ic_action_star"
-        android:onClick="addFavorite" />
+        android:layout_below="@+id/addfavoritebutton"
+        android:layout_marginTop="19dp"
+        android:src="@drawable/readlater" />
 
 </RelativeLayout>

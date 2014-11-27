@@ -72,6 +72,11 @@ public class MyQuestionsCacheManager {
 		this.qal = qal_in;
 	}
 	
+	public void add(Question question)
+	{
+		this.qal.addQuestion(question);
+	}
+	
 	/*
 	public void addQuestion(Question question)
 	{
