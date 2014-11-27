@@ -30,7 +30,8 @@
 	    android:layout_alignParentEnd="true"
 	    android:layout_below="@+id/list_question_upvote"
 	    android:layout_toEndOf="@+id/list_question_title"
-	    android:textSize="10sp" />
+	    android:textSize="10sp"
+	    android:gravity="center" />
 	
 	<LinearLayout 
 	    android:id="@id/layout_bottom"
