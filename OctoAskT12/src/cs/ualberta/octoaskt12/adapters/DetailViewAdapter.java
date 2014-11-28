@@ -25,6 +25,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView.FindListener;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -287,6 +288,17 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 					}
 				}
 			});
+			
+			ImageView favButton = (ImageView) convertView.findViewById(R.id.addfavoritebutton);
+			favButton.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					MainActivity.favoritesArrayList.addQuestion(question);
+					Log.i("Favorite","Favorite");
+				}
+			});
+			
 			TextView upvoteCaption = (TextView) convertView
 					.findViewById(R.id.question_upvote_caption);
 			upvoteCaption.setText(question.getVotes() + " upvotes");
