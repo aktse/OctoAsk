@@ -426,8 +426,8 @@ containing a value of this type.
     public static final class id {
         public static final int action_settings=0x7f070044;
         public static final int add_answer_button=0x7f070034;
-        public static final int addfavoritebutton=0x7f07002f;
-        public static final int addreadlaterbutton=0x7f070030;
+        public static final int addfavoritebutton=0x7f070030;
+        public static final int addreadlaterbutton=0x7f07002f;
         public static final int answerBodyText=0x7f070014;
         public static final int answer_upvote_caption=0x7f070026;
         public static final int book_now=0x7f070010;
