@@ -24,6 +24,8 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -57,7 +59,16 @@ public class MainActivity extends FragmentActivity implements
 	ESClient esc = new ESClient();
 
 	public static QuestionArrayList questionArrayList = new QuestionArrayList();
+	
+	public static QuestionArrayList myQuestionsList = new QuestionArrayList();
+	
 	public static QuestionArrayList sortedQuestionArrayList;
+
+	public static QuestionArrayList historyArrayList = new QuestionArrayList();
+
+	public static QuestionArrayList favoritesArrayList = new QuestionArrayList();
+
+	public static QuestionArrayList laterArrayList = new QuestionArrayList();
 
 	private static NavigationDrawerFragment mNavigationDrawerFragment;
 
@@ -80,8 +91,54 @@ public class MainActivity extends FragmentActivity implements
 				.permitAll().build();
 		StrictMode.setThreadPolicy(p);
 
-		updateQuestions();
 
+
+		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo ni = cm.getActiveNetworkInfo();
+
+		// no connection
+		if (ni == null)
+		{
+			AllQuestionsCacheManager aqcm = new AllQuestionsCacheManager(getApplicationContext());
+			aqcm.init(); // create sav file
+			aqcm.load();
+			questionArrayList = aqcm.get();
+			aqcm.clear();
+		}
+		// have connection
+		else
+		{	
+			/*
+			updateQuestions();
+			
+			// may need to modify this part
+			// may need to modify this part
+			// may need to modify this part
+			// may need to modify this part
+			// may need to modify this part
+
+			QuestionsCacheManager qcm = new QuestionsCacheManager(getApplicationContext());
+			qcm.clear();
+			*/
+			
+			// new
+			QuestionsCacheManager qcm = new QuestionsCacheManager(CallContext());
+			qcm.loadQuestions();
+			ArrayList<Question> cachedQuestions = qcm.get();
+			
+			for (Question cachedQuestion : cachedQuestions)
+			{
+				QuestionsController.addQuestion(cachedQuestion);
+			}			
+			
+			ArrayList<Question> emptyQuestionList = new ArrayList<Question>();
+			qcm.set(emptyQuestionList);
+			qcm.clear();
+			qcm.saveQuestions();
+			
+			updateQuestions();
+		}
+		
 		User currentUser = UserController.getCurrentUser();
 
 		context = this;
@@ -100,8 +157,34 @@ public class MainActivity extends FragmentActivity implements
 		// ElasticSearchAddQuestion.AddToDatabase();
 
 		// create new .sav data
+		
+		// may need to modify this part
+		// may need to modify this part
+		// may need to modify this part
+		// may need to modify this part
+		// may need to modify this part
 		QuestionsCacheManager qcm = new QuestionsCacheManager(getApplicationContext());
 		qcm.init();
+		
+		MyQuestionsCacheManager mqcm = new MyQuestionsCacheManager(getApplicationContext());
+		mqcm.init();
+		System.out.println(myQuestionsList);
+		myQuestionsList = mqcm.get();
+		System.out.println("after"+myQuestionsList);
+		
+		FavouritesCacheManager fcm = new FavouritesCacheManager(getApplicationContext());
+		fcm.init();
+		System.out.println(favoritesArrayList);
+		favoritesArrayList = fcm.get();
+		System.out.println("after"+favoritesArrayList);
+		
+		HistoryCacheManager hcm = new HistoryCacheManager(getApplicationContext());
+		hcm.init();
+		historyArrayList = hcm.get();
+		
+		ReadLaterCacheManager rlcm = new ReadLaterCacheManager(getApplicationContext());
+		rlcm.init();
+		laterArrayList = rlcm.get();
 	}
 
 	@Override
@@ -196,6 +279,47 @@ public class MainActivity extends FragmentActivity implements
 		return super.onOptionsItemSelected(item);
 	}
 
+	@Override
+	public void onPause()
+	{
+		super.onPause();
+		
+		// save all viewable questions
+		AllQuestionsCacheManager aqcm = new AllQuestionsCacheManager(getApplicationContext());
+		aqcm.clear();
+		aqcm.set(questionArrayList);
+		aqcm.save();
+
+		MyQuestionsCacheManager mqcm = new MyQuestionsCacheManager(getApplicationContext());
+		mqcm.clear();
+		mqcm.set(myQuestionsList);
+		mqcm.save();
+		
+		// save favourites
+		FavouritesCacheManager fcm = new FavouritesCacheManager(getApplicationContext());
+		fcm.clear();
+		fcm.set(favoritesArrayList);
+		fcm.save();
+		
+		// save history
+		HistoryCacheManager hcm = new HistoryCacheManager(getApplicationContext());
+		/*
+		Log.i("LOOK HERE", "HEEEEEEEEEERE");
+		Log.i("LOOK HERE", "HEEEEEEEEEERE");
+		Log.i("LOOK HERE", "HEEEEEEEEEERE");
+		Log.i("LOOK HERE", "HEEEEEEEEEERE");
+		Log.i("LOOK HERE", "HEEEEEEEEEERE");
+		*/
+		hcm.clear();
+		hcm.set(historyArrayList);
+		hcm.save();
+		
+		// save read laters
+		ReadLaterCacheManager rlcm = new ReadLaterCacheManager(getApplicationContext());
+		rlcm.clear();
+		rlcm.set(laterArrayList);
+		rlcm.save();
+	}
 	public void createSortDialog(MenuItem menu) {
 		// Creates a dialog fragment to prompt user into making a selection to
 		// sort view
@@ -271,6 +395,10 @@ public class MainActivity extends FragmentActivity implements
 					CreateQuestionActivity.class);
 			startActivity(intent);
 		}
+	}
+	
+	public void addFavorite(View view) {
+		//favoritesArrayList.addQuestion(question);
 	}
 
 	public void setUsername(View view) {
@@ -350,10 +478,24 @@ public class MainActivity extends FragmentActivity implements
 		System.out.println(count);
 		if (count > 0) {
 			FragmentManager fragmentManager = getFragmentManager();
-			fragmentManager.popBackStackImmediate();
-			fragmentManager.beginTransaction()
-					.replace(R.id.container, QuestionFragment.newInstance())
-					.commit();
+			System.out
+					.println(fragmentManager.getBackStackEntryAt(0).getName());
+
+			System.out.println(getFragmentManager().getBackStackEntryCount());
+			if (fragmentManager.getBackStackEntryAt(0).getName() == "Questions") {
+				fragmentManager.popBackStackImmediate();
+				fragmentManager
+						.beginTransaction()
+						.replace(R.id.container, QuestionFragment.newInstance())
+						.commit();
+			} else if (fragmentManager.getBackStackEntryAt(0).getName() == "History") {
+				fragmentManager.popBackStackImmediate();
+				fragmentManager.beginTransaction()
+						.replace(R.id.container, HistoryFragment.newInstance())
+						.commit();
+			} else {
+				super.onBackPressed();
+			}
 		} else {
 			super.onBackPressed();
 		}
@@ -390,6 +532,14 @@ public class MainActivity extends FragmentActivity implements
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
+					
+					Question question = questionArrayList.getQuestions().get(position);
+					if (historyArrayList.has(question)) {
+						historyArrayList.remove(question);
+						historyArrayList.addToFront(question);
+					} else {
+						historyArrayList.addToFront(question);
+					}
 					FragmentManager fragmentManager = getFragmentManager();
 					fragmentManager
 							.beginTransaction()
@@ -398,9 +548,8 @@ public class MainActivity extends FragmentActivity implements
 									QuestionDetailFragment
 											.newInstance(questionArrayList
 													.getQuestions().get(
-															position)),
-									"QuestionDetailFragment")
-							.addToBackStack("QuestionDetailFragment").commit();
+															position)))
+							.addToBackStack("Questions").commit();
 				}
 
 			});
@@ -457,6 +606,28 @@ public class MainActivity extends FragmentActivity implements
 		public void onResume() {
 			super.onResume();
 
+			ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(CallContext().CONNECTIVITY_SERVICE);
+			NetworkInfo ni = cm.getActiveNetworkInfo();
+
+			// have connection
+			if (ni != null)
+			{
+				
+				QuestionsCacheManager qcm = new QuestionsCacheManager(CallContext());
+				qcm.loadQuestions();
+				ArrayList<Question> cachedQuestions = qcm.get();
+				
+				for (Question cachedQuestion : cachedQuestions)
+				{
+					QuestionsController.addQuestion(cachedQuestion);
+				}			
+				
+				ArrayList<Question> emptyQuestionList = new ArrayList<Question>();
+				qcm.set(emptyQuestionList);
+				qcm.clear();
+				qcm.saveQuestions();
+			}		
+			
 			// Re-sorts the array when app is closed and reopened
 			// Guarentees consistency in sorting (doesn't randomly unsort)
 			SortManager sortManager = new SortManager();
@@ -480,6 +651,8 @@ public class MainActivity extends FragmentActivity implements
 
 	}
 
+	// ========================================================================
+
 	public static class MyQuestionsFragment extends Fragment {
 
 		public CustomArrayAdapter MyQuestionAdapter = null;
@@ -494,7 +667,7 @@ public class MainActivity extends FragmentActivity implements
 				Bundle savedInstanceState) {
 
 			this.MyQuestionAdapter = new CustomArrayAdapter(getActivity(),
-					questionArrayList);
+					myQuestionsList);
 
 			View rootView = inflater.inflate(R.layout.fragment_myquestions,
 					container, false);
@@ -513,7 +686,7 @@ public class MainActivity extends FragmentActivity implements
 							.replace(
 									R.id.container,
 									QuestionDetailFragment
-											.newInstance(questionArrayList
+											.newInstance(myQuestionsList
 													.getQuestions().get(
 															position)))
 							.commit();
@@ -531,7 +704,8 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
-	// ===
+	// ========================================================================
+
 	public static class FavoriteFragment extends Fragment {
 
 		public CustomArrayAdapter FavouriteAdapter = null;
@@ -546,7 +720,7 @@ public class MainActivity extends FragmentActivity implements
 				Bundle savedInstanceState) {
 
 			this.FavouriteAdapter = new CustomArrayAdapter(getActivity(),
-					questionArrayList);
+					favoritesArrayList);
 
 			View rootView = inflater.inflate(R.layout.fragment_favorite,
 					container, false);
@@ -565,7 +739,7 @@ public class MainActivity extends FragmentActivity implements
 							.replace(
 									R.id.container,
 									QuestionDetailFragment
-											.newInstance(questionArrayList
+											.newInstance(favoritesArrayList
 													.getQuestions().get(
 															position)))
 							.commit();
@@ -583,7 +757,8 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
-	// ====
+	// ========================================================================
+
 	public static class LaterFragment extends Fragment {
 
 		public CustomArrayAdapter LaterAdapter = null;
@@ -593,14 +768,14 @@ public class MainActivity extends FragmentActivity implements
 			return fragment;
 		}
 
-		public LaterFragment() {
-		}
-
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.fragment_later,
 					container, false);
+
+			this.LaterAdapter = new CustomArrayAdapter(getActivity(),
+					laterArrayList);
 
 			ListView lv = (ListView) rootView.findViewById(R.id.later_list);
 			lv.setAdapter(LaterAdapter);
@@ -615,7 +790,7 @@ public class MainActivity extends FragmentActivity implements
 							.replace(
 									R.id.container,
 									QuestionDetailFragment
-											.newInstance(questionArrayList
+											.newInstance(laterArrayList
 													.getQuestions().get(
 															position)))
 							.commit();
@@ -636,27 +811,25 @@ public class MainActivity extends FragmentActivity implements
 
 	public static class HistoryFragment extends Fragment {
 
-		public CustomArrayAdapter HistoryViewAdapter = null;
+		public CustomArrayAdapter historyViewAdapter = null;
 
 		public static HistoryFragment newInstance() {
 			HistoryFragment fragment = new HistoryFragment();
 			return fragment;
 		}
 
-		public HistoryFragment() {
-
-		}
-
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 
-			this.HistoryViewAdapter = new CustomArrayAdapter(getActivity(),
-					questionArrayList);
+			this.historyViewAdapter = new CustomArrayAdapter(getActivity(),
+					historyArrayList);
+
 			View rootView = inflater.inflate(R.layout.fragment_history,
 					container, false);
+
 			ListView lv = (ListView) rootView.findViewById(R.id.history_list);
-			lv.setAdapter(HistoryViewAdapter);
+			lv.setAdapter(historyViewAdapter);
 			lv.setOnItemClickListener(new OnItemClickListener() {
 
 				@Override
@@ -668,26 +841,25 @@ public class MainActivity extends FragmentActivity implements
 							.replace(
 									R.id.container,
 									QuestionDetailFragment
-											.newInstance(questionArrayList
+											.newInstance(historyArrayList
 													.getQuestions().get(
 															position)))
-							.commit();
+							.addToBackStack("History").commit();
 				}
 
 			});
-
 			return rootView;
 		}
-
+		
 		@Override
 		public void onAttach(Activity activity) {
 			super.onAttach(activity);
-			((MainActivity) activity).onSectionAttached(6);
+			((MainActivity) activity).onSectionAttached(5);
 		}
 	}
 
 	// ========================================================================
-	
+
 	public static class ProfileFragment extends Fragment {
 
 		private static ProfileFragment newInstance() {
@@ -717,7 +889,7 @@ public class MainActivity extends FragmentActivity implements
 		@Override
 		public void onAttach(Activity activity) {
 			super.onAttach(activity);
-			((MainActivity) activity).onSectionAttached(5);
+			((MainActivity) activity).onSectionAttached(6);
 		}
 
 		@Override
@@ -737,7 +909,7 @@ public class MainActivity extends FragmentActivity implements
 
 		}
 	}
-	
+
 	// ========================================================================
 
 	public static class QuestionDetailFragment extends Fragment {
@@ -812,7 +984,16 @@ public class MainActivity extends FragmentActivity implements
 		public void onResume() {
 			super.onResume();
 			detailViewAdapter.notifyDataSetChanged();
-			QuestionsController.updateQuestion(question);
+			ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+			NetworkInfo ni = cm.getActiveNetworkInfo();
+
+			// no connection
+			if (ni == null)
+			{
+				;
+			} else {
+				QuestionsController.updateQuestion(question);
+			}
 		}
 	}
 }

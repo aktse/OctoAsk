@@ -6,19 +6,21 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.util.Log;
 
-public class ReadLaterCacheManager {
-	private static final String FILENAME = "read_later.sav";
+public class AllQuestionsCacheManager {
+	private static final String FILENAME = "AllQuestionsOffline.sav";
 	private User user;
 	private Context context;
-	private QuestionArrayList qal;
+	public QuestionArrayList qal;
 	
-	public ReadLaterCacheManager(Context context)
+	public AllQuestionsCacheManager(Context context)
 	{
 		this.context = context;
-		this.qal = new QuestionArrayList();
+		qal = new QuestionArrayList();
 	}
 	
 	public void init()
@@ -27,12 +29,14 @@ public class ReadLaterCacheManager {
 			FileInputStream fis = context.openFileInput(FILENAME);
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			this.qal = (QuestionArrayList) ois.readObject();
-			Log.i("RLCM", "read later initialized");
+			
+			Log.i("AllQuestionsCacheManager", "Initialized all questions");
+
 			fis.close();
 			ois.close();
 		}
 		catch (Exception e) {
-			Log.i("RLCM", "Error initializing");
+			Log.i("AllQuestionsCacheManager", "Error initializing");
 			e.printStackTrace();
 			File offlineData = new File(context.getFilesDir(), FILENAME);
 			try {
@@ -43,7 +47,7 @@ public class ReadLaterCacheManager {
 			}
 		}
 	}
-
+	
 	public void load()
 	{		
 		try {
@@ -51,12 +55,12 @@ public class ReadLaterCacheManager {
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			this.qal = (QuestionArrayList) ois.readObject();
 			
-			Log.i("RLCM", "Loaded read later");
+			Log.i("AllQuestionsCacheManager", "Loaded all questions");
 
 			fis.close();
 			ois.close();
 		} catch (Exception e) {
-			Log.i("RLCM", "Error loading read later");
+			Log.i("AllQuestionsCacheManager", "Error loading");
 			e.printStackTrace();
 		}
 	}
@@ -71,25 +75,18 @@ public class ReadLaterCacheManager {
 		this.qal = qal_in;
 	}
 	
-	/*
-	public void addQuestion(Question question)
-	{
-		this.qlist.add(question);
-	}
-	*/
-	
 	public void save()
 	{
 		try {
 			FileOutputStream fos = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeObject(this.qal);
-			Log.i("RLCM", "All read later saved to cache");
+			Log.i("AllQuestionsCacheManager", "All questions saved to cache");
 			fos.close();
 			oos.close();
 		}
 		catch (Exception e) {
-			Log.i("RLCM", "Error saving read later");
+			Log.i("AllQuestionsCacheManager", "Error saving");
 			e.printStackTrace();
 		}
 	}
@@ -99,6 +96,10 @@ public class ReadLaterCacheManager {
 		try
 		{
 			context.deleteFile(FILENAME);
+			Log.i("AllQuestionsCacheManager", "file deleted");
+			Log.i("AllQuestionsCacheManager", "file deleted");
+			Log.i("AllQuestionsCacheManager", "file deleted");
+			Log.i("AllQuestionsCacheManager", "file deleted");
 			
 			File offlineData = new File(context.getFilesDir(), FILENAME);
 			try {
@@ -111,7 +112,24 @@ public class ReadLaterCacheManager {
 		}
 		catch (Exception e)
 		{
-			Log.i("RLCM", "Error deleting");
+			Log.i("AllQuestionsCacheManager", "Error deleting");
+			Log.i("AllQuestionsCacheManager", "Error deleting");
+			Log.i("AllQuestionsCacheManager", "Error deleting");
+			Log.i("AllQuestionsCacheManager", "Error deleting");
 		}
+		/*
+		try
+		{
+			File current_dir = this.context.getFilesDir();
+			File current_file = new File(current_dir, FILENAME);
+			current_file.delete();
+			File offlineData = new File(context.getFilesDir(), FILENAME);
+			offlineData.createNewFile();
+		}
+		catch (Exception e)
+		{
+			Log.i("Clearing part", "clearing a non existent file.");
+		}
+		*/
 	}
 }

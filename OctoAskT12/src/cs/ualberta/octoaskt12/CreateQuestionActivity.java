@@ -143,6 +143,15 @@ public class CreateQuestionActivity extends Activity {
 		
 		// new
 
+		/*
+		MyQuestionsCacheManager mqcm = new MyQuestionsCacheManager(getApplicationContext());
+		mqcm.init();
+		mqcm.load();
+		mqcm.add(question);
+		mqcm.save();
+		*/
+		
+		MainActivity.myQuestionsList.addQuestion(question);
 		
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo ni = cm.getActiveNetworkInfo();
@@ -159,9 +168,9 @@ public class CreateQuestionActivity extends Activity {
 			
 			
 			QuestionsController.addQuestion(question);
-			Toast.makeText(getBaseContext(), "Have connection,  question added.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getBaseContext(), "Connected to internet,  question added.", Toast.LENGTH_SHORT).show();
 			
-			
+			/*
 			QuestionsCacheManager qcm = new QuestionsCacheManager(getApplicationContext());
 			qcm.loadQuestions();
 			ArrayList<Question> cachedQuestions = qcm.getQuestions();
@@ -170,8 +179,10 @@ public class CreateQuestionActivity extends Activity {
 			{
 				QuestionsController.addQuestion(cachedQuestion);
 			}			
+			*/
 			
 		}
+		// no connection
 		else
 		{
 			
@@ -186,9 +197,10 @@ public class CreateQuestionActivity extends Activity {
 			QuestionsCacheManager qcm = new QuestionsCacheManager(getApplicationContext());
 			qcm.loadQuestions();
 			qcm.addQuestion(question);
-			qcm.saveQuestion();
+			qcm.clear();
+			qcm.saveQuestions();
 			
-			Toast.makeText(getBaseContext(), "No onnection,  question cached.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getBaseContext(), "No onnection found,  question cached.", Toast.LENGTH_SHORT).show();
 		}
 
 		//QuestionsController.addQuestion(question);

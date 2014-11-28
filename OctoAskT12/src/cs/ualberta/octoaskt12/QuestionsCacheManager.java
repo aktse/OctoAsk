@@ -3,6 +3,7 @@ package cs.ualberta.octoaskt12;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
@@ -20,26 +21,41 @@ public class QuestionsCacheManager {
 	{
 		this.context = context;
 		qlist = new ArrayList<Question>();
-		
-		
 	}
 	
 	public void init()
 	{
 		try {
-			FileOutputStream fos = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
-			ObjectOutputStream oos = new ObjectOutputStream(fos);
-			oos.writeObject(this.qlist);
-			Log.i("QCM", "file created.");
-			fos.close();
-			oos.close();
+			FileInputStream fis = context.openFileInput(FILENAME);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			this.qlist = (ArrayList<Question>) ois.readObject();
+			Log.i("QCM", "file initialized");
+			fis.close();
+			ois.close();
 		}
 		catch (Exception e) {
-			Log.i("QuestionsCacheManager", "Error creating");
+			Log.i("QuestionsCacheManager", "Error initializing");
 			e.printStackTrace();
 			File offlineData = new File(context.getFilesDir(), "OfflineQuestions.sav");
+			try {
+				offlineData.createNewFile();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
+	
+	public void set(ArrayList<Question> newQuestionsList)
+	{
+		this.qlist = newQuestionsList;
+	}
+	
+	public ArrayList<Question> get()
+	{
+		return this.qlist;
+	}
+	
 	public void loadQuestions()
 	{		
 		try {
@@ -55,12 +71,6 @@ public class QuestionsCacheManager {
 			Log.i("QuestionsCacheManager", "Error loading");
 			e.printStackTrace();
 		}
-
-	}
-	
-	public ArrayList<Question> getQuestions()
-	{
-		return this.qlist;
 	}
 	
 	public void addQuestion(Question question)
@@ -68,7 +78,7 @@ public class QuestionsCacheManager {
 		this.qlist.add(question);
 	}
 	
-	public void saveQuestion()
+	public void saveQuestions()
 	{
 		try {
 			FileOutputStream fos = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
@@ -84,4 +94,38 @@ public class QuestionsCacheManager {
 		}
 	}
 
+	public void clear()
+	{
+		try
+		{
+			context.deleteFile(FILENAME);
+			
+			File offlineData = new File(context.getFilesDir(), FILENAME);
+			try {
+				offlineData.createNewFile();
+				Log.i("Created new file", FILENAME);
+			} catch (IOException e1) {
+				Log.i("Error creating", FILENAME);
+				e1.printStackTrace();
+			}
+		}
+		catch (Exception e)
+		{
+			Log.i("QuestionsCacheManager", "Error deleting");
+		}
+		
+		/*
+		try
+		{
+			File current_dir = this.context.getFilesDir();
+			File current_file = new File(current_dir, FILENAME);
+			current_file.delete();
+			File offlineData = new File(context.getFilesDir(), FILENAME);
+		}
+		catch (Exception e)
+		{
+			Log.i("Clearing part", "clearing a non existent file.");
+		}
+		*/
+	}
 }

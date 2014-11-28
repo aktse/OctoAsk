@@ -6,19 +6,21 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.util.Log;
 
-public class ReadLaterCacheManager {
-	private static final String FILENAME = "read_later.sav";
+public class FavouritesCacheManager {
+	private static final String FILENAME = "favourites.sav";
 	private User user;
 	private Context context;
-	private QuestionArrayList qal;
-	
-	public ReadLaterCacheManager(Context context)
+	public QuestionArrayList flist;
+
+	public FavouritesCacheManager(Context context)
 	{
 		this.context = context;
-		this.qal = new QuestionArrayList();
+		this.flist = new QuestionArrayList();
 	}
 	
 	public void init()
@@ -26,13 +28,14 @@ public class ReadLaterCacheManager {
 		try {
 			FileInputStream fis = context.openFileInput(FILENAME);
 			ObjectInputStream ois = new ObjectInputStream(fis);
-			this.qal = (QuestionArrayList) ois.readObject();
-			Log.i("RLCM", "read later initialized");
+
+			this.flist = (QuestionArrayList) ois.readObject();
+			Log.i("FCM", "favourites initialized");
 			fis.close();
 			ois.close();
 		}
 		catch (Exception e) {
-			Log.i("RLCM", "Error initializing");
+			Log.i("FavouritesCacheManager", "Error initializing");
 			e.printStackTrace();
 			File offlineData = new File(context.getFilesDir(), FILENAME);
 			try {
@@ -49,26 +52,26 @@ public class ReadLaterCacheManager {
 		try {
 			FileInputStream fis = context.openFileInput(FILENAME);
 			ObjectInputStream ois = new ObjectInputStream(fis);
-			this.qal = (QuestionArrayList) ois.readObject();
+			this.flist = (QuestionArrayList) ois.readObject();
 			
-			Log.i("RLCM", "Loaded read later");
+			Log.i("Fav list", "Loaded favourites");
 
 			fis.close();
 			ois.close();
 		} catch (Exception e) {
-			Log.i("RLCM", "Error loading read later");
+			Log.i("FavouritesCacheManager", "Error loading favourites");
 			e.printStackTrace();
 		}
 	}
 	
 	public QuestionArrayList get()
 	{
-		return this.qal;
+		return this.flist;
 	}
 	
 	public void set(QuestionArrayList qal_in)
 	{
-		this.qal = qal_in;
+		this.flist = qal_in;
 	}
 	
 	/*
@@ -83,13 +86,13 @@ public class ReadLaterCacheManager {
 		try {
 			FileOutputStream fos = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
-			oos.writeObject(this.qal);
-			Log.i("RLCM", "All read later saved to cache");
+			oos.writeObject(this.flist);
+			Log.i("Fav list", "All favourites saved to cache");
 			fos.close();
 			oos.close();
 		}
 		catch (Exception e) {
-			Log.i("RLCM", "Error saving read later");
+			Log.i("FavouritesCacheManager", "Error saving favourites");
 			e.printStackTrace();
 		}
 	}
@@ -111,7 +114,7 @@ public class ReadLaterCacheManager {
 		}
 		catch (Exception e)
 		{
-			Log.i("RLCM", "Error deleting");
+			Log.i("QuestionsCacheManager", "Error deleting");
 		}
 	}
 }
