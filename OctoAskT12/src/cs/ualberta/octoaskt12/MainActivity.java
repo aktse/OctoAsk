@@ -780,7 +780,7 @@ public class MainActivity extends FragmentActivity implements
 			ListView lv = (ListView) rootView.findViewById(R.id.later_list);
 			lv.setAdapter(LaterAdapter);
 			lv.setOnItemClickListener(new OnItemClickListener() {
-
+				
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {

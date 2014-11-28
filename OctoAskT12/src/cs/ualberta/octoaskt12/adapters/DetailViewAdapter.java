@@ -289,13 +289,45 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 				}
 			});
 			
-			ImageView favButton = (ImageView) convertView.findViewById(R.id.addfavoritebutton);
+			final ImageView favButton = (ImageView) convertView.findViewById(R.id.addfavoritebutton);
+			if(MainActivity.favoritesArrayList.has(question)) {
+				favButton.setImageResource(R.drawable.favorited);
+			} else {
+				favButton.setImageResource(R.drawable.favorite);
+			}
+			
 			favButton.setOnClickListener(new View.OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
-					MainActivity.favoritesArrayList.addQuestion(question);
-					Log.i("Favorite","Favorite");
+					if(MainActivity.favoritesArrayList.has(question)) {
+						MainActivity.favoritesArrayList.remove(question);
+						favButton.setImageResource(R.drawable.favorite);
+					} else {
+						MainActivity.favoritesArrayList.addToFront(question);
+						favButton.setImageResource(R.drawable.favorited);
+					}
+				}
+			});
+			
+			final ImageView rlButton = (ImageView) convertView.findViewById(R.id.addreadlaterbutton);
+			if(MainActivity.laterArrayList.has(question)) {
+				rlButton.setImageResource(R.drawable.readlatered);
+			} else {
+				rlButton.setImageResource(R.drawable.readlater);
+			}
+			
+			rlButton.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					if(MainActivity.laterArrayList.has(question)) {
+						MainActivity.laterArrayList.remove(question);
+						rlButton.setImageResource(R.drawable.readlater);
+					} else {
+						MainActivity.laterArrayList.addToFront(question);
+						rlButton.setImageResource(R.drawable.readlatered);
+					}
 				}
 			});
 			
