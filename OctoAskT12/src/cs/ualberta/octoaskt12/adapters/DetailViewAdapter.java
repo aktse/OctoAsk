@@ -260,8 +260,16 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 					.findViewById(R.id.detail_question_header);
 			questionBodyTextView.setText(questionBody);
 			questionTitleTextView.setText(questionTitle);
-			ImageView upvoteButton = (ImageView) convertView
+			final ImageView upvoteButton = (ImageView) convertView
 					.findViewById(R.id.upvote_question_button);
+			
+			if(question.getUpvotedUsers().contains(
+					UserController.getCurrentUser())) {
+				upvoteButton.setImageResource(R.drawable.upvoted);
+			} else {
+				upvoteButton.setImageResource(R.drawable.upvote);
+			}
+			
 			upvoteButton.setOnClickListener(new View.OnClickListener() {
 
 				@Override
@@ -273,6 +281,7 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 								.getCurrentUser());
 						notifyDataSetChanged();
 						QuestionsController.updateQuestion(question);
+						upvoteButton.setImageResource(R.drawable.upvote);
 					} else {
 						if (UserController.getCurrentUser() == null) {
 							Intent intent = new Intent(context,
@@ -284,6 +293,7 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 									.getCurrentUser());
 							notifyDataSetChanged();
 							QuestionsController.updateQuestion(question);
+							upvoteButton.setImageResource(R.drawable.upvoted);
 						}
 					}
 				}
@@ -352,10 +362,18 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 			}
 			answerBodyTextView.setText(answerBody);
 
-			ImageView image = (ImageView) convertView
+			final ImageView image = (ImageView) convertView
 					.findViewById(R.id.upvote_answer_button);
+			
+			if(answers.get(groupPosition - 1).getUpvotedUsers()
+					.contains(UserController.getCurrentUser())) {
+				image.setImageResource(R.drawable.upvoted);
+			} else {
+				image.setImageResource(R.drawable.upvote);
+			}
 			image.setOnClickListener(new View.OnClickListener() {
-
+				
+				
 				@Override
 				public void onClick(View v) {
 					if (answers.get(groupPosition - 1).getUpvotedUsers()
@@ -365,6 +383,7 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 								UserController.getCurrentUser());
 						notifyDataSetChanged();
 						QuestionsController.updateQuestion(question);
+						image.setImageResource(R.drawable.upvote);
 					} else {
 						if (UserController.getCurrentUser() == null) {
 							Intent intent = new Intent(context,
@@ -376,6 +395,7 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 									UserController.getCurrentUser());
 							notifyDataSetChanged();
 							QuestionsController.updateQuestion(question);
+							image.setImageResource(R.drawable.upvoted);
 						}
 					}
 				}

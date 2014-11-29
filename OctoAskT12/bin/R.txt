@@ -103,7 +103,8 @@ int drawable question_edit_text 0x7f020027
 int drawable readlater 0x7f020028
 int drawable readlatered 0x7f020029
 int drawable upvote 0x7f02002a
-int drawable upvoterepresent 0x7f02002b
+int drawable upvoted 0x7f02002b
+int drawable upvoterepresent 0x7f02002c
 int id action_settings 0x7f070044
 int id add_answer_button 0x7f070034
 int id addfavoritebutton 0x7f070030

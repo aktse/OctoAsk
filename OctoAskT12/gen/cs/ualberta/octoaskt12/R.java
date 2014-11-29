@@ -423,7 +423,8 @@ containing a value of this type.
         public static final int readlater=0x7f020028;
         public static final int readlatered=0x7f020029;
         public static final int upvote=0x7f02002a;
-        public static final int upvoterepresent=0x7f02002b;
+        public static final int upvoted=0x7f02002b;
+        public static final int upvoterepresent=0x7f02002c;
     }
     public static final class id {
         public static final int action_settings=0x7f070044;
