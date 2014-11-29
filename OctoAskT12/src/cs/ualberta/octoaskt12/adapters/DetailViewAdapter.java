@@ -300,16 +300,61 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 			});
 			
 			final ImageView favButton = (ImageView) convertView.findViewById(R.id.addfavoritebutton);
-			if(MainActivity.favoritesArrayList.has(question)) {
+			
+			boolean duplicateFav = false;
+			for (Question favQuestion : MainActivity.favoritesArrayList.getQuestions()) {
+				System.out.println("Look here FAV "+favQuestion.getId());
+				System.out.println("Look here current "+question.getId());
+				if (favQuestion.getId().equals(question.getId())) {
+					duplicateFav = true;
+					break;
+				}
+			}
+			
+			// new jack/chris
+			if(duplicateFav == true) {
 				favButton.setImageResource(R.drawable.favorited);
 			} else {
 				favButton.setImageResource(R.drawable.favorite);
 			}
 			
+			/*
+			if(MainActivity.favoritesArrayList.has(question)) {
+				favButton.setImageResource(R.drawable.favorited);
+			} else {
+				favButton.setImageResource(R.drawable.favorite);
+			}
+			*/
+			
 			favButton.setOnClickListener(new View.OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
+					boolean duplicateFav2 = false;
+					
+//					Log.i("Current question id", question.getId());
+//					Log.i("Current question id", question.getId());
+//					Log.i("Current question id", question.getId());
+//					Log.i("Current question id", question.getId());
+//					Log.i("Current question id", question.getId());
+					
+					for (Question favQuestion : MainActivity.favoritesArrayList.getQuestions()) {
+//						Log.i("Looped id", favQuestion.getId());
+						if (favQuestion.getId().equals(question.getId())) {
+							duplicateFav2 = true;
+							break;
+						}
+					}
+					if (duplicateFav2 == true) {
+						int questionIndex = MainActivity.favoritesArrayList.searchQuestionIndexById(question.getId());
+						MainActivity.favoritesArrayList.removeQuestionByIndex(questionIndex);
+						favButton.setImageResource(R.drawable.favorite);
+					} else {
+						MainActivity.favoritesArrayList.addToFront(question);
+						favButton.setImageResource(R.drawable.favorited);
+					}
+					
+					/*
 					if(MainActivity.favoritesArrayList.has(question)) {
 						MainActivity.favoritesArrayList.remove(question);
 						favButton.setImageResource(R.drawable.favorite);
@@ -317,20 +362,64 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 						MainActivity.favoritesArrayList.addToFront(question);
 						favButton.setImageResource(R.drawable.favorited);
 					}
+					*/
 				}
 			});
 			
 			final ImageView rlButton = (ImageView) convertView.findViewById(R.id.addreadlaterbutton);
-			if(MainActivity.laterArrayList.has(question)) {
+			
+			boolean duplicateRL = false;
+			for (Question rlQuestion : MainActivity.laterArrayList.getQuestions()) {
+				if (rlQuestion.getId().equals(question.getId())) {
+					duplicateRL = true;
+					break;
+				}
+			}
+			
+			// new jack/chris
+			if(duplicateRL == true) {
 				rlButton.setImageResource(R.drawable.readlatered);
 			} else {
 				rlButton.setImageResource(R.drawable.readlater);
 			}
 			
+			/*
+			if(MainActivity.laterArrayList.has(question)) {
+				rlButton.setImageResource(R.drawable.readlatered);
+			} else {
+				rlButton.setImageResource(R.drawable.readlater);
+			}
+			*/
+			
 			rlButton.setOnClickListener(new View.OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
+					boolean duplicateRL2 = false;
+					
+//					Log.i("Current question id", question.getId());
+//					Log.i("Current question id", question.getId());
+//					Log.i("Current question id", question.getId());
+//					Log.i("Current question id", question.getId());
+//					Log.i("Current question id", question.getId());
+					
+					for (Question rlQuestion : MainActivity.laterArrayList.getQuestions()) {
+//						Log.i("Looped id", favQuestion.getId());
+						if (rlQuestion.getId().equals(question.getId())) {
+							duplicateRL2 = true;
+							break;
+						}
+					}
+					if (duplicateRL2 == true) {
+						int questionIndex = MainActivity.laterArrayList.searchQuestionIndexById(question.getId());
+						MainActivity.laterArrayList.removeQuestionByIndex(questionIndex);
+						rlButton.setImageResource(R.drawable.readlater);
+					} else {
+						MainActivity.laterArrayList.addToFront(question);
+						rlButton.setImageResource(R.drawable.readlatered);
+					}
+					
+					/*
 					if(MainActivity.laterArrayList.has(question)) {
 						MainActivity.laterArrayList.remove(question);
 						rlButton.setImageResource(R.drawable.readlater);
@@ -338,6 +427,7 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 						MainActivity.laterArrayList.addToFront(question);
 						rlButton.setImageResource(R.drawable.readlatered);
 					}
+					*/
 				}
 			});
 			

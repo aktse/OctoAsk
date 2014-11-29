@@ -151,7 +151,7 @@ public class CreateQuestionActivity extends Activity {
 		mqcm.save();
 		*/
 		
-		MainActivity.myQuestionsList.addQuestion(question);
+		//MainActivity.myQuestionsList.addQuestion(question);
 		
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo ni = cm.getActiveNetworkInfo();

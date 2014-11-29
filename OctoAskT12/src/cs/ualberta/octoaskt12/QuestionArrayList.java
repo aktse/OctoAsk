@@ -72,4 +72,23 @@ public class QuestionArrayList implements Serializable {
 			return 0;
 		}
 	}
+	
+	public int searchQuestionIndexById(String questionId)
+	{
+		int count = 0;
+		for (Question question : questions)
+		{
+			if (question.getId().equals(questionId))
+			{
+				break;
+			}
+		}
+		
+		return count;
+	}
+	
+	public void removeQuestionByIndex(int index)
+	{
+		questions.remove(index);
+	}
 }

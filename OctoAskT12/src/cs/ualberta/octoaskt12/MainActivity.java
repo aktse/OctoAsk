@@ -91,8 +91,10 @@ public class MainActivity extends FragmentActivity implements
 				.permitAll().build();
 		StrictMode.setThreadPolicy(p);
 
-
-
+		// need to remove these two lines
+		User currentUser2 = new User("Chris");
+		UserController.setCurrentUser(currentUser2);
+		
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo ni = cm.getActiveNetworkInfo();
 
@@ -394,6 +396,7 @@ public class MainActivity extends FragmentActivity implements
 			Intent intent = new Intent(MainActivity.this,
 					CreateQuestionActivity.class);
 			startActivity(intent);
+			
 		}
 	}
 	
@@ -666,6 +669,21 @@ public class MainActivity extends FragmentActivity implements
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 
+			//updateQuestions();
+			
+			myQuestionsList.clear();
+			
+			for (Question current_question : questionArrayList.getQuestions())
+			{
+				System.out.println("question, "+current_question.getUser());
+				System.out.println("user controller, "+current_question.getUser());
+ 
+				if (current_question.getUser().equals(UserController.getCurrentUser().getName()))
+				{
+					MainActivity.myQuestionsList.addQuestion(current_question);
+				}
+			}
+			
 			this.MyQuestionAdapter = new CustomArrayAdapter(getActivity(),
 					myQuestionsList);
 
