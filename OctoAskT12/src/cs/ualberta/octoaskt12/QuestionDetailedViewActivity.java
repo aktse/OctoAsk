@@ -14,17 +14,7 @@ public class QuestionDetailedViewActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.detail_view);
-		/*
-		ImageButton favButton = (ImageButton) findViewById(R.id.addfavoritebutton);
-		favButton.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				//MainActivity.favoritesArrayList.addQuestion(question);
-				Log.i("Favorite","Favorite");
-			}
-		});
-		*/
+
 	}
 
 	@Override
