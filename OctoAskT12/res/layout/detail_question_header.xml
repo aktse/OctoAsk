@@ -26,7 +26,6 @@
         android:id="@+id/detail_question_header"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/detail_question_body"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/upvote_question_button"
@@ -40,7 +39,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/question_upvote_caption"
+        android:layout_below="@+id/detail_question_header"
         android:layout_toLeftOf="@+id/upvote_question_button"
         android:minHeight="100dp"
         android:padding="5dp"
@@ -73,8 +72,8 @@
         android:id="@+id/addfavoritebutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/detail_question_body"
-        android:layout_marginTop="18dp"
+        android:layout_alignTop="@+id/question_upvote_caption"
+        android:layout_marginTop="37dp"
         android:layout_toRightOf="@+id/detail_question_body"
         android:src="@drawable/favorite" />
 
