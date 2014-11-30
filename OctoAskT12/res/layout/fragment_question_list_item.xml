@@ -22,7 +22,8 @@
 	    android:textSize="15sp"
 	    android:textStyle="bold"
 	    android:ellipsize="end"
-	    android:maxLines="2"/>
+	    android:maxLines="2"
+	    android:paddingLeft="5dp" />
 	
 	<TextView
 	    android:id="@+id/list_question_upvote_caption"

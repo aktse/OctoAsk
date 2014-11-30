@@ -91,4 +91,27 @@ public class QuestionArrayList implements Serializable {
 	{
 		questions.remove(index);
 	}
+	
+	public int getIndexById(String ID)
+	{
+		boolean found = false;
+		int index = 0;
+		for (Question question : this.questions)
+		{
+			if (question.getId().equals(ID))
+			{
+				found = true;
+				break;
+			}
+			index += 1;
+		}
+		if (found == true)
+		{
+			return index;
+		}
+		else
+		{
+			return -1;
+		}
+	}
 }

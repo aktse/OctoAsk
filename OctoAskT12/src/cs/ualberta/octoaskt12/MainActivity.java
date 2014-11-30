@@ -537,12 +537,38 @@ public class MainActivity extends FragmentActivity implements
 						int position, long id) {
 					
 					Question question = questionArrayList.getQuestions().get(position);
+					
+					boolean duplicateHistory = false;
+					for (Question histQuestion : MainActivity.historyArrayList.getQuestions()) {
+						// System.out.println("Look here FAV "+histQuestion.getId());
+						// System.out.println("Look here current "+question.getId());
+						if (histQuestion.getId().equals(question.getId())) {
+							duplicateHistory = true;
+							break;
+						}
+					}
+					
+					// new jack/chris
+					if(duplicateHistory == true) {
+						int history_question_index = historyArrayList.getIndexById(question.getId());
+						if (history_question_index != -1)
+						{
+							historyArrayList.removeQuestionByIndex(history_question_index);
+						}
+						historyArrayList.addToFront(question);
+					} else {
+						historyArrayList.addToFront(question);
+					}
+					
+					/*
 					if (historyArrayList.has(question)) {
 						historyArrayList.remove(question);
 						historyArrayList.addToFront(question);
 					} else {
 						historyArrayList.addToFront(question);
 					}
+					*/
+					
 					FragmentManager fragmentManager = getFragmentManager();
 					fragmentManager
 							.beginTransaction()
