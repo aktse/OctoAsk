@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
 
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -105,6 +106,7 @@ public class CreateQuestionActivity extends Activity {
 		getMenuInflater().inflate(R.menu.create_question, menu);
 		return true;
 	}
+	
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -125,6 +127,15 @@ public class CreateQuestionActivity extends Activity {
 	public void cancelQuestionAction(View v) {
 		onBackPressed();
 	}
+	
+	public void addGeo(View v) {
+		
+		Intent intent = new Intent(CreateQuestionActivity.this,
+				GeoAct.class);
+		startActivity(intent);
+		
+
+}
 
 	public void submitQuestionAction(View v) {
 		EditText titleEditText = (EditText) findViewById(R.id.questionTitleText);
