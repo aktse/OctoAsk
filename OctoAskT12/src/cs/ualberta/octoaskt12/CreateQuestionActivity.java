@@ -1,5 +1,7 @@
 package cs.ualberta.octoaskt12;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -9,6 +11,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.BitmapFactory.Options;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
@@ -84,23 +87,16 @@ public class CreateQuestionActivity extends Activity {
 				int columnIndex = cursor.getColumnIndex(filePath[0]);
 				String picturePath = cursor.getString(columnIndex);
 				ImageView iv = (ImageView) findViewById(R.id.question_ImageView);
-				iv.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+				Bitmap bm = BitmapFactory.decodeFile(picturePath);
+				int bitmapSize = bm.getByteCount();
+				if (bitmapSize > 1200000) {
+					Toast.makeText(this, "Picture is too big!", Toast.LENGTH_SHORT).show();
+				}
+				else {
+					iv.setImageBitmap(bm);
+				}
 			}
-		}
-		
-//		if(requestCode == CAMERA_ACTIVITY_REQUEST_CODE){
-//			if(resultCode == RESULT_OK){
-//				ImageView iv = (ImageView) findViewById(R.id.question_ImageView);
-//				iv.setImageDrawable(Drawable.createFromPath(imageFileUri.getPath()));
-//				
-//			}
-//			else{
-//				if(resultCode == RESULT_CANCELED){
-//					// do nothing
-//				}
-//			}
-//		}
-			
+		}			
 	}
 
 	@Override
@@ -147,6 +143,15 @@ public class CreateQuestionActivity extends Activity {
 		
 		// new
 
+		/*
+		MyQuestionsCacheManager mqcm = new MyQuestionsCacheManager(getApplicationContext());
+		mqcm.init();
+		mqcm.load();
+		mqcm.add(question);
+		mqcm.save();
+		*/
+		
+		//MainActivity.myQuestionsList.addQuestion(question);
 		
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo ni = cm.getActiveNetworkInfo();

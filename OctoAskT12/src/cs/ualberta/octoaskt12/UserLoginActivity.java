@@ -11,8 +11,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class UserLoginActivity extends Activity {
+	private static final String FILENAME = "UserName.sav";
 	ArrayList<User> userList;
 	User loggedInUser;
 	String username;
@@ -48,6 +50,7 @@ public class UserLoginActivity extends Activity {
 				}
 				// set the loggedInUser
 				UserController.setCurrentUser(loggedInUser);
+				Toast.makeText(getApplicationContext(), "Logged in as "+loggedInUser.getName(), Toast.LENGTH_SHORT).show();
 				finish();
 			}
 		});
