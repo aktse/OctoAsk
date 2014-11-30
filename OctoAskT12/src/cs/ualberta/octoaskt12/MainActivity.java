@@ -94,8 +94,8 @@ public class MainActivity extends FragmentActivity implements
 		StrictMode.setThreadPolicy(p);
 
 		// need to remove these two lines
-		User currentUser2 = new User("Chris");
-		UserController.setCurrentUser(currentUser2);
+		// User currentUser2 = new User("Chris");
+		// UserController.setCurrentUser(currentUser2);
 		
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo ni = cm.getActiveNetworkInfo();
@@ -718,14 +718,21 @@ public class MainActivity extends FragmentActivity implements
 			
 			myQuestionsList.clear();
 			
-			for (Question current_question : questionArrayList.getQuestions())
+			if (UserController.getCurrentUser() != null)
 			{
-				System.out.println("question, "+current_question.getUser());
-				System.out.println("user controller, "+current_question.getUser());
- 
-				if (current_question.getUser().equals(UserController.getCurrentUser().getName()))
+				for (Question current_question : questionArrayList.getQuestions())
 				{
-					MainActivity.myQuestionsList.addQuestion(current_question);
+					System.out.println("question, "+current_question.getUser());
+					System.out.println("user controller, "+current_question.getUser());
+ 
+				
+					System.out.println("Current question user: "+current_question.getUser());
+					System.out.println("User controller  user: "+UserController.getCurrentUser().getName());
+
+					if (current_question.getUser().equals(UserController.getCurrentUser().getName()))
+					{
+						MainActivity.myQuestionsList.addQuestion(current_question);
+					}
 				}
 			}
 			
