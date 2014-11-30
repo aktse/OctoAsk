@@ -69,6 +69,8 @@ public class MainActivity extends FragmentActivity implements
 	public static QuestionArrayList favoritesArrayList = new QuestionArrayList();
 
 	public static QuestionArrayList laterArrayList = new QuestionArrayList();
+	
+	public static User loggedInUser = null;
 
 	private static NavigationDrawerFragment mNavigationDrawerFragment;
 
@@ -139,7 +141,7 @@ public class MainActivity extends FragmentActivity implements
 			updateQuestions();
 		}
 		
-		User currentUser = UserController.getCurrentUser();
+		// User currentUser = UserController.getCurrentUser();
 
 		context = this;
 
@@ -185,6 +187,15 @@ public class MainActivity extends FragmentActivity implements
 		ReadLaterCacheManager rlcm = new ReadLaterCacheManager(getApplicationContext());
 		rlcm.init();
 		laterArrayList = rlcm.get();
+		
+		UserCacheManager ucm = new UserCacheManager(getApplicationContext());
+		ucm.init();
+		ucm.load();
+		if (ucm.getUser().getName() != null)
+		{
+			UserController.setCurrentUser(ucm.getUser());
+		}
+		
 	}
 
 	@Override
@@ -319,6 +330,14 @@ public class MainActivity extends FragmentActivity implements
 		rlcm.clear();
 		rlcm.set(laterArrayList);
 		rlcm.save();
+		
+		UserCacheManager ucm = new UserCacheManager(getApplicationContext());
+		ucm.clear();
+		if (UserController.getCurrentUser() != null)
+		{
+				ucm.setUser(UserController.getCurrentUser());
+		}
+		ucm.save();
 	}
 	public void createSortDialog(MenuItem menu) {
 		// Creates a dialog fragment to prompt user into making a selection to
