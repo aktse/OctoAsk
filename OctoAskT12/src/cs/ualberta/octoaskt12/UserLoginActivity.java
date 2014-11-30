@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class UserLoginActivity extends Activity {
+	private static final String FILENAME = "UserName.sav";
 	ArrayList<User> userList;
 	User loggedInUser;
 	String username;

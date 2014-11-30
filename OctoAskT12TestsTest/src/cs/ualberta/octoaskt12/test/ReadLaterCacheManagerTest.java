@@ -31,11 +31,11 @@ public class ReadLaterCacheManagerTest extends ActivityInstrumentationTestCase2<
 		
 		ReadLaterCacheManager rlcm = new ReadLaterCacheManager(context);
 		
-		rlcm.saveQuestions(rl, user);
+		rlcm.save();
 		
-		ReadLater rl2 = rlcm.loadReadLater();
+		QuestionArrayList rl2 = rlcm.get();
 		
-		assert(rl2.count() == 10);
+		assert(rl2.getSize() == 10);
 		//assertEquals(qal, qal2);
 		//assertEquals(qal2.getSize(), 0);
 	}

@@ -20,7 +20,9 @@
 	    android:layout_alignBottom="@id/list_question_upvote"
 	    android:layout_alignTop="@id/list_question_upvote" 	    
 	    android:textSize="15sp"
-	    android:textStyle="bold"/>
+	    android:textStyle="bold"
+	    android:ellipsize="end"
+	    android:maxLines="2"/>
 	
 	<TextView
 	    android:id="@+id/list_question_upvote_caption"
@@ -30,7 +32,8 @@
 	    android:layout_alignParentEnd="true"
 	    android:layout_below="@+id/list_question_upvote"
 	    android:layout_toEndOf="@+id/list_question_title"
-	    android:textSize="10sp" />
+	    android:textSize="10sp"
+	    android:gravity="center" />
 	
 	<LinearLayout 
 	    android:id="@id/layout_bottom"

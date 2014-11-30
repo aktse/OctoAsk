@@ -33,9 +33,9 @@ public class MyQuestionsCacheManagerTest extends ActivityInstrumentationTestCase
 		
 		MyQuestionsCacheManager mqcm = new MyQuestionsCacheManager(context);
 		
-		mqcm.saveQuestions(qal, user);
+		mqcm.save();
 		
-		QuestionArrayList qal2 = mqcm.loadQuestions();
+		QuestionArrayList qal2 = mqcm.get();
 		
 		assert(qal2.getSize() == 10);
 		//assertEquals(qal, qal2);
