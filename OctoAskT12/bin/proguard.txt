@@ -4,28 +4,34 @@
 # view res/layout/fragment_question.xml #generated:1
 -keep class android.support.v4.widget.SwipeRefreshLayout { <init>(...); }
 
-# view AndroidManifest.xml #generated:48
+# view AndroidManifest.xml #generated:50
 -keep class cs.ualberta.octoaskt12.CreateAnswerActivity { <init>(...); }
 
-# view AndroidManifest.xml #generated:40
+# view AndroidManifest.xml #generated:42
 -keep class cs.ualberta.octoaskt12.CreateQuestionActivity { <init>(...); }
 
-# view AndroidManifest.xml #generated:52
+# view AndroidManifest.xml #generated:54
 -keep class cs.ualberta.octoaskt12.CreateReplyActivity { <init>(...); }
 
-# view AndroidManifest.xml #generated:26
+# view AndroidManifest.xml #generated:59
+-keep class cs.ualberta.octoaskt12.GeoAct { <init>(...); }
+
+# view AndroidManifest.xml #generated:28
 -keep class cs.ualberta.octoaskt12.MainActivity { <init>(...); }
 
 # view res/layout/activity_main.xml #generated:31
 -keep class cs.ualberta.octoaskt12.NavigationDrawerFragment { <init>(...); }
 
-# view AndroidManifest.xml #generated:44
+# view AndroidManifest.xml #generated:46
 -keep class cs.ualberta.octoaskt12.QuestionDetailedViewActivity { <init>(...); }
 
-# view AndroidManifest.xml #generated:36
+# view AndroidManifest.xml #generated:38
 -keep class cs.ualberta.octoaskt12.UserLoginActivity { <init>(...); }
 
 # onClick res/layout/activity_create_question.xml #generated:86
+-keepclassmembers class * { *** addGeo(...); }
+
+# onClick res/layout/activity_create_question.xml #generated:93
 -keepclassmembers class * { *** cancelQuestionAction(...); }
 
 # onClick res/menu/main.xml #generated:5
@@ -40,6 +46,6 @@
 # onClick res/layout/fragment_profile.xml #generated:16
 -keepclassmembers class * { *** setUsername(...); }
 
-# onClick res/layout/activity_create_question.xml #generated:93
+# onClick res/layout/activity_create_question.xml #generated:100
 -keepclassmembers class * { *** submitQuestionAction(...); }
 
