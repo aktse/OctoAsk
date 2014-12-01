@@ -24,6 +24,7 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -65,6 +66,9 @@ public class MainActivity extends FragmentActivity implements
 	public static QuestionArrayList sortedQuestionArrayList;
 
 	public static QuestionArrayList historyArrayList = new QuestionArrayList();
+	
+	public static QuestionArrayList NearbyArrayList = new QuestionArrayList();
+
 
 	public static QuestionArrayList favoritesArrayList = new QuestionArrayList();
 
@@ -242,6 +246,11 @@ public class MainActivity extends FragmentActivity implements
 					.replace(R.id.container, ProfileFragment.newInstance())
 					.commit();
 			break;
+		case 7:
+			fragmentManager.beginTransaction()
+					.replace(R.id.container, QuestionsNearbyFragment.newInstance())
+					.commit();
+			break;
 		}
 	}
 
@@ -264,6 +273,9 @@ public class MainActivity extends FragmentActivity implements
 			break;
 		case 6:
 			mTitle = getString(R.string.title_section6);
+			break;
+		case 7:
+			mTitle = getString(R.string.title_section7);
 			break;
 
 		}
@@ -531,7 +543,14 @@ public class MainActivity extends FragmentActivity implements
 				fragmentManager.beginTransaction()
 						.replace(R.id.container, HistoryFragment.newInstance())
 						.commit();
-			} else {
+			}
+			else if (fragmentManager.getBackStackEntryAt(0).getName() == "QuestionsNearby") {
+				fragmentManager.popBackStackImmediate();
+				fragmentManager.beginTransaction()
+						.replace(R.id.container, QuestionsNearbyFragment.newInstance())
+						.commit();
+			}
+			else {
 				super.onBackPressed();
 			}
 		} else {
@@ -996,6 +1015,76 @@ public class MainActivity extends FragmentActivity implements
 	}
 
 	// ========================================================================
+	
+
+	public static class QuestionsNearbyFragment extends Fragment {
+
+		public CustomArrayAdapter questionViewAdapter = null;
+
+		public static QuestionsNearbyFragment newInstance() {
+			QuestionsNearbyFragment fragment = new QuestionsNearbyFragment();
+			return fragment;
+		}
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+				Bundle savedInstanceState) {
+
+			this.questionViewAdapter = new CustomArrayAdapter(getActivity(),
+					NearbyArrayList);
+
+			View rootView = inflater.inflate(R.layout.fragment_questions_neaby,
+					container, false);
+
+			ListView lv = (ListView) rootView.findViewById(R.id.nearby_arraylist);
+			lv.setAdapter(questionViewAdapter);
+			lv.setOnItemClickListener(new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+					FragmentManager fragmentManager = getFragmentManager();
+					fragmentManager
+							.beginTransaction()
+							.replace(
+									R.id.container,
+									QuestionDetailFragment
+											.newInstance(historyArrayList
+													.getQuestions().get(
+															position)))
+							.addToBackStack("History").commit();
+				}
+
+			});
+			return rootView;
+		}
+
+		@Override
+		public void onAttach(Activity activity) {
+			super.onAttach(activity);
+			((MainActivity) activity).onSectionAttached(5);
+		}
+	}
+	
+	
+	public double locationdifference(double initialLat, double initialLong,
+            double finalLat, double finalLong){
+	
+		Location locationA = new Location("point A");     
+		locationA.setLatitude(initialLat); 
+		locationA.setLongitude(initialLong);
+		
+		Location locationB = new Location("point B");
+		
+		locationB.setLatitude(finalLat); 
+		locationB.setLongitude(finalLong);
+		
+		double distance = locationA.distanceTo(locationB) ;
+		
+		return distance;
+	}
+	
+	// ========================================
 
 	public static class QuestionDetailFragment extends Fragment {
 		protected static final int CREATE_ANSWER_ACTIVITY_CODE = 1234;
@@ -1058,6 +1147,13 @@ public class MainActivity extends FragmentActivity implements
 					String answerBodyText = data.getStringExtra("answerBody");
 					Answer answer = new Answer(answerBodyText,
 							UserController.getCurrentUser());
+					String location = data.getStringExtra("location");
+					Double latitude = data.getExtras().getDouble("latitude");
+					Double longitude = data.getExtras().getDouble("longitude");
+
+					answer.setLocation(location);
+					answer.setLongitude(longitude);
+					answer.setLatitude(latitude);
 					question.addAnswer(answer);
 					QuestionsController.updateQuestion(question);
 
