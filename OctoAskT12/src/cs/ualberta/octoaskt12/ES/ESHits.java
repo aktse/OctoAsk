@@ -2,6 +2,8 @@ package cs.ualberta.octoaskt12.ES;
 
 import java.util.Collection;
 
+// Class that model the hits json section of the 
+// ElasticSearch response
 public class ESHits<T> {
 
 	int total;

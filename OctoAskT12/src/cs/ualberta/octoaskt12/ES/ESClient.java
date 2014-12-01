@@ -27,6 +27,8 @@ import cs.ualberta.octoaskt12.QuestionArrayList;
 
 /*
  * inspiration taken from https://github.com/rayzhangcl/ESDemo/
+ * This class handles all connections to ElasticSearch for 
+ * searching, getting, adding, and updating questions.
  */
 public class ESClient {
 	private HttpClient httpClient = new DefaultHttpClient();

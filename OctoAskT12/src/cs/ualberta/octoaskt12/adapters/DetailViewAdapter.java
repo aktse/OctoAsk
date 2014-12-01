@@ -266,14 +266,14 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 			questionTitleTextView.setText(questionTitle);
 			final ImageView upvoteButton = (ImageView) convertView
 					.findViewById(R.id.upvote_question_button);
-			
-			if(question.getUpvotedUsers().contains(
+
+			if (question.getUpvotedUsers().contains(
 					UserController.getCurrentUser().getName())) {
 				upvoteButton.setImageResource(R.drawable.upvoted);
 			} else {
 				upvoteButton.setImageResource(R.drawable.upvote);
 			}
-			
+
 			upvoteButton.setOnClickListener(new View.OnClickListener() {
 
 				@Override
@@ -283,8 +283,9 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 						question.decrementVotes();
 						question.removeUpvotedUser(UserController
 								.getCurrentUser().getName());
-						final MediaPlayer mp = MediaPlayer.create(context, R.raw.downvotesound);
-				        mp.start();
+						final MediaPlayer mp = MediaPlayer.create(context,
+								R.raw.downvotesound);
+						mp.start();
 						notifyDataSetChanged();
 						QuestionsController.updateQuestion(question);
 						upvoteButton.setImageResource(R.drawable.upvote);
@@ -297,8 +298,9 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 							question.incrementVotes();
 							question.addUpvotedUser(UserController
 									.getCurrentUser().getName());
-							final MediaPlayer mp = MediaPlayer.create(context, R.raw.upvotesound);
-					        mp.start();
+							final MediaPlayer mp = MediaPlayer.create(context,
+									R.raw.upvotesound);
+							mp.start();
 							notifyDataSetChanged();
 							QuestionsController.updateQuestion(question);
 							upvoteButton.setImageResource(R.drawable.upvoted);
@@ -306,106 +308,118 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 					}
 				}
 			});
-			
-			final ImageView favButton = (ImageView) convertView.findViewById(R.id.addfavoritebutton);
-			
+
+			final ImageView favButton = (ImageView) convertView
+					.findViewById(R.id.addfavoritebutton);
+
 			boolean duplicateFav = false;
-			for (Question favQuestion : MainActivity.favoritesArrayList.getQuestions()) {
-				System.out.println("Look here FAV "+favQuestion.getId());
-				System.out.println("Look here current "+question.getId());
+			for (Question favQuestion : MainActivity.favoritesArrayList
+					.getQuestions()) {
+				System.out.println("Look here FAV " + favQuestion.getId());
+				System.out.println("Look here current " + question.getId());
 				if (favQuestion.getId().equals(question.getId())) {
 					duplicateFav = true;
 					break;
 				}
 			}
-			
+
 			// new jack/chris
-			if(duplicateFav == true) {
+			if (duplicateFav == true) {
 				favButton.setImageResource(R.drawable.favorited);
 			} else {
 				favButton.setImageResource(R.drawable.favorite);
 			}
-			
+
 			/*
-			if(MainActivity.favoritesArrayList.has(question)) {
-				favButton.setImageResource(R.drawable.favorited);
-			} else {
-				favButton.setImageResource(R.drawable.favorite);
-			}
-			*/
-			
+			 * if(MainActivity.favoritesArrayList.has(question)) {
+			 * favButton.setImageResource(R.drawable.favorited); } else {
+			 * favButton.setImageResource(R.drawable.favorite); }
+			 */
+
 			favButton.setOnClickListener(new View.OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
 					boolean duplicateFav2 = false;
 
-					for (Question favQuestion : MainActivity.favoritesArrayList.getQuestions()) {
+					for (Question favQuestion : MainActivity.favoritesArrayList
+							.getQuestions()) {
 						if (favQuestion.getId().equals(question.getId())) {
 							duplicateFav2 = true;
 							break;
 						}
 					}
 					if (duplicateFav2 == true) {
-						int questionIndex = MainActivity.favoritesArrayList.searchQuestionIndexById(question.getId());
-						MainActivity.favoritesArrayList.removeQuestionByIndex(questionIndex);
+						int questionIndex = MainActivity.favoritesArrayList
+								.searchQuestionIndexById(question.getId());
+						MainActivity.favoritesArrayList
+								.removeQuestionByIndex(questionIndex);
 						favButton.setImageResource(R.drawable.favorite);
-						final MediaPlayer mp = MediaPlayer.create(context, R.raw.unfavorite);
-				        mp.start();
+						final MediaPlayer mp = MediaPlayer.create(context,
+								R.raw.unfavorite);
+						mp.start();
 					} else {
 						MainActivity.favoritesArrayList.addToFront(question);
 						favButton.setImageResource(R.drawable.favorited);
-						final MediaPlayer mp = MediaPlayer.create(context, R.raw.favorite);
-				        mp.start();
+						final MediaPlayer mp = MediaPlayer.create(context,
+								R.raw.favorite);
+						mp.start();
 					}
 
 				}
 			});
-			
-			final ImageView rlButton = (ImageView) convertView.findViewById(R.id.addreadlaterbutton);
-			
+
+			final ImageView rlButton = (ImageView) convertView
+					.findViewById(R.id.addreadlaterbutton);
+
 			boolean duplicateRL = false;
-			for (Question rlQuestion : MainActivity.laterArrayList.getQuestions()) {
+			for (Question rlQuestion : MainActivity.laterArrayList
+					.getQuestions()) {
 				if (rlQuestion.getId().equals(question.getId())) {
 					duplicateRL = true;
 					break;
 				}
 			}
-			
+
 			// new jack/chris
-			if(duplicateRL == true) {
+			if (duplicateRL == true) {
 				rlButton.setImageResource(R.drawable.readlatered);
 			} else {
 				rlButton.setImageResource(R.drawable.readlater);
 			}
-			
+
 			rlButton.setOnClickListener(new View.OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
 					boolean duplicateRL2 = false;
-					
-					for (Question rlQuestion : MainActivity.laterArrayList.getQuestions()) {
+
+					for (Question rlQuestion : MainActivity.laterArrayList
+							.getQuestions()) {
 						if (rlQuestion.getId().equals(question.getId())) {
 							duplicateRL2 = true;
 							break;
 						}
 					}
 					if (duplicateRL2 == true) {
-						int questionIndex = MainActivity.laterArrayList.searchQuestionIndexById(question.getId());
-						MainActivity.laterArrayList.removeQuestionByIndex(questionIndex);
+						int questionIndex = MainActivity.laterArrayList
+								.searchQuestionIndexById(question.getId());
+						MainActivity.laterArrayList
+								.removeQuestionByIndex(questionIndex);
 						rlButton.setImageResource(R.drawable.readlater);
-						final MediaPlayer mp = MediaPlayer.create(context, R.raw.unreadlater);
-				        mp.start();
+						final MediaPlayer mp = MediaPlayer.create(context,
+								R.raw.unreadlater);
+						mp.start();
 					} else {
 						MainActivity.laterArrayList.addToFront(question);
 						rlButton.setImageResource(R.drawable.readlatered);
-						final MediaPlayer mp = MediaPlayer.create(context, R.raw.readlater);
-				        mp.start();
+						final MediaPlayer mp = MediaPlayer.create(context,
+								R.raw.readlater);
+						mp.start();
 					}
 				}
 			});
-			
+
 			TextView upvoteCaption = (TextView) convertView
 					.findViewById(R.id.question_upvote_caption);
 			upvoteCaption.setText(question.getVotes() + " upvotes");
@@ -426,30 +440,32 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 				System.out.println("null");
 			}
 			answerBodyTextView.setText(answerBody);
-			
 
 			final ImageView image = (ImageView) convertView
 					.findViewById(R.id.upvote_answer_button);
-			
-			if(answers.get(groupPosition - 1).getUpvotedUsers()
+
+			if (answers.get(groupPosition - 1).getUpvotedUsers()
 					.contains(UserController.getCurrentUser().getName())) {
 				image.setImageResource(R.drawable.upvoted);
 			} else {
 				image.setImageResource(R.drawable.upvote);
 			}
 			image.setOnClickListener(new View.OnClickListener() {
-				
-				
+
 				@Override
 				public void onClick(View v) {
-					System.out.println(answers.get(groupPosition-1).getUpvotedUsers());
-					if (answers.get(groupPosition - 1).getUpvotedUsers()
+					System.out.println(answers.get(groupPosition - 1)
+							.getUpvotedUsers());
+					if (answers
+							.get(groupPosition - 1)
+							.getUpvotedUsers()
 							.contains(UserController.getCurrentUser().getName())) {
 						answers.get(groupPosition - 1).decrementVotes();
 						answers.get(groupPosition - 1).removeUpvotedUser(
 								UserController.getCurrentUser().getName());
-				        final MediaPlayer mp = MediaPlayer.create(context, R.raw.downvotesound);
-				        mp.start();
+						final MediaPlayer mp = MediaPlayer.create(context,
+								R.raw.downvotesound);
+						mp.start();
 
 						notifyDataSetChanged();
 						QuestionsController.updateQuestion(question);
@@ -463,8 +479,9 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 							answers.get(groupPosition - 1).incrementVotes();
 							answers.get(groupPosition - 1).addUpvotedUser(
 									UserController.getCurrentUser().getName());
-							final MediaPlayer mp = MediaPlayer.create(context, R.raw.upvotesound);
-					        mp.start();
+							final MediaPlayer mp = MediaPlayer.create(context,
+									R.raw.upvotesound);
+							mp.start();
 							notifyDataSetChanged();
 							QuestionsController.updateQuestion(question);
 							image.setImageResource(R.drawable.upvoted);

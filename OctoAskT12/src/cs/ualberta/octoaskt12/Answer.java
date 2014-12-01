@@ -74,8 +74,7 @@ public class Answer implements Serializable {
 	public String getBody() {
 		if (location == null) {
 			return answerBody;
-		}
-		else {
+		} else {
 			return answerBody.concat(" (from:" + location + " )");
 		}
 	}

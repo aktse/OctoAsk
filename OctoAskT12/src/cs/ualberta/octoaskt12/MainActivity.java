@@ -54,6 +54,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/*
+ * Main activity of the app. Here the user can see a list of questions,
+ * favorites, read laters, etc. It's the main screen the user sees when
+ * opening the app. It has serveral fragments, the main one being the
+ * Question Fragment which holds a listview of all the questions.
+ */
 public class MainActivity extends FragmentActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks {
 
@@ -85,9 +91,8 @@ public class MainActivity extends FragmentActivity implements
 
 	private static int sortIndex = 0;
 
-    private final static int GEO_ACTIVITY_REQUEST_CODE = 6969;
+	private final static int GEO_ACTIVITY_REQUEST_CODE = 6969;
 
-    
 	private static String MyQuestionFilename;
 	private static Context context;
 
@@ -932,11 +937,11 @@ public class MainActivity extends FragmentActivity implements
 
 	public static class QuestionsNearbyFragment extends Fragment {
 
-		//questionArrayList
+		// questionArrayList
 		private Double latitude;
 		private Double longitude;
 		private String locality;
-		
+
 		public CustomArrayAdapter questionViewAdapter = null;
 
 		public static QuestionsNearbyFragment newInstance(Question question) {
@@ -952,29 +957,26 @@ public class MainActivity extends FragmentActivity implements
 			QuestionsNearbyFragment fragment = new QuestionsNearbyFragment();
 			return fragment;
 		}
-		
-		public void onActivityResult(int requestCode, int resultCode, Intent data){
-			if(resultCode == GEO_ACTIVITY_REQUEST_CODE){
-			
-			   latitude  = data.getExtras().getDouble("Latitude");
-		       longitude = data.getExtras().getDouble("Longitude");
-		       locality  = data.getExtras().getString("Locality");
+
+		public void onActivityResult(int requestCode, int resultCode,
+				Intent data) {
+			if (resultCode == GEO_ACTIVITY_REQUEST_CODE) {
+
+				latitude = data.getExtras().getDouble("Latitude");
+				longitude = data.getExtras().getDouble("Longitude");
+				locality = data.getExtras().getString("Locality");
 			}
 			arraySort();
-				
-		}
 
+		}
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			
-			
 
 			Intent intent = new Intent(getActivity(), GeoAct.class);
 
 			startActivityForResult(intent, GEO_ACTIVITY_REQUEST_CODE);
-			
 
 			this.questionViewAdapter = new CustomArrayAdapter(getActivity(),
 					NearbyArrayList);
@@ -1011,53 +1013,74 @@ public class MainActivity extends FragmentActivity implements
 			super.onAttach(activity);
 			((MainActivity) activity).onSectionAttached(7);
 		}
-		
 
 		private void arraySort() {
-			QuestionArrayList sortedQal = new QuestionArrayList();		
+			QuestionArrayList sortedQal = new QuestionArrayList();
 			NearbyArrayList = sortedQal;
-			if(questionArrayList.getSize() > 0){
-			ArrayList<Double> distancecontainers = new ArrayList<Double>();
-			ArrayList tempqal = new ArrayList();
-			for(int q = 0; q < questionArrayList.getSize(); q++){
-				//if(!questionArrayList.getQuestion(q).getLatitude().equals(null) || !questionArrayList.getQuestion(q).getLongitude().equals(null) || !questionArrayList.getQuestion(q).getLongitude().equals(0.0) || !questionArrayList.getQuestion(q).getLongitude().equals("")){
-				if(!questionArrayList.getQuestion(q).getLatitude().equals(0.0)){
-				Double blatitude = questionArrayList.getQuestion(q).getLatitude();
-				Double blongitude = questionArrayList.getQuestion(q).getLongitude();
-				Double dist = locationdifference(latitude, longitude, blatitude, blatitude );
-				distancecontainers.add(dist);
-				tempqal.add(questionArrayList.getQuestion(q));		
-				}
-			}	
-			Question insertquestion;
-			int s = 0;
-			for (int i = 1; i < questionArrayList.getSize(); i++ ){
-				if(!questionArrayList.getQuestion(i).getLatitude().equals(0.0)){
-				insertquestion = questionArrayList.get(i);
-				Double clatitude = questionArrayList.getQuestion(i).getLatitude();
-				Double clongitude = questionArrayList.getQuestion(i).getLongitude();
-				Double dist2 = locationdifference(latitude, longitude, clatitude, clongitude );
-
-				for (s = i-1; (s >= 0) && (( locationdifference(latitude, longitude, questionArrayList.getQuestion(s).getLatitude(), questionArrayList.getQuestion(s).getLongitude() )) > dist2); s++){
-					//tempqal.set(s+1, questionArrayList.get(s));
-				}
-				//tempqal.set(s, insertquestion);
-				}
-			}			
-			for (int z = 0; z > tempqal.size(); z++){
-				if(questionArrayList.getQuestion(z).getLatitude().equals(null) && questionArrayList.getQuestion(z).getLongitude().equals(null)){
-				//tempqal.remove(z);
+			if (questionArrayList.getSize() > 0) {
+				ArrayList<Double> distancecontainers = new ArrayList<Double>();
+				ArrayList tempqal = new ArrayList();
+				for (int q = 0; q < questionArrayList.getSize(); q++) {
+					// if(!questionArrayList.getQuestion(q).getLatitude().equals(null)
+					// ||
+					// !questionArrayList.getQuestion(q).getLongitude().equals(null)
+					// ||
+					// !questionArrayList.getQuestion(q).getLongitude().equals(0.0)
+					// ||
+					// !questionArrayList.getQuestion(q).getLongitude().equals("")){
+					if (!questionArrayList.getQuestion(q).getLatitude()
+							.equals(0.0)) {
+						Double blatitude = questionArrayList.getQuestion(q)
+								.getLatitude();
+						Double blongitude = questionArrayList.getQuestion(q)
+								.getLongitude();
+						Double dist = locationdifference(latitude, longitude,
+								blatitude, blatitude);
+						distancecontainers.add(dist);
+						tempqal.add(questionArrayList.getQuestion(q));
 					}
-				}			
-			this.questionViewAdapter.clear();
-			this.questionViewAdapter.addAll(tempqal);
-			this.questionViewAdapter.notifyDataSetChanged();
+				}
+				Question insertquestion;
+				int s = 0;
+				for (int i = 1; i < questionArrayList.getSize(); i++) {
+					if (!questionArrayList.getQuestion(i).getLatitude()
+							.equals(0.0)) {
+						insertquestion = questionArrayList.get(i);
+						Double clatitude = questionArrayList.getQuestion(i)
+								.getLatitude();
+						Double clongitude = questionArrayList.getQuestion(i)
+								.getLongitude();
+						Double dist2 = locationdifference(latitude, longitude,
+								clatitude, clongitude);
+
+						for (s = i - 1; (s >= 0)
+								&& ((locationdifference(latitude, longitude,
+										questionArrayList.getQuestion(s)
+												.getLatitude(),
+										questionArrayList.getQuestion(s)
+												.getLongitude())) > dist2); s++) {
+							// tempqal.set(s+1, questionArrayList.get(s));
+						}
+						// tempqal.set(s, insertquestion);
+					}
+				}
+				for (int z = 0; z > tempqal.size(); z++) {
+					if (questionArrayList.getQuestion(z).getLatitude()
+							.equals(null)
+							&& questionArrayList.getQuestion(z).getLongitude()
+									.equals(null)) {
+						// tempqal.remove(z);
+					}
+				}
+				this.questionViewAdapter.clear();
+				this.questionViewAdapter.addAll(tempqal);
+				this.questionViewAdapter.notifyDataSetChanged();
 			}
 		}
 	}
 
-	public static double locationdifference(double initialLat, double initialLong,
-			double finalLat, double finalLong) {
+	public static double locationdifference(double initialLat,
+			double initialLong, double finalLat, double finalLong) {
 
 		Location locationA = new Location("point A");
 		locationA.setLatitude(initialLat);

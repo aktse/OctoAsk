@@ -14,7 +14,7 @@ import android.widget.EditText;
 public class SearchFragment extends DialogFragment {
 
 	String searchString = null;
-	
+
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -32,11 +32,12 @@ public class SearchFragment extends DialogFragment {
 							@Override
 							public void onClick(DialogInterface dialog,
 									int which) {
-								EditText mEdit = (EditText) inflater.findViewById(R.id.search_dialog);
+								EditText mEdit = (EditText) inflater
+										.findViewById(R.id.search_dialog);
 								searchString = mEdit.getText().toString();
 								System.out.println(searchString);
-								((MainActivity) getActivity()).searchQuestions(
-										searchString);
+								((MainActivity) getActivity())
+										.searchQuestions(searchString);
 							}
 						})
 				.setNegativeButton("Cancel",
