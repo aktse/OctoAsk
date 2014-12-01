@@ -207,7 +207,7 @@ public class CreateQuestionActivity extends Activity {
 			
 			QuestionsController.addQuestion(question);
 			Toast.makeText(getBaseContext(), "Connected to internet,  question added.", Toast.LENGTH_SHORT).show();
-			MainActivity.updateQuestions();
+//			MainActivity.updateQuestions();
 			/*
 			QuestionsCacheManager qcm = new QuestionsCacheManager(getApplicationContext());
 			qcm.loadQuestions();

@@ -72,7 +72,7 @@ public class ESClient {
 				System.out.println("ID: " + question.getId());
 			}
 			qal.addQuestion(question);
-		}
+		}		
 		return qal;
 	}
 
@@ -100,6 +100,15 @@ public class ESClient {
 		String status = response.getStatusLine().toString();
 		System.out.println(status);
 		HttpEntity entity = response.getEntity();
+		try {
+			getQuestions();
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void updateQuestion(Question question) {
