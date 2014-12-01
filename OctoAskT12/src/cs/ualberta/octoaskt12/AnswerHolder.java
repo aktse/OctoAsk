@@ -7,18 +7,19 @@ public class AnswerHolder {
 	private Answer answer = null;
 	// lazy singleton
 	private static AnswerHolder answerHolder = null;
-	public static AnswerHolder getInstance(){
-		if (answerHolder == null){
+
+	public static AnswerHolder getInstance() {
+		if (answerHolder == null) {
 			answerHolder = new AnswerHolder();
 		}
 		return answerHolder;
 	}
-	
-	public Answer getAnswer(){
+
+	public Answer getAnswer() {
 		return answer;
 	}
-	
-	public void setAnswer(Answer answer){
+
+	public void setAnswer(Answer answer) {
 		this.answer = answer;
 	}
 }

@@ -5,18 +5,19 @@ public class QuestionHolder {
 	private Question question = null;
 	// lazy singleton
 	private static QuestionHolder questionHolder = null;
-	public static QuestionHolder getInstance(){
-		if (questionHolder == null){
+
+	public static QuestionHolder getInstance() {
+		if (questionHolder == null) {
 			questionHolder = new QuestionHolder();
 		}
 		return questionHolder;
 	}
-	
-	public Question getQuestion(){
+
+	public Question getQuestion() {
 		return question;
 	}
-	
-	public void setQuestion(Question question){
+
+	public void setQuestion(Question question) {
 		this.question = question;
 	}
 }

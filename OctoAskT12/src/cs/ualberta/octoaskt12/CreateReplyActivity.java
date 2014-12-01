@@ -16,13 +16,12 @@ import android.widget.Toast;
 // Activity for creating a reply to an answer or question
 
 public class CreateReplyActivity extends Activity {
-	
-	   double latitude;
-       double longitude;
-       String locality;
-       
-    private final int GEO_ACTIVITY_REQUEST_CODE = 6969;
 
+	double latitude;
+	double longitude;
+	String locality;
+
+	private final int GEO_ACTIVITY_REQUEST_CODE = 6969;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,23 +32,26 @@ public class CreateReplyActivity extends Activity {
 		final String extraKey = intent.getStringExtra("replyFor");
 		Button submitReply = (Button) findViewById(R.id.submitReplyButton);
 		submitReply.setOnClickListener(new View.OnClickListener() {
-		
+
 			@Override
 			public void onClick(View v) {
 				EditText replyBodyText = (EditText) findViewById(R.id.replyBodyText);
 				String replyBody = replyBodyText.getText().toString();
 				// user wants to reply to an answer
-				
-				if (extraKey.equals("0")){
+
+				if (extraKey.equals("0")) {
 					AnswerHolder answerHolder = AnswerHolder.getInstance();
 					Answer answer = answerHolder.getAnswer();
-					answer.addReply(new Reply(replyBody, UserController.getCurrentUser(), latitude, longitude, locality));
-					
+					answer.addReply(new Reply(replyBody, UserController
+							.getCurrentUser(), latitude, longitude, locality));
+
 				}
-				if (extraKey.equals("1")){
-					QuestionHolder questionHolder = QuestionHolder.getInstance();
+				if (extraKey.equals("1")) {
+					QuestionHolder questionHolder = QuestionHolder
+							.getInstance();
 					Question question = questionHolder.getQuestion();
-					question.addReply(new Reply(replyBody, UserController.getCurrentUser(), latitude, longitude, locality));
+					question.addReply(new Reply(replyBody, UserController
+							.getCurrentUser(), latitude, longitude, locality));
 
 					QuestionsController.updateQuestion(question);
 				}
@@ -57,15 +59,14 @@ public class CreateReplyActivity extends Activity {
 			}
 		});
 	}
-	
-	public void addGeo(View v) {
-		
-		Intent intent = new Intent(CreateReplyActivity.this,
-				GeoAct.class);
-		
-		startActivityForResult(intent, GEO_ACTIVITY_REQUEST_CODE);		
 
-}
+	public void addGeo(View v) {
+
+		Intent intent = new Intent(CreateReplyActivity.this, GeoAct.class);
+
+		startActivityForResult(intent, GEO_ACTIVITY_REQUEST_CODE);
+
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -85,17 +86,20 @@ public class CreateReplyActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
-	protected void onActivityResult(int requestCode, int resultCode, Intent data){
-		if(resultCode == GEO_ACTIVITY_REQUEST_CODE){
-		
-		   latitude  = data.getExtras().getDouble("Latitude");
-	       longitude = data.getExtras().getDouble("Longitude");
-	       locality  = data.getExtras().getString("Locality");
-	       Toast.makeText(getApplicationContext(), locality+" "+Double.toString(longitude)+" "+Double.toString(latitude), Toast.LENGTH_SHORT).show();
 
-			
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == GEO_ACTIVITY_REQUEST_CODE) {
+
+			latitude = data.getExtras().getDouble("Latitude");
+			longitude = data.getExtras().getDouble("Longitude");
+			locality = data.getExtras().getString("Locality");
+			Toast.makeText(
+					getApplicationContext(),
+					locality + " " + Double.toString(longitude) + " "
+							+ Double.toString(latitude), Toast.LENGTH_SHORT)
+					.show();
+
 		}
-	
-	
-}}
+
+	}
+}

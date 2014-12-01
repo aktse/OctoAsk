@@ -9,15 +9,18 @@ import java.io.ObjectOutputStream;
 import android.content.Context;
 import android.util.Log;
 
+// Grabs all of the questions the user has created while being offline 
+// and save them so that they can be pushed to the server later.
+
 public class OfflineDataManager {
-	
+
 	private static String MyQuestionFilename = "";
 
-	public static void LoadMyQuestions(Context context, QuestionArrayList questions) throws ClassNotFoundException{
-		
+	public static void LoadMyQuestions(Context context,
+			QuestionArrayList questions) throws ClassNotFoundException {
+
 		QuestionArrayList MyQuestions = new QuestionArrayList();
-		
-		
+
 		try {
 			FileInputStream fos = context.openFileInput(MyQuestionFilename);
 			ObjectInputStream ois = new ObjectInputStream(fos);
@@ -26,29 +29,26 @@ public class OfflineDataManager {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		int instanceinarraysize = MyQuestions.getSize();
 		questions.clear();
 		int dummy;
-		
+
 		for (dummy = 0; dummy < instanceinarraysize; dummy++) {
 			questions.addQuestion(MyQuestions.get(dummy));
 		}
 	}
 
-	public static void SaveMyQuestions(Context context, QuestionArrayList questions) {
+	public static void SaveMyQuestions(Context context,
+			QuestionArrayList questions) {
 		try {
-			FileOutputStream fos = context.openFileOutput(MyQuestionFilename, context.MODE_PRIVATE);
+			FileOutputStream fos = context.openFileOutput(MyQuestionFilename,
+					context.MODE_PRIVATE);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeObject(questions);
 			fos.close();
-		} catch(IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
+		}
 	}
-}
-
-		
-
-	
-	
 }

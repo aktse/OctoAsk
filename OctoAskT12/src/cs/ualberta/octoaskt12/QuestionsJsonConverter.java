@@ -11,7 +11,8 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
-public class QuestionsJsonConverter implements JsonDeserializer<QuestionArrayList>, JsonSerializer<Bitmap>{
+public class QuestionsJsonConverter implements
+		JsonDeserializer<QuestionArrayList>, JsonSerializer<Bitmap> {
 
 	@Override
 	public JsonElement serialize(Bitmap arg0, Type arg1,

@@ -11,7 +11,6 @@ import cs.ualberta.octoaskt12.MainActivity;
 import cs.ualberta.octoaskt12.Question;
 import cs.ualberta.octoaskt12.QuestionArrayList;
 import cs.ualberta.octoaskt12.QuestionsCacheManager;
-import cs.ualberta.octoaskt12.ReadLater;
 import cs.ualberta.octoaskt12.User;
 
 public class AllQuestionsCacheManagerTest extends ActivityInstrumentationTestCase2<MainActivity> {

@@ -38,10 +38,11 @@ public class Question implements Serializable {
 
 	private transient Bitmap image = null;
 	private String imageBase64;
-	
+
 	private String questionId = null;
-	
+
 	private String location;
+
 	public String getLocation() {
 		return location;
 	}
@@ -68,7 +69,6 @@ public class Question implements Serializable {
 
 	Double longitude;
 	Double latitude;
-	
 
 	// Constructor
 	public Question(String questionTitle, String questionBody, User user) {
@@ -89,7 +89,11 @@ public class Question implements Serializable {
 	}
 
 	public String getTitle() {
-		return questionTitle.concat(" (from: "+location+" )");
+		if (location == null) {
+			return questionTitle;
+		} else {
+			return questionTitle.concat(" (from: " + location + " )");
+		}
 	}
 
 	public void setBody(String questionBody) {
@@ -116,7 +120,7 @@ public class Question implements Serializable {
 	public void decrementVotes() {
 		numVotes--;
 	}
-	
+
 	/**
 	 * These methods concerns the answers associated with the question.
 	 */
@@ -178,7 +182,7 @@ public class Question implements Serializable {
 	public void addUpvotedUser(String username) {
 		this.upvotedUsers.add(username);
 	}
-	
+
 	public void removeUpvotedUser(String username) {
 		this.upvotedUsers.remove(username);
 	}
@@ -219,11 +223,11 @@ public class Question implements Serializable {
 		return BitmapFactory
 				.decodeByteArray(decodedByte, 0, decodedByte.length);
 	}
-	
+
 	public void setId(String id) {
 		this.questionId = id;
 	}
-	
+
 	public String getId() {
 		return this.questionId;
 	}

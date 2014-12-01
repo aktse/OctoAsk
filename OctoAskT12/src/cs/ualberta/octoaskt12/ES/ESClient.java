@@ -27,6 +27,8 @@ import cs.ualberta.octoaskt12.QuestionArrayList;
 
 /*
  * inspiration taken from https://github.com/rayzhangcl/ESDemo/
+ * This class handles all connections to ElasticSearch for 
+ * searching, getting, adding, and updating questions.
  */
 public class ESClient {
 	private HttpClient httpClient = new DefaultHttpClient();
@@ -72,7 +74,7 @@ public class ESClient {
 				System.out.println("ID: " + question.getId());
 			}
 			qal.addQuestion(question);
-		}		
+		}
 		return qal;
 	}
 
@@ -153,9 +155,13 @@ public class ESClient {
 		HttpPost searchRequest = new HttpPost(
 				"http://cmput301.softwareprocess.es:8080/cmput301f14t12/_search?size=150");
 
-		String SEARCH_USER_FAV = "{\n" + "\"query\":{\n"
-				+ "\"fuzzy_like_this\":{\n" + "\"fields\": [" + "\"questionBody\", \"questionTitle\", \"answers.answerBody\"],\n"
-				+ "\"like_text\":" + "\"" + searchString + "\"" + "\n}\n}\n}\n}";
+		String SEARCH_USER_FAV = "{\n"
+				+ "\"query\":{\n"
+				+ "\"fuzzy_like_this\":{\n"
+				+ "\"fields\": ["
+				+ "\"questionBody\", \"questionTitle\", \"answers.answerBody\"],\n"
+				+ "\"like_text\":" + "\"" + searchString + "\""
+				+ "\n}\n}\n}\n}";
 
 		StringEntity stringEntity = new StringEntity(SEARCH_USER_FAV);
 

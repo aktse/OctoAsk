@@ -4,6 +4,8 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+// Check if the device is connected to the internet
+
 public class NetworkChecker extends CreateQuestionActivity {
 	private Context context;
 

@@ -17,23 +17,20 @@ public class ReadLaterCacheManager {
 	private User user;
 	private Context context;
 	private QuestionArrayList qal;
-	
-	public ReadLaterCacheManager(Context context)
-	{
+
+	public ReadLaterCacheManager(Context context) {
 		this.context = context;
 		this.qal = new QuestionArrayList();
 	}
-	
-	public void init()
-	{
+
+	public void init() {
 		try {
 			FileInputStream fis = context.openFileInput(FILENAME);
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			this.qal = (QuestionArrayList) ois.readObject();
 			fis.close();
 			ois.close();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			File offlineData = new File(context.getFilesDir(), FILENAME);
 			try {
@@ -44,59 +41,51 @@ public class ReadLaterCacheManager {
 		}
 	}
 
-	public void load()
-	{		
+	public void load() {
 		try {
 			FileInputStream fis = context.openFileInput(FILENAME);
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			this.qal = (QuestionArrayList) ois.readObject();
-			
+
 			fis.close();
 			ois.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public QuestionArrayList get()
-	{
+
+	public QuestionArrayList get() {
 		return this.qal;
 	}
-	
-	public void set(QuestionArrayList qal_in)
-	{
+
+	public void set(QuestionArrayList qal_in) {
 		this.qal = qal_in;
 	}
-	
-	public void save()
-	{
+
+	public void save() {
 		try {
-			FileOutputStream fos = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
+			FileOutputStream fos = context.openFileOutput(FILENAME,
+					Context.MODE_PRIVATE);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeObject(this.qal);
 			fos.close();
 			oos.close();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public void clear()
-	{
-		try
-		{
+
+	public void clear() {
+		try {
 			context.deleteFile(FILENAME);
-			
+
 			File offlineData = new File(context.getFilesDir(), FILENAME);
 			try {
 				offlineData.createNewFile();
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

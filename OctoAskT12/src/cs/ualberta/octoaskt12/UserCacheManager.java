@@ -18,14 +18,12 @@ public class UserCacheManager {
 	private User user;
 	private Context context;
 
-	public UserCacheManager(Context context)
-	{
+	public UserCacheManager(Context context) {
 		this.context = context;
 		this.user = new User(null);
 	}
-	
-	public void init()
-	{
+
+	public void init() {
 		try {
 			FileInputStream fis = context.openFileInput(FILENAME);
 			ObjectInputStream ois = new ObjectInputStream(fis);
@@ -33,8 +31,7 @@ public class UserCacheManager {
 			this.user = (User) ois.readObject();
 			fis.close();
 			ois.close();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			File offlineData = new File(context.getFilesDir(), FILENAME);
 			try {
@@ -45,64 +42,55 @@ public class UserCacheManager {
 		}
 	}
 
-	public void load()
-	{		
+	public void load() {
 		try {
 			FileInputStream fis = context.openFileInput(FILENAME);
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			this.user = (User) ois.readObject();
-			
+
 			fis.close();
 			ois.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public User getUser()
-	{
+
+	public User getUser() {
 		return this.user;
 	}
-	
-	public String getUsername()
-	{
+
+	public String getUsername() {
 		return this.user.getName();
 	}
-	
-	public void setUser(User user)
-	{
+
+	public void setUser(User user) {
 		this.user = user;
 	}
-	
-	public void save()
-	{
+
+	public void save() {
 		try {
-			FileOutputStream fos = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
+			FileOutputStream fos = context.openFileOutput(FILENAME,
+					Context.MODE_PRIVATE);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeObject(this.user);
 			fos.close();
 			oos.close();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public void clear()
-	{
-		try
-		{
+
+	public void clear() {
+		try {
 			context.deleteFile(FILENAME);
-			
+
 			File offlineData = new File(context.getFilesDir(), FILENAME);
 			try {
 				offlineData.createNewFile();
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
