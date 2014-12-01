@@ -22,7 +22,7 @@ public class Answer implements Serializable {
 	// the replies for this answer
 	private ArrayList<Reply> replies = new ArrayList<Reply>();
 	// users that upvoted the answer
-	private ArrayList<User> upvotedUsers = new ArrayList<User>();
+	private ArrayList<String> upvotedUsers = new ArrayList<String>();
 	// the date the answer was created
 	private GregorianCalendar dateCreated;
 	private transient Bitmap image = null;
@@ -110,16 +110,16 @@ public class Answer implements Serializable {
 		}
 	}
 
-	public ArrayList<User> getUpvotedUsers() {
+	public ArrayList<String> getUpvotedUsers() {
 		return this.upvotedUsers;
 	}
 
-	public void addUpvotedUser(User user) {
-		this.upvotedUsers.add(user);
+	public void addUpvotedUser(String string) {
+		this.upvotedUsers.add(string);
 	}
 
-	public void removeUpvotedUser(User user){
-		this.upvotedUsers.remove(user);
+	public void removeUpvotedUser(String string){
+		this.upvotedUsers.remove(string);
 	}
 	
 	public void setImage(Bitmap bitmap) {
