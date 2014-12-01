@@ -981,7 +981,13 @@ public class MainActivity extends FragmentActivity implements
 				
 				//Toast.makeText(getActivity(), "ei", Toast.LENGTH_SHORT).show();
 
-				if(!questionArrayList.getQuestion(q).getLatitude().equals(null) && !questionArrayList.getQuestion(q).getLongitude().equals(null)){
+				//if(!questionArrayList.getQuestion(q).getLatitude().equals(null) || !questionArrayList.getQuestion(q).getLongitude().equals(null) || !questionArrayList.getQuestion(q).getLongitude().equals(0.0) || !questionArrayList.getQuestion(q).getLongitude().equals("")){
+				if(!questionArrayList.getQuestion(q).getLatitude().equals(0.0)){
+				//Toast.makeText(getActivity(), "null"+questionArrayList.getQuestion(q).getLatitude().equals(null), Toast.LENGTH_SHORT).show();
+				//Toast.makeText(getActivity(), "string1"+questionArrayList.getQuestion(q).getLatitude().equals(""), Toast.LENGTH_SHORT).show();
+				//Toast.makeText(getActivity(), "0.0"+questionArrayList.getQuestion(q).getLatitude().equals(0.0), Toast.LENGTH_SHORT).show();
+				//Toast.makeText(getActivity(), "nulllong"+questionArrayList.getQuestion(q).getLongitude().equals(null), Toast.LENGTH_SHORT).show();
+
 				Double blatitude = questionArrayList.getQuestion(q).getLatitude();
 				Double blongitude = questionArrayList.getQuestion(q).getLongitude();
 				//Toast.makeText(getActivity(), "ei", Toast.LENGTH_SHORT).show();
@@ -1001,8 +1007,10 @@ public class MainActivity extends FragmentActivity implements
 			Question insertquestion;
 			int s = 0;
 
+			
 			for (int i = 1; i < questionArrayList.getSize(); i++ ){
-				if(!questionArrayList.getQuestion(i).getLatitude().equals(null) && !questionArrayList.getQuestion(i).getLongitude().equals(null)){
+				//if(!questionArrayList.getQuestion(i).getLatitude().equals(null) || !questionArrayList.getQuestion(i).getLongitude().equals(null)  || !questionArrayList.getQuestion(i).getLongitude().equals(0.0) || !questionArrayList.getQuestion(i).getLongitude().equals("")){
+				if(!questionArrayList.getQuestion(i).getLatitude().equals(0.0)){
 
 				insertquestion = questionArrayList.get(i);
 				Double clatitude = questionArrayList.getQuestion(i).getLatitude();
@@ -1015,21 +1023,19 @@ public class MainActivity extends FragmentActivity implements
 				for (s = i-1; (s >= 0) && (( locationdifference(latitude, longitude, questionArrayList.getQuestion(s).getLatitude(), questionArrayList.getQuestion(s).getLongitude() )) > dist2); s++){
 					tempqal.set(s+1, questionArrayList.get(s));
 				}
-				tempqal.set(s+1, insertquestion);
+				tempqal.set(s, insertquestion);
 				}
 			}
 			
-		    Toast.makeText(getActivity(), "tempqal"+(tempqal) , Toast.LENGTH_SHORT).show();
-		    Toast.makeText(getActivity(), "tempqal"+(tempqal) , Toast.LENGTH_SHORT).show();
-		    Toast.makeText(getActivity(), "tempqal"+(tempqal) , Toast.LENGTH_SHORT).show();
-		    Toast.makeText(getActivity(), "tempqal"+(tempqal) , Toast.LENGTH_SHORT).show();
-
 
 			
-			/*
+			
 			for (int z = 0; z > tempqal.size(); z++){
-				NearbyArrayList.addQuestion(((Question)tempqal.get(z)));
-				}*/
+				if(questionArrayList.getQuestion(z).getLatitude().equals(null) && questionArrayList.getQuestion(z).getLongitude().equals(null)){
+
+				tempqal.remove(z);
+					}
+				}
 		    Toast.makeText(getActivity(), "size"+Integer.toString(tempqal.size()), Toast.LENGTH_SHORT).show();
 			
 			this.questionViewAdapter.clear();
