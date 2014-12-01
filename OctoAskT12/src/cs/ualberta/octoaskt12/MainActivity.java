@@ -59,9 +59,9 @@ public class MainActivity extends FragmentActivity implements
 	ESClient esc = new ESClient();
 
 	public static QuestionArrayList questionArrayList = new QuestionArrayList();
-	
+
 	public static QuestionArrayList myQuestionsList = new QuestionArrayList();
-	
+
 	public static QuestionArrayList sortedQuestionArrayList;
 
 	public static QuestionArrayList historyArrayList = new QuestionArrayList();
@@ -70,11 +70,15 @@ public class MainActivity extends FragmentActivity implements
 
 	public static QuestionArrayList laterArrayList = new QuestionArrayList();
 
+	public static User loggedInUser = null;
+
 	private static NavigationDrawerFragment mNavigationDrawerFragment;
 
 	private CharSequence mTitle;
 
 	private static int REQUEST_CODE_USERNAME = 1521;
+
+	private static int REQUEST_CODE_CREATE_QUESTION = 1555;
 
 	private static int sortIndex = 0;
 
@@ -85,61 +89,59 @@ public class MainActivity extends FragmentActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
 
 		StrictMode.ThreadPolicy p = new StrictMode.ThreadPolicy.Builder()
 				.permitAll().build();
 		StrictMode.setThreadPolicy(p);
 
-
+		// need to remove these two lines
+		// User currentUser2 = new User("Chris");
+		// UserController.setCurrentUser(currentUser2);
 
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo ni = cm.getActiveNetworkInfo();
 
 		// no connection
-		if (ni == null)
-		{
-			AllQuestionsCacheManager aqcm = new AllQuestionsCacheManager(getApplicationContext());
+		if (ni == null) {
+			AllQuestionsCacheManager aqcm = new AllQuestionsCacheManager(
+					getApplicationContext());
 			aqcm.init(); // create sav file
 			aqcm.load();
 			questionArrayList = aqcm.get();
 			aqcm.clear();
 		}
 		// have connection
-		else
-		{	
+		else {
 			/*
-			updateQuestions();
-			
-			// may need to modify this part
-			// may need to modify this part
-			// may need to modify this part
-			// may need to modify this part
-			// may need to modify this part
+			 * updateQuestions();
+			 * 
+			 * // may need to modify this part // may need to modify this part
+			 * // may need to modify this part // may need to modify this part
+			 * // may need to modify this part
+			 * 
+			 * QuestionsCacheManager qcm = new
+			 * QuestionsCacheManager(getApplicationContext()); qcm.clear();
+			 */
 
-			QuestionsCacheManager qcm = new QuestionsCacheManager(getApplicationContext());
-			qcm.clear();
-			*/
-			
 			// new
 			QuestionsCacheManager qcm = new QuestionsCacheManager(CallContext());
 			qcm.loadQuestions();
 			ArrayList<Question> cachedQuestions = qcm.get();
-			
-			for (Question cachedQuestion : cachedQuestions)
-			{
+
+			for (Question cachedQuestion : cachedQuestions) {
 				QuestionsController.addQuestion(cachedQuestion);
-			}			
-			
+			}
+
 			ArrayList<Question> emptyQuestionList = new ArrayList<Question>();
 			qcm.set(emptyQuestionList);
 			qcm.clear();
 			qcm.saveQuestions();
-			
+
 			updateQuestions();
+
 		}
-		
-		User currentUser = UserController.getCurrentUser();
+
+		// User currentUser = UserController.getCurrentUser();
 
 		context = this;
 
@@ -157,34 +159,47 @@ public class MainActivity extends FragmentActivity implements
 		// ElasticSearchAddQuestion.AddToDatabase();
 
 		// create new .sav data
-		
+
 		// may need to modify this part
 		// may need to modify this part
 		// may need to modify this part
 		// may need to modify this part
 		// may need to modify this part
-		QuestionsCacheManager qcm = new QuestionsCacheManager(getApplicationContext());
+		QuestionsCacheManager qcm = new QuestionsCacheManager(
+				getApplicationContext());
 		qcm.init();
-		
-		MyQuestionsCacheManager mqcm = new MyQuestionsCacheManager(getApplicationContext());
+
+		MyQuestionsCacheManager mqcm = new MyQuestionsCacheManager(
+				getApplicationContext());
 		mqcm.init();
 		System.out.println(myQuestionsList);
 		myQuestionsList = mqcm.get();
-		System.out.println("after"+myQuestionsList);
-		
-		FavouritesCacheManager fcm = new FavouritesCacheManager(getApplicationContext());
+		System.out.println("after" + myQuestionsList);
+
+		FavouritesCacheManager fcm = new FavouritesCacheManager(
+				getApplicationContext());
 		fcm.init();
 		System.out.println(favoritesArrayList);
 		favoritesArrayList = fcm.get();
-		System.out.println("after"+favoritesArrayList);
-		
-		HistoryCacheManager hcm = new HistoryCacheManager(getApplicationContext());
+		System.out.println("after" + favoritesArrayList);
+
+		HistoryCacheManager hcm = new HistoryCacheManager(
+				getApplicationContext());
 		hcm.init();
 		historyArrayList = hcm.get();
-		
-		ReadLaterCacheManager rlcm = new ReadLaterCacheManager(getApplicationContext());
+
+		ReadLaterCacheManager rlcm = new ReadLaterCacheManager(
+				getApplicationContext());
 		rlcm.init();
 		laterArrayList = rlcm.get();
+
+		UserCacheManager ucm = new UserCacheManager(getApplicationContext());
+		ucm.init();
+		ucm.load();
+		if (ucm.getUser().getName() != null) {
+			UserController.setCurrentUser(ucm.getUser());
+		}
+
 	}
 
 	@Override
@@ -280,46 +295,57 @@ public class MainActivity extends FragmentActivity implements
 	}
 
 	@Override
-	public void onPause()
-	{
+	public void onPause() {
 		super.onPause();
-		
+
 		// save all viewable questions
-		AllQuestionsCacheManager aqcm = new AllQuestionsCacheManager(getApplicationContext());
+		AllQuestionsCacheManager aqcm = new AllQuestionsCacheManager(
+				getApplicationContext());
 		aqcm.clear();
 		aqcm.set(questionArrayList);
 		aqcm.save();
 
-		MyQuestionsCacheManager mqcm = new MyQuestionsCacheManager(getApplicationContext());
+		MyQuestionsCacheManager mqcm = new MyQuestionsCacheManager(
+				getApplicationContext());
 		mqcm.clear();
 		mqcm.set(myQuestionsList);
 		mqcm.save();
-		
+
 		// save favourites
-		FavouritesCacheManager fcm = new FavouritesCacheManager(getApplicationContext());
+		FavouritesCacheManager fcm = new FavouritesCacheManager(
+				getApplicationContext());
 		fcm.clear();
 		fcm.set(favoritesArrayList);
 		fcm.save();
-		
+
 		// save history
-		HistoryCacheManager hcm = new HistoryCacheManager(getApplicationContext());
+		HistoryCacheManager hcm = new HistoryCacheManager(
+				getApplicationContext());
 		/*
-		Log.i("LOOK HERE", "HEEEEEEEEEERE");
-		Log.i("LOOK HERE", "HEEEEEEEEEERE");
-		Log.i("LOOK HERE", "HEEEEEEEEEERE");
-		Log.i("LOOK HERE", "HEEEEEEEEEERE");
-		Log.i("LOOK HERE", "HEEEEEEEEEERE");
-		*/
+		 * Log.i("LOOK HERE", "HEEEEEEEEEERE"); Log.i("LOOK HERE",
+		 * "HEEEEEEEEEERE"); Log.i("LOOK HERE", "HEEEEEEEEEERE");
+		 * Log.i("LOOK HERE", "HEEEEEEEEEERE"); Log.i("LOOK HERE",
+		 * "HEEEEEEEEEERE");
+		 */
 		hcm.clear();
 		hcm.set(historyArrayList);
 		hcm.save();
-		
+
 		// save read laters
-		ReadLaterCacheManager rlcm = new ReadLaterCacheManager(getApplicationContext());
+		ReadLaterCacheManager rlcm = new ReadLaterCacheManager(
+				getApplicationContext());
 		rlcm.clear();
 		rlcm.set(laterArrayList);
 		rlcm.save();
+
+		UserCacheManager ucm = new UserCacheManager(getApplicationContext());
+		ucm.clear();
+		if (UserController.getCurrentUser() != null) {
+			ucm.setUser(UserController.getCurrentUser());
+		}
+		ucm.save();
 	}
+
 	public void createSortDialog(MenuItem menu) {
 		// Creates a dialog fragment to prompt user into making a selection to
 		// sort view
@@ -364,6 +390,7 @@ public class MainActivity extends FragmentActivity implements
 		// Updates questions by querying server
 		try {
 			questionArrayList = QuestionsController.getAllQuestions();
+
 		} catch (ClientProtocolException e1) {
 			e1.printStackTrace();
 		} catch (IOException e1) {
@@ -393,12 +420,14 @@ public class MainActivity extends FragmentActivity implements
 		} else {
 			Intent intent = new Intent(MainActivity.this,
 					CreateQuestionActivity.class);
-			startActivity(intent);
+			System.out.println("preparing to create question");
+			startActivityForResult(intent, REQUEST_CODE_CREATE_QUESTION);
+
 		}
 	}
-	
+
 	public void addFavorite(View view) {
-		//favoritesArrayList.addQuestion(question);
+		// favoritesArrayList.addQuestion(question);
 	}
 
 	public void setUsername(View view) {
@@ -408,10 +437,18 @@ public class MainActivity extends FragmentActivity implements
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		System.out.println(requestCode);
 		if (requestCode == REQUEST_CODE_USERNAME) {
 			FragmentManager fragmentManager = getFragmentManager();
 			fragmentManager.beginTransaction()
 					.replace(R.id.container, ProfileFragment.newInstance())
+					.commit();
+		} else if (requestCode == REQUEST_CODE_CREATE_QUESTION) {
+			System.out.println("created question");
+//			updateQuestions();
+			FragmentManager fragmentManager = getFragmentManager();
+			fragmentManager.beginTransaction()
+					.replace(R.id.container, QuestionFragment.newInstance())
 					.commit();
 		}
 
@@ -512,6 +549,7 @@ public class MainActivity extends FragmentActivity implements
 
 		public static QuestionFragment newInstance() {
 			QuestionFragment fragment = new QuestionFragment();
+			System.out.println("Question Fragment Created");
 			return fragment;
 		}
 
@@ -532,14 +570,41 @@ public class MainActivity extends FragmentActivity implements
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
-					
-					Question question = questionArrayList.getQuestions().get(position);
-					if (historyArrayList.has(question)) {
-						historyArrayList.remove(question);
+
+					Question question = questionArrayList.getQuestions().get(
+							position);
+
+					boolean duplicateHistory = false;
+					for (Question histQuestion : MainActivity.historyArrayList
+							.getQuestions()) {
+						// System.out.println("Look here FAV "+histQuestion.getId());
+						// System.out.println("Look here current "+question.getId());
+						if (histQuestion.getId().equals(question.getId())) {
+							duplicateHistory = true;
+							break;
+						}
+					}
+
+					// new jack/chris
+					if (duplicateHistory == true) {
+						int history_question_index = historyArrayList
+								.getIndexById(question.getId());
+						if (history_question_index != -1) {
+							historyArrayList
+									.removeQuestionByIndex(history_question_index);
+						}
 						historyArrayList.addToFront(question);
 					} else {
 						historyArrayList.addToFront(question);
 					}
+
+					/*
+					 * if (historyArrayList.has(question)) {
+					 * historyArrayList.remove(question);
+					 * historyArrayList.addToFront(question); } else {
+					 * historyArrayList.addToFront(question); }
+					 */
+
 					FragmentManager fragmentManager = getFragmentManager();
 					fragmentManager
 							.beginTransaction()
@@ -598,7 +663,12 @@ public class MainActivity extends FragmentActivity implements
 						swipeLayout.setEnabled(false);
 				}
 			});
-
+			
+//			updateQuestions();
+			System.out.println("updated questions");
+			onResume();
+			System.out.println(sortIndex);
+			System.out.println("resumed");
 			return rootView;
 		}
 
@@ -606,28 +676,28 @@ public class MainActivity extends FragmentActivity implements
 		public void onResume() {
 			super.onResume();
 
-			ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(CallContext().CONNECTIVITY_SERVICE);
+			ConnectivityManager cm = (ConnectivityManager) getActivity()
+					.getSystemService(CallContext().CONNECTIVITY_SERVICE);
 			NetworkInfo ni = cm.getActiveNetworkInfo();
 
 			// have connection
-			if (ni != null)
-			{
-				
-				QuestionsCacheManager qcm = new QuestionsCacheManager(CallContext());
+			if (ni != null) {
+
+				QuestionsCacheManager qcm = new QuestionsCacheManager(
+						CallContext());
 				qcm.loadQuestions();
 				ArrayList<Question> cachedQuestions = qcm.get();
-				
-				for (Question cachedQuestion : cachedQuestions)
-				{
+
+				for (Question cachedQuestion : cachedQuestions) {
 					QuestionsController.addQuestion(cachedQuestion);
-				}			
-				
+				}
+
 				ArrayList<Question> emptyQuestionList = new ArrayList<Question>();
 				qcm.set(emptyQuestionList);
 				qcm.clear();
 				qcm.saveQuestions();
-			}		
-			
+			}
+
 			// Re-sorts the array when app is closed and reopened
 			// Guarentees consistency in sorting (doesn't randomly unsort)
 			SortManager sortManager = new SortManager();
@@ -665,6 +735,31 @@ public class MainActivity extends FragmentActivity implements
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
+
+			// updateQuestions();
+
+			myQuestionsList.clear();
+
+			if (UserController.getCurrentUser() != null) {
+				for (Question current_question : questionArrayList
+						.getQuestions()) {
+					System.out.println("question, "
+							+ current_question.getUser());
+					System.out.println("user controller, "
+							+ current_question.getUser());
+
+					System.out.println("Current question user: "
+							+ current_question.getUser());
+					System.out.println("User controller  user: "
+							+ UserController.getCurrentUser().getName());
+
+					if (current_question.getUser().equals(
+							UserController.getCurrentUser().getName())) {
+						MainActivity.myQuestionsList
+								.addQuestion(current_question);
+					}
+				}
+			}
 
 			this.MyQuestionAdapter = new CustomArrayAdapter(getActivity(),
 					myQuestionsList);
@@ -780,7 +875,7 @@ public class MainActivity extends FragmentActivity implements
 			ListView lv = (ListView) rootView.findViewById(R.id.later_list);
 			lv.setAdapter(LaterAdapter);
 			lv.setOnItemClickListener(new OnItemClickListener() {
-				
+
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
@@ -850,7 +945,7 @@ public class MainActivity extends FragmentActivity implements
 			});
 			return rootView;
 		}
-		
+
 		@Override
 		public void onAttach(Activity activity) {
 			super.onAttach(activity);
@@ -984,12 +1079,12 @@ public class MainActivity extends FragmentActivity implements
 		public void onResume() {
 			super.onResume();
 			detailViewAdapter.notifyDataSetChanged();
-			ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+			ConnectivityManager cm = (ConnectivityManager) getActivity()
+					.getSystemService(Context.CONNECTIVITY_SERVICE);
 			NetworkInfo ni = cm.getActiveNetworkInfo();
 
 			// no connection
-			if (ni == null)
-			{
+			if (ni == null) {
 				;
 			} else {
 				QuestionsController.updateQuestion(question);

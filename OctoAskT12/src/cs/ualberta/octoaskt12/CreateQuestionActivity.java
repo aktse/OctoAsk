@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
 
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -105,6 +106,7 @@ public class CreateQuestionActivity extends Activity {
 		getMenuInflater().inflate(R.menu.create_question, menu);
 		return true;
 	}
+	
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -125,6 +127,15 @@ public class CreateQuestionActivity extends Activity {
 	public void cancelQuestionAction(View v) {
 		onBackPressed();
 	}
+	
+	public void addGeo(View v) {
+		
+		Intent intent = new Intent(CreateQuestionActivity.this,
+				GeoAct.class);
+		startActivity(intent);
+		
+
+}
 
 	public void submitQuestionAction(View v) {
 		EditText titleEditText = (EditText) findViewById(R.id.questionTitleText);
@@ -151,7 +162,7 @@ public class CreateQuestionActivity extends Activity {
 		mqcm.save();
 		*/
 		
-		MainActivity.myQuestionsList.addQuestion(question);
+		//MainActivity.myQuestionsList.addQuestion(question);
 		
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo ni = cm.getActiveNetworkInfo();
@@ -169,7 +180,7 @@ public class CreateQuestionActivity extends Activity {
 			
 			QuestionsController.addQuestion(question);
 			Toast.makeText(getBaseContext(), "Connected to internet,  question added.", Toast.LENGTH_SHORT).show();
-			
+			MainActivity.updateQuestions();
 			/*
 			QuestionsCacheManager qcm = new QuestionsCacheManager(getApplicationContext());
 			qcm.loadQuestions();
@@ -205,5 +216,6 @@ public class CreateQuestionActivity extends Activity {
 
 		//QuestionsController.addQuestion(question);
 		onBackPressed();
+		System.out.println("returning to main activity");
 	}
 }

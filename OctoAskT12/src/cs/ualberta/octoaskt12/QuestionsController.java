@@ -43,9 +43,9 @@ public class QuestionsController {
 	 */
 
 	public static void addQuestion(Question question) {
-		allQuestions.addQuestion(question);
 		ESClient esc = new ESClient();
 		esc.addQuestion(question);
+//		allQuestions.addQuestion(question);
 	}
 
 	public static void updateQuestion(Question question) {
