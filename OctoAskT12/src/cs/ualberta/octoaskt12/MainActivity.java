@@ -66,9 +66,8 @@ public class MainActivity extends FragmentActivity implements
 	public static QuestionArrayList sortedQuestionArrayList;
 
 	public static QuestionArrayList historyArrayList = new QuestionArrayList();
-	
-	public static QuestionArrayList NearbyArrayList = new QuestionArrayList();
 
+	public static QuestionArrayList NearbyArrayList = new QuestionArrayList();
 
 	public static QuestionArrayList favoritesArrayList = new QuestionArrayList();
 
@@ -204,13 +203,14 @@ public class MainActivity extends FragmentActivity implements
 		}
 
 	}
-//
-//	@Override
-//	public void onResume() {
-//		super.onResume();
-//		updateQuestions();
-//	}
-	
+
+	//
+	// @Override
+	// public void onResume() {
+	// super.onResume();
+	// updateQuestions();
+	// }
+
 	@Override
 	public void onNavigationDrawerItemSelected(int position) {
 		// update the main content by replacing fragments
@@ -247,9 +247,10 @@ public class MainActivity extends FragmentActivity implements
 					.commit();
 			break;
 		case 7:
-			fragmentManager.beginTransaction()
-					.replace(R.id.container, QuestionsNearbyFragment.newInstance())
-					.commit();
+			fragmentManager
+					.beginTransaction()
+					.replace(R.id.container,
+							QuestionsNearbyFragment.newInstance()).commit();
 			break;
 		}
 	}
@@ -543,14 +544,13 @@ public class MainActivity extends FragmentActivity implements
 				fragmentManager.beginTransaction()
 						.replace(R.id.container, HistoryFragment.newInstance())
 						.commit();
-			}
-			else if (fragmentManager.getBackStackEntryAt(0).getName() == "QuestionsNearby") {
+			} else if (fragmentManager.getBackStackEntryAt(0).getName() == "QuestionsNearby") {
 				fragmentManager.popBackStackImmediate();
-				fragmentManager.beginTransaction()
-						.replace(R.id.container, QuestionsNearbyFragment.newInstance())
-						.commit();
-			}
-			else {
+				fragmentManager
+						.beginTransaction()
+						.replace(R.id.container,
+								QuestionsNearbyFragment.newInstance()).commit();
+			} else {
 				super.onBackPressed();
 			}
 		} else {
@@ -614,7 +614,7 @@ public class MainActivity extends FragmentActivity implements
 					} else {
 						historyArrayList.addToFront(question);
 					}
-					
+
 					FragmentManager fragmentManager = getFragmentManager();
 					fragmentManager
 							.beginTransaction()
@@ -673,8 +673,8 @@ public class MainActivity extends FragmentActivity implements
 						swipeLayout.setEnabled(false);
 				}
 			});
-			
-//			updateQuestions();
+
+			// updateQuestions();
 
 			return rootView;
 		}
@@ -699,14 +699,14 @@ public class MainActivity extends FragmentActivity implements
 					QuestionsController.addQuestion(cachedQuestion);
 				}
 
-//				updateQuestions();
-				
+				// updateQuestions();
+
 				ArrayList<Question> emptyQuestionList = new ArrayList<Question>();
 				qcm.set(emptyQuestionList);
 				qcm.clear();
 				qcm.saveQuestions();
 			}
-			
+
 			// Re-sorts the array when app is closed and reopened
 			// Guarentees consistency in sorting (doesn't randomly unsort)
 			SortManager sortManager = new SortManager();
@@ -1015,11 +1015,21 @@ public class MainActivity extends FragmentActivity implements
 	}
 
 	// ========================================================================
-	
 
 	public static class QuestionsNearbyFragment extends Fragment {
 
+		//questionArrayList
+		
 		public CustomArrayAdapter questionViewAdapter = null;
+
+		public static QuestionsNearbyFragment newInstance(Question question) {
+			QuestionsNearbyFragment fragment = new QuestionsNearbyFragment();
+
+			Bundle args = new Bundle();
+			args.putSerializable("question", question);
+			fragment.setArguments(args);
+			return fragment;
+		}
 
 		public static QuestionsNearbyFragment newInstance() {
 			QuestionsNearbyFragment fragment = new QuestionsNearbyFragment();
@@ -1029,6 +1039,11 @@ public class MainActivity extends FragmentActivity implements
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
+			/*
+			for (int i = 0; i > questionArrayList.getSize(); i++ ){
+				questionArrayList.get(i); //question
+			}*/
+			NearbyArrayList = questionArrayList;
 
 			this.questionViewAdapter = new CustomArrayAdapter(getActivity(),
 					NearbyArrayList);
@@ -1036,7 +1051,8 @@ public class MainActivity extends FragmentActivity implements
 			View rootView = inflater.inflate(R.layout.fragment_questions_neaby,
 					container, false);
 
-			ListView lv = (ListView) rootView.findViewById(R.id.nearby_arraylist);
+			ListView lv = (ListView) rootView
+					.findViewById(R.id.nearby_arraylist);
 			lv.setAdapter(questionViewAdapter);
 			lv.setOnItemClickListener(new OnItemClickListener() {
 
@@ -1052,7 +1068,7 @@ public class MainActivity extends FragmentActivity implements
 											.newInstance(NearbyArrayList
 													.getQuestions().get(
 															position)))
-							.addToBackStack("History").commit();
+							.commit();
 				}
 
 			});
@@ -1062,28 +1078,27 @@ public class MainActivity extends FragmentActivity implements
 		@Override
 		public void onAttach(Activity activity) {
 			super.onAttach(activity);
-			((MainActivity) activity).onSectionAttached(5);
+			((MainActivity) activity).onSectionAttached(7);
 		}
 	}
-	
-	
+
 	public double locationdifference(double initialLat, double initialLong,
-            double finalLat, double finalLong){
-	
-		Location locationA = new Location("point A");     
-		locationA.setLatitude(initialLat); 
+			double finalLat, double finalLong) {
+
+		Location locationA = new Location("point A");
+		locationA.setLatitude(initialLat);
 		locationA.setLongitude(initialLong);
-		
+
 		Location locationB = new Location("point B");
-		
-		locationB.setLatitude(finalLat); 
+
+		locationB.setLatitude(finalLat);
 		locationB.setLongitude(finalLong);
-		
-		double distance = locationA.distanceTo(locationB) ;
-		
+
+		double distance = locationA.distanceTo(locationB);
+
 		return distance;
 	}
-	
+
 	// ========================================
 
 	public static class QuestionDetailFragment extends Fragment {
