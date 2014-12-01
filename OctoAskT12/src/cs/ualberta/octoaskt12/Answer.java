@@ -27,6 +27,34 @@ public class Answer implements Serializable {
 	private GregorianCalendar dateCreated;
 	private transient Bitmap image = null;
 	private String imageBase64;
+	public Double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
+	}
+
+	public Double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	private Double longitude;
+	private Double latitude;
+	private String location;
+
 
 	// constructor
 	public Answer(String answerBody, User user) {

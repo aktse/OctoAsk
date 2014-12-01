@@ -3,16 +3,29 @@ package cs.ualberta.octoaskt12;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 public class CreateAnswerActivity extends Activity {
 
+    private final int GEO_ACTIVITY_REQUEST_CODE = 6969;
+
+	   double latitude;
+       double longitude;
+       String locality;
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -60,6 +73,10 @@ public class CreateAnswerActivity extends Activity {
 					String answerBody = answerBodyText.getText().toString();
 					Intent returnIntent = new Intent();
 					returnIntent.putExtra("answerBody", answerBody);
+					returnIntent.putExtra("location", locality);
+					returnIntent.putExtra("latitude", latitude);
+					returnIntent.putExtra("longitude", longitude);
+
 					setResult(RESULT_OK, returnIntent);
 				}
 			} catch (Exception e) {
@@ -72,5 +89,32 @@ public class CreateAnswerActivity extends Activity {
 
 	public void cancelAnswer(View v) {
 		onBackPressed();
+	}
+	
+	public void addGeo(View v) {
+		
+		Intent intent = new Intent(CreateAnswerActivity.this,
+				GeoAct.class);
+		
+		startActivityForResult(intent, GEO_ACTIVITY_REQUEST_CODE);
+
+		//startActivity(intent);
+		
+
+}
+	
+
+	
+	protected void onActivityResult(int requestCode, int resultCode, Intent data){
+		if(resultCode == GEO_ACTIVITY_REQUEST_CODE){
+		
+		   latitude  = data.getExtras().getDouble("Latitude");
+	       longitude = data.getExtras().getDouble("Longitude");
+	       locality  = data.getExtras().getString("Locality");
+	       Toast.makeText(getApplicationContext(), locality+" "+Double.toString(longitude)+" "+Double.toString(latitude), Toast.LENGTH_SHORT).show();
+
+			
+		}
+			
 	}
 }

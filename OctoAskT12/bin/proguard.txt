@@ -28,7 +28,9 @@
 # view AndroidManifest.xml #generated:38
 -keep class cs.ualberta.octoaskt12.UserLoginActivity { <init>(...); }
 
+# onClick res/layout/activity_create_answer.xml #generated:69
 # onClick res/layout/activity_create_question.xml #generated:86
+# onClick res/layout/activity_create_reply.xml #generated:69
 -keepclassmembers class * { *** addGeo(...); }
 
 # onClick res/layout/activity_create_question.xml #generated:93
