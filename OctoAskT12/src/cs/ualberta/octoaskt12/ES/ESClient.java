@@ -100,6 +100,13 @@ public class ESClient {
 		String status = response.getStatusLine().toString();
 		System.out.println(status);
 		HttpEntity entity = response.getEntity();
+		try {
+			getQuestions();
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void updateQuestion(Question question) {

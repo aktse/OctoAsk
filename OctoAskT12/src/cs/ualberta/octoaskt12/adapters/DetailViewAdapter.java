@@ -18,6 +18,7 @@ import cs.ualberta.octoaskt12.UserLoginActivity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -279,6 +280,8 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 						question.decrementVotes();
 						question.removeUpvotedUser(UserController
 								.getCurrentUser());
+						final MediaPlayer mp = MediaPlayer.create(context, R.raw.downvotesound);
+				        mp.start();
 						notifyDataSetChanged();
 						QuestionsController.updateQuestion(question);
 						upvoteButton.setImageResource(R.drawable.upvote);
@@ -291,6 +294,8 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 							question.incrementVotes();
 							question.addUpvotedUser(UserController
 									.getCurrentUser());
+							final MediaPlayer mp = MediaPlayer.create(context, R.raw.upvotesound);
+					        mp.start();
 							notifyDataSetChanged();
 							QuestionsController.updateQuestion(question);
 							upvoteButton.setImageResource(R.drawable.upvoted);
@@ -349,9 +354,13 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 						int questionIndex = MainActivity.favoritesArrayList.searchQuestionIndexById(question.getId());
 						MainActivity.favoritesArrayList.removeQuestionByIndex(questionIndex);
 						favButton.setImageResource(R.drawable.favorite);
+						final MediaPlayer mp = MediaPlayer.create(context, R.raw.unfavorite);
+				        mp.start();
 					} else {
 						MainActivity.favoritesArrayList.addToFront(question);
 						favButton.setImageResource(R.drawable.favorited);
+						final MediaPlayer mp = MediaPlayer.create(context, R.raw.favorite);
+				        mp.start();
 					}
 					
 					/*
@@ -414,9 +423,13 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 						int questionIndex = MainActivity.laterArrayList.searchQuestionIndexById(question.getId());
 						MainActivity.laterArrayList.removeQuestionByIndex(questionIndex);
 						rlButton.setImageResource(R.drawable.readlater);
+						final MediaPlayer mp = MediaPlayer.create(context, R.raw.unreadlater);
+				        mp.start();
 					} else {
 						MainActivity.laterArrayList.addToFront(question);
 						rlButton.setImageResource(R.drawable.readlatered);
+						final MediaPlayer mp = MediaPlayer.create(context, R.raw.readlater);
+				        mp.start();
 					}
 					
 					/*
@@ -471,6 +484,9 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 						answers.get(groupPosition - 1).decrementVotes();
 						answers.get(groupPosition - 1).removeUpvotedUser(
 								UserController.getCurrentUser());
+				        final MediaPlayer mp = MediaPlayer.create(context, R.raw.downvotesound);
+				        mp.start();
+
 						notifyDataSetChanged();
 						QuestionsController.updateQuestion(question);
 						image.setImageResource(R.drawable.upvote);
@@ -483,6 +499,8 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 							answers.get(groupPosition - 1).incrementVotes();
 							answers.get(groupPosition - 1).addUpvotedUser(
 									UserController.getCurrentUser());
+							final MediaPlayer mp = MediaPlayer.create(context, R.raw.upvotesound);
+					        mp.start();
 							notifyDataSetChanged();
 							QuestionsController.updateQuestion(question);
 							image.setImageResource(R.drawable.upvoted);
