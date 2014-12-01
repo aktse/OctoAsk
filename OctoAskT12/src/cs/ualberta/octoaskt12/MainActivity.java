@@ -1049,7 +1049,7 @@ public class MainActivity extends FragmentActivity implements
 							.replace(
 									R.id.container,
 									QuestionDetailFragment
-											.newInstance(historyArrayList
+											.newInstance(NearbyArrayList
 													.getQuestions().get(
 															position)))
 							.addToBackStack("History").commit();
