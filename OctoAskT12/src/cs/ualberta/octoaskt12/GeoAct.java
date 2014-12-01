@@ -31,45 +31,27 @@ import cs.ualberta.octoaskt12.R;
 public class GeoAct extends Activity implements LocationListener,
 GooglePlayServicesClient.ConnectionCallbacks,
 GooglePlayServicesClient.OnConnectionFailedListener {
-
 	
-TextView mDisplayTextView;
+	TextView mDisplayTextView;
 	
     LocationRequest mLocationRequest;
     LocationClient mLocationClient;
-    
-    
-	static final int REQUEST_CODE_GPS_APK = 6969;
-	
-	//contains quality of service
-
+    static final int REQUEST_CODE_GPS_APK = 6969;
     Location mCurrentLocation;
-    
     private Dialog mDialog;
-    // Default constructor. Sets the dialog field to null
-
 	protected double longitude;
-
 	protected double latitude;
-
-
 	
 	@Override
 	protected void onCreate(Bundle savedinstancestate){
 		super.onCreate(savedinstancestate);
+		setContentView(R.layout.activity_geo);
+
 
 		Double locationlatitude;
 		Double locationlongitude;
-		 String locality;
+		String locality;
 		
-		 //locationlatitude = null;
-		 //locationlongitude = null;
-		 //locality = "locality";
-		
-		
-		setContentView(R.layout.activity_geo);
-		//setContentView(R.activity_geo);
-
 		   /*
          * Create a new location client, using the enclosing class to
          * handle callbacks.
@@ -109,74 +91,19 @@ TextView mDisplayTextView;
 	protected void onStart(){
         super.onStart();
 
-		/*
-	     * Called when the Activity becomes visible.
-	     */
-        
-        //boolean gpsapk = isOk();
-        
-Log.i("bef","bef");
-Log.i("bef","bef");
-
-        
         int googlePayResult = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-        
-        
-Log.i("aft","aft");
-Log.i("aft","aft");
-
 
         if (googlePayResult == ConnectionResult.SUCCESS ) {
         	
-            
-        	Log.i("succ","succ");
-        	Log.i("succ","succ");
-        	
-        	
         	mLocationClient.connect();
         	
-            
-        	Log.i("conn","conn");
-
-        	Log.i("conn","conn");
-        	Log.i("conn","conn");
-        	Log.i("conn","conn");
-        	Log.i("conn","conn");
-            //mCurrentLocation = mLocationClient.getLastLocation();
-        	
-        	
-            
-        	Log.i("last","last");
-        	Log.i("conn","conn");
-        	Log.i("conn","conn");
-        	Log.i("conn","conn");
-
-
         }
-        /*
-        else if(gpsapk = true){
-        	mLocationClient.connect();
-            mCurrentLocation = mLocationClient.getLastLocation();
-
-        	
-        }*/
         
         else{
 			Toast.makeText(this, "Google Play is not Available", Toast.LENGTH_LONG).show();
         }
-        
+
         /*
-        Log.i(Boolean.toString(gpsapk == true),Boolean.toString(gpsapk == true));
-        Log.i(Boolean.toString(gpsapk == true),Boolean.toString(gpsapk == true));
-        Log.i(Boolean.toString(gpsapk == true),Boolean.toString(gpsapk == true));
-        Log.i(Boolean.toString(gpsapk == true),Boolean.toString(gpsapk == true));
-        Log.i(Boolean.toString(gpsapk == true),Boolean.toString(gpsapk == true));
-        Log.i(Boolean.toString(gpsapk == true),Boolean.toString(gpsapk == true));
-        Log.i(Boolean.toString(gpsapk == true),Boolean.toString(gpsapk == true));
-        Log.i(Boolean.toString(gpsapk == true),Boolean.toString(gpsapk == true));
-        Log.i(Boolean.toString(gpsapk == true),Boolean.toString(gpsapk == true));
-        Log.i(Boolean.toString(gpsapk == true),Boolean.toString(gpsapk == true));*/
-/*
        if(gpsapk==true){
         	mLocationClient.connect();
             mCurrentLocation = mLocationClient.getLastLocation();
@@ -186,9 +113,6 @@ Log.i("aft","aft");
         
     }
 
-        //mLocationClient.connect();
-        //mCurrentLocation = mLocationClient.getLastLocation();
-
         
 	@Override
 	protected void onResume(){
@@ -196,36 +120,24 @@ Log.i("aft","aft");
 		
 		LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE); 
 		Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-		//longitude = location.getLongitude();
-		//latitude = location.getLatitude();
 		
-		
-		//Toast.makeText(this, location.getLatitude() +"," + location.getLongitude()+" : ", Toast.LENGTH_LONG).show();
-
 		Geocoder geodude = new Geocoder(this);
 		//List
 		try {
 			List<Address> geodudelocation = geodude.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
 			for(Address geoaddress : geodudelocation){
 
-
-			//Toast.makeText(this, location.getLatitude() +"," + location.getLongitude()+" : "+ geoaddress.getLocality(), Toast.LENGTH_LONG).show();
 			}
 			
 			double x = locationdifference(location.getLatitude(),location.getLongitude(), 53.522458, -113.623004);
 			longitude = location.getLongitude();
 			latitude = location.getLatitude();
-			//Toast.makeText(this, Double.toString(x), Toast.LENGTH_LONG).show();
-			
-        	//Log.i(Double.toString(x),Double.toString(x));
-
-
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		
+		//BUTTON
 		Button next = (Button) findViewById(R.id.button1);
 		next.setOnClickListener(new View.OnClickListener() {
 		    public void onClick(View view) {
@@ -234,24 +146,16 @@ Log.i("aft","aft");
 		    	Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 				String locality = null;
 
-		    
-		    	//======
-		    	
 		        Geocoder coder = new Geocoder(getApplicationContext());
 				List<Address> geocodeResults;
 				
 				try {
 					geocodeResults = coder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
 					for (Address address: geocodeResults){
-						Log.d("Location", location.getLatitude() +"," + location.getLongitude() +" : " +address.getLocality());
-						//Toast.makeText(this, location.getLatitude() +"," + location.getLongitude()+" : " +address.getLocality(), Toast.LENGTH_LONG).show();
-
+						
 						Double locationlatitude = location.getLatitude();
 						Double locationlongitude = location.getLongitude();
 						locality = address.getLocality();
-						//TextView mDisplayTextView = (TextView) findViewById(R.id.displayTextViews);
-						//String q = location.getLatitude() +"," + location.getLongitude()+" : " +address.getLocality();
-						//mDisplayTextView.setText(q);
 					}
 					}
 					catch  (Exception e) { // http://developer.android.com/reference/android/content/IntentSender.html
@@ -260,32 +164,17 @@ Log.i("aft","aft");
 		                e.printStackTrace();
 					}
 		    	
-		    	
-		    	//=====
-
 				longitude = location.getLongitude();
 				latitude = location.getLatitude();
-				
-		        //Intent intent = new Intent(getApplicationContext(),CreateQuestionActivity.class);
-		        //intent.putExtra("Tag", "Value");
-				
-		        //Toast.makeText(getApplicationContext(), longitude +"," + latitude+" : " , Toast.LENGTH_LONG).show();
-				//Toast.makeText(getApplicationContext(), location.getLatitude() +"," + location.getLongitude()+" : ", Toast.LENGTH_LONG).show();
 
-		        //startActivity(intent);
-				
 				Intent intent = new Intent();
 				intent.putExtra("Latitude", latitude);
 				intent.putExtra("Longitude", longitude);
 				intent.putExtra("Locality", locality);
-
 			    setResult(REQUEST_CODE_GPS_APK, intent);
-
 				//REQUEST_CODE_GPS_APK
-				
 		        finish();
 		    }
-		    
 		});
 		
 		
@@ -324,30 +213,21 @@ Log.i("aft","aft");
                         this,
                         REQUEST_CODE_GPS_APK);
 			}//try
-			
 			catch  (IntentSender.SendIntentException e) { // http://developer.android.com/reference/android/content/IntentSender.html
 				// Log the error
 				//description of intent not being able to send or unable to process request 
                 e.printStackTrace();
-                
             }// catch
-			
 		}// if hasresolution
 		else{
-			
-			   
              //* If no resolution is available, display a dialog to the
              //* user with the error.
-             //
 	        Toast.makeText(this, "Well... SHIT..", Toast.LENGTH_SHORT).show();
-
 		}*/
 		
 	}//onconnectionfailed	
 		
-	//
 
-	
     /*
      * Called by Location Services when the request to connect the
      * client finishes successfully. At this point, you can
@@ -355,19 +235,9 @@ Log.i("aft","aft");
      */
 	@Override
 	public void onConnected(Bundle dataBundle) {
-        // Display the connection status
-	    //mLocationClient.requestLocationUpdates(mLocationRequest, this);
         mCurrentLocation = mLocationClient.getLastLocation();
 
         Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
-        Log.i("oi","oi");
-        Log.i("bef","bef");
-        Log.i("bef","bef");
-
-        //Toast.makeText(this, (CharSequence) mCurrentLocation,
-         //       Toast.LENGTH_SHORT).show();
-        
-
 		
 	}// on connected
 
@@ -388,10 +258,10 @@ Log.i("aft","aft");
 	
 	/*
 	Context classcontext = getApplicationContext();;
-	Activity classactivity = this;*/
+	Activity classactivity = this;
 	
 
-	/*
+	
 	public boolean isOk(){
 		
 		boolean hasAPK = false;
@@ -442,12 +312,9 @@ Log.i("aft","aft");
 		
 		
 		return hasAPK;
-	}//is ok */
+	}//is ok 
 	
-	
-	
-	//check if gspapk is available
-	/*
+
 	 private boolean servicesConnected() {
 	        // Check that Google Play services is available
 	        int resultCode =
@@ -486,10 +353,7 @@ Log.i("aft","aft");
 	        }*/
 	
 	
-	//you need to turn this into an activity and 
-	//have an onactivityresult
-	
-	
+
 	//http://developer.android.com/training/location/retrieve-current.html
 	
 	@Override
@@ -507,10 +371,7 @@ Log.i("aft","aft");
 						return;
 					}//if case rquest_code_gps_apk
 					else if (resultCode == Activity.RESULT_OK){
-						//go to previous activity through intent  and try the gps
-						// no maybe try isok method
 						return;
-
 					}//else if
 					break;
 		
@@ -537,23 +398,17 @@ private final LocationListener locationListener = new LocationListener() {
 			geocodeResults = coder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
 			for (Address address: geocodeResults){
 				Log.d("Location", location.getLatitude() +"," + location.getLongitude() +" : " +address.getLocality());
-				//Toast.makeText(this, location.getLatitude() +"," + location.getLongitude()+" : " +address.getLocality(), Toast.LENGTH_LONG).show();
 
 				Double locationlatitude = location.getLatitude();
 				Double locationlongitude = location.getLongitude();
 				String locality = address.getLocality();
-				//TextView mDisplayTextView = (TextView) findViewById(R.id.displayTextViews);
-				//String q = location.getLatitude() +"," + location.getLongitude()+" : " +address.getLocality();
-				//mDisplayTextView.setText(q);
+
 			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		/*
-		Intent intent = new Intent(GeoAct.this,
-				CreateQuestionActivity.class);
-		startActivity(intent);	*/
+
 	}
 	
 	//http://rosettacode.org/wiki/Haversine_formula
