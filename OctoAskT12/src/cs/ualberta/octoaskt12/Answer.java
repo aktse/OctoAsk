@@ -142,12 +142,12 @@ public class Answer implements Serializable {
 		return this.upvotedUsers;
 	}
 
-	public void addUpvotedUser(String user) {
-		this.upvotedUsers.add(user);
+	public void addUpvotedUser(String string) {
+		this.upvotedUsers.add(string);
 	}
 
-	public void removeUpvotedUser(User user){
-		this.upvotedUsers.remove(user);
+	public void removeUpvotedUser(String string){
+		this.upvotedUsers.remove(string);
 	}
 	
 	public void setImage(Bitmap bitmap) {

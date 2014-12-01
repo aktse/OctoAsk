@@ -31,7 +31,7 @@ public class Question implements Serializable {
 	// the replies for this question
 	private ArrayList<Reply> replies = new ArrayList<Reply>();
 
-	private ArrayList<User> upvotedUsers = new ArrayList<User>();
+	private ArrayList<String> upvotedUsers = new ArrayList<String>();
 
 	private ArrayList<String> favoritedUsers = new ArrayList<String>();
 
@@ -178,15 +178,15 @@ public class Question implements Serializable {
 		}
 	}
 
-	public void addUpvotedUser(User user) {
-		this.upvotedUsers.add(user);
+	public void addUpvotedUser(String username) {
+		this.upvotedUsers.add(username);
 	}
 	
-	public void removeUpvotedUser(User user) {
-		this.upvotedUsers.remove(user);
+	public void removeUpvotedUser(String username) {
+		this.upvotedUsers.remove(username);
 	}
 
-	public ArrayList<User> getUpvotedUsers() {
+	public ArrayList<String> getUpvotedUsers() {
 		return this.upvotedUsers;
 	}
 
