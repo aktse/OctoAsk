@@ -370,14 +370,14 @@ containing a value of this type.
          would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively).
     
          */
-        public static final int activity_horizontal_margin=0x7f090000;
-        public static final int activity_vertical_margin=0x7f090001;
+        public static final int activity_horizontal_margin=0x7f0a0000;
+        public static final int activity_vertical_margin=0x7f0a0001;
         /** 
          Per the design guidelines, navigation drawers should be between 240dp and 320dp:
          https://developer.android.com/design/patterns/navigation-drawer.html
     
          */
-        public static final int navigation_drawer_width=0x7f090002;
+        public static final int navigation_drawer_width=0x7f0a0002;
     }
     public static final class drawable {
         public static final int common_full_open_on_phone=0x7f020000;
@@ -427,83 +427,83 @@ containing a value of this type.
         public static final int upvoterepresent=0x7f02002c;
     }
     public static final class id {
-        public static final int action_settings=0x7f0b0046;
-        public static final int add_answer_button=0x7f0b0036;
-        public static final int addfavoritebutton=0x7f0b0032;
-        public static final int addreadlaterbutton=0x7f0b0031;
-        public static final int answerBodyText=0x7f0b0014;
-        public static final int answer_upvote_caption=0x7f0b0028;
-        public static final int book_now=0x7f0b000e;
-        public static final int button1=0x7f0b001b;
-        public static final int buyButton=0x7f0b000a;
-        public static final int buy_now=0x7f0b000f;
-        public static final int buy_with_google=0x7f0b0010;
-        public static final int cancelAnswerButton=0x7f0b0015;
-        public static final int cancelQuestionButton=0x7f0b001c;
-        public static final int cancelReplyButton=0x7f0b001f;
-        public static final int changeUserButton=0x7f0b003c;
-        public static final int classic=0x7f0b0011;
-        public static final int container=0x7f0b0023;
-        public static final int detail_answer_header=0x7f0b0029;
-        public static final int detail_answer_replies=0x7f0b002a;
-        public static final int detail_answer_replies_add=0x7f0b002b;
-        public static final int detail_question_body=0x7f0b002f;
-        public static final int detail_question_header=0x7f0b002e;
-        public static final int detail_question_replies=0x7f0b0033;
-        public static final int detail_question_replies_add=0x7f0b0034;
-        public static final int displayTextViews=0x7f0b0021;
-        public static final int drawer_layout=0x7f0b0022;
-        public static final int favourite_list=0x7f0b0037;
-        public static final int grayscale=0x7f0b0012;
-        public static final int history_list=0x7f0b0038;
-        public static final int holo_dark=0x7f0b0005;
-        public static final int holo_light=0x7f0b0006;
-        public static final int hybrid=0x7f0b0000;
-        public static final int item1=0x7f0b0047;
-        public static final int later_list=0x7f0b0039;
-        public static final int layout_bottom=0x7f0b0042;
-        public static final int list_question_answer=0x7f0b0043;
-        public static final int list_question_time=0x7f0b0044;
-        public static final int list_question_title=0x7f0b0040;
-        public static final int list_question_upvote=0x7f0b003f;
-        public static final int list_question_upvote_caption=0x7f0b0041;
-        public static final int loginText=0x7f0b0025;
-        public static final int match_parent=0x7f0b000c;
-        public static final int monochrome=0x7f0b0013;
-        public static final int myquestion_list=0x7f0b003a;
-        public static final int navigation_drawer=0x7f0b0024;
-        public static final int none=0x7f0b0001;
-        public static final int normal=0x7f0b0002;
-        public static final int production=0x7f0b0007;
-        public static final int questionBodyText=0x7f0b001a;
-        public static final int questionTitleText=0x7f0b0019;
-        public static final int question_ImageButton=0x7f0b0018;
-        public static final int question_ImageView=0x7f0b0017;
-        public static final int question_ImageViewFinal=0x7f0b0030;
-        public static final int question_list=0x7f0b003e;
-        public static final int question_upvote_caption=0x7f0b002d;
-        public static final int replyBodyText=0x7f0b001e;
-        public static final int sandbox=0x7f0b0008;
-        public static final int satellite=0x7f0b0003;
-        public static final int search=0x7f0b0049;
-        public static final int search_dialog=0x7f0b0045;
-        public static final int selectionDetails=0x7f0b000b;
-        public static final int setUsernameButton=0x7f0b0026;
-        public static final int sort=0x7f0b0048;
-        public static final int strict_sandbox=0x7f0b0009;
-        public static final int submitAnswerButton=0x7f0b0016;
-        public static final int submitQuestionButton=0x7f0b001d;
-        public static final int submitReplyButton=0x7f0b0020;
-        public static final int swipe_container=0x7f0b003d;
-        public static final int terrain=0x7f0b0004;
-        public static final int upvote_answer_button=0x7f0b0027;
-        public static final int upvote_question_button=0x7f0b002c;
-        public static final int username=0x7f0b003b;
-        public static final int view_question_detail=0x7f0b0035;
-        public static final int wrap_content=0x7f0b000d;
+        public static final int action_settings=0x7f080046;
+        public static final int add_answer_button=0x7f080036;
+        public static final int addfavoritebutton=0x7f080032;
+        public static final int addreadlaterbutton=0x7f080031;
+        public static final int answerBodyText=0x7f080014;
+        public static final int answer_upvote_caption=0x7f080028;
+        public static final int book_now=0x7f080010;
+        public static final int button1=0x7f08001b;
+        public static final int buyButton=0x7f08000a;
+        public static final int buy_now=0x7f08000f;
+        public static final int buy_with_google=0x7f08000e;
+        public static final int cancelAnswerButton=0x7f080015;
+        public static final int cancelQuestionButton=0x7f08001c;
+        public static final int cancelReplyButton=0x7f08001f;
+        public static final int changeUserButton=0x7f08003c;
+        public static final int classic=0x7f080011;
+        public static final int container=0x7f080023;
+        public static final int detail_answer_header=0x7f080029;
+        public static final int detail_answer_replies=0x7f08002a;
+        public static final int detail_answer_replies_add=0x7f08002b;
+        public static final int detail_question_body=0x7f08002f;
+        public static final int detail_question_header=0x7f08002e;
+        public static final int detail_question_replies=0x7f080033;
+        public static final int detail_question_replies_add=0x7f080034;
+        public static final int displayTextViews=0x7f080021;
+        public static final int drawer_layout=0x7f080022;
+        public static final int favourite_list=0x7f080037;
+        public static final int grayscale=0x7f080012;
+        public static final int history_list=0x7f080038;
+        public static final int holo_dark=0x7f080005;
+        public static final int holo_light=0x7f080006;
+        public static final int hybrid=0x7f080004;
+        public static final int item1=0x7f080047;
+        public static final int later_list=0x7f080039;
+        public static final int layout_bottom=0x7f080042;
+        public static final int list_question_answer=0x7f080043;
+        public static final int list_question_time=0x7f080044;
+        public static final int list_question_title=0x7f080040;
+        public static final int list_question_upvote=0x7f08003f;
+        public static final int list_question_upvote_caption=0x7f080041;
+        public static final int loginText=0x7f080025;
+        public static final int match_parent=0x7f08000c;
+        public static final int monochrome=0x7f080013;
+        public static final int myquestion_list=0x7f08003a;
+        public static final int navigation_drawer=0x7f080024;
+        public static final int none=0x7f080000;
+        public static final int normal=0x7f080001;
+        public static final int production=0x7f080007;
+        public static final int questionBodyText=0x7f08001a;
+        public static final int questionTitleText=0x7f080019;
+        public static final int question_ImageButton=0x7f080018;
+        public static final int question_ImageView=0x7f080017;
+        public static final int question_ImageViewFinal=0x7f080030;
+        public static final int question_list=0x7f08003e;
+        public static final int question_upvote_caption=0x7f08002d;
+        public static final int replyBodyText=0x7f08001e;
+        public static final int sandbox=0x7f080008;
+        public static final int satellite=0x7f080002;
+        public static final int search=0x7f080049;
+        public static final int search_dialog=0x7f080045;
+        public static final int selectionDetails=0x7f08000b;
+        public static final int setUsernameButton=0x7f080026;
+        public static final int sort=0x7f080048;
+        public static final int strict_sandbox=0x7f080009;
+        public static final int submitAnswerButton=0x7f080016;
+        public static final int submitQuestionButton=0x7f08001d;
+        public static final int submitReplyButton=0x7f080020;
+        public static final int swipe_container=0x7f08003d;
+        public static final int terrain=0x7f080003;
+        public static final int upvote_answer_button=0x7f080027;
+        public static final int upvote_question_button=0x7f08002c;
+        public static final int username=0x7f08003b;
+        public static final int view_question_detail=0x7f080035;
+        public static final int wrap_content=0x7f08000d;
     }
     public static final class integer {
-        public static final int google_play_services_version=0x7f080000;
+        public static final int google_play_services_version=0x7f090000;
     }
     public static final class layout {
         public static final int activity_create_answer=0x7f030000;
@@ -532,13 +532,13 @@ containing a value of this type.
         public static final int sort_dialog=0x7f030017;
     }
     public static final class menu {
-        public static final int create_answer=0x7f0a0000;
-        public static final int create_question=0x7f0a0001;
-        public static final int create_reply=0x7f0a0002;
-        public static final int global=0x7f0a0003;
-        public static final int main=0x7f0a0004;
-        public static final int question_detailed_view=0x7f0a0005;
-        public static final int user_login=0x7f0a0006;
+        public static final int create_answer=0x7f0b0000;
+        public static final int create_question=0x7f0b0001;
+        public static final int create_reply=0x7f0b0002;
+        public static final int global=0x7f0b0003;
+        public static final int main=0x7f0b0004;
+        public static final int question_detailed_view=0x7f0b0005;
+        public static final int user_login=0x7f0b0006;
     }
     public static final class raw {
         public static final int downvotesound=0x7f040000;

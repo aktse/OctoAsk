@@ -265,7 +265,7 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 					.findViewById(R.id.upvote_question_button);
 			
 			if(question.getUpvotedUsers().contains(
-					UserController.getCurrentUser())) {
+					UserController.getCurrentUser().getName())) {
 				upvoteButton.setImageResource(R.drawable.upvoted);
 			} else {
 				upvoteButton.setImageResource(R.drawable.upvote);
@@ -276,10 +276,10 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 				@Override
 				public void onClick(View v) {
 					if (question.getUpvotedUsers().contains(
-							UserController.getCurrentUser())) {
+							UserController.getCurrentUser().getName())) {
 						question.decrementVotes();
 						question.removeUpvotedUser(UserController
-								.getCurrentUser());
+								.getCurrentUser().getName());
 						final MediaPlayer mp = MediaPlayer.create(context, R.raw.downvotesound);
 				        mp.start();
 						notifyDataSetChanged();
@@ -293,7 +293,7 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 						} else {
 							question.incrementVotes();
 							question.addUpvotedUser(UserController
-									.getCurrentUser());
+									.getCurrentUser().getName());
 							final MediaPlayer mp = MediaPlayer.create(context, R.raw.upvotesound);
 					        mp.start();
 							notifyDataSetChanged();
@@ -469,7 +469,7 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 					.findViewById(R.id.upvote_answer_button);
 			
 			if(answers.get(groupPosition - 1).getUpvotedUsers()
-					.contains(UserController.getCurrentUser())) {
+					.contains(UserController.getCurrentUser().getName())) {
 				image.setImageResource(R.drawable.upvoted);
 			} else {
 				image.setImageResource(R.drawable.upvote);
@@ -479,11 +479,12 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 				
 				@Override
 				public void onClick(View v) {
+					System.out.println(answers.get(groupPosition-1).getUpvotedUsers());
 					if (answers.get(groupPosition - 1).getUpvotedUsers()
-							.contains(UserController.getCurrentUser())) {
+							.contains(UserController.getCurrentUser().getName())) {
 						answers.get(groupPosition - 1).decrementVotes();
 						answers.get(groupPosition - 1).removeUpvotedUser(
-								UserController.getCurrentUser());
+								UserController.getCurrentUser().getName());
 				        final MediaPlayer mp = MediaPlayer.create(context, R.raw.downvotesound);
 				        mp.start();
 
@@ -498,7 +499,7 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 						} else {
 							answers.get(groupPosition - 1).incrementVotes();
 							answers.get(groupPosition - 1).addUpvotedUser(
-									UserController.getCurrentUser());
+									UserController.getCurrentUser().getName());
 							final MediaPlayer mp = MediaPlayer.create(context, R.raw.upvotesound);
 					        mp.start();
 							notifyDataSetChanged();
