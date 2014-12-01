@@ -166,7 +166,7 @@ GooglePlayServicesClient.OnConnectionFailedListener {
 	public void onConnected(Bundle dataBundle) {
         mCurrentLocation = mLocationClient.getLastLocation();
 
-        Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Setting Up", Toast.LENGTH_SHORT).show();
 		
 	}// on connected
 

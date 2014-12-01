@@ -74,6 +74,6 @@
         android:layout_alignBottom="@+id/submitAnswerButton"
         android:layout_centerHorizontal="true"
         android:onClick="addGeo"
-        android:text="Add location" />
+        android:text="Add location?" />
 
 </RelativeLayout>
