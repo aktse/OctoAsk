@@ -13,6 +13,9 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,13 +32,14 @@ public class GeoAct extends Activity implements LocationListener,
 GooglePlayServicesClient.ConnectionCallbacks,
 GooglePlayServicesClient.OnConnectionFailedListener {
 
+	
 TextView mDisplayTextView;
 	
     LocationRequest mLocationRequest;
     LocationClient mLocationClient;
     
     
-	static final int REQUEST_CODE_GPS_APK = 69;
+	static final int REQUEST_CODE_GPS_APK = 6969;
 	
 	//contains quality of service
 
@@ -54,6 +58,14 @@ TextView mDisplayTextView;
 	protected void onCreate(Bundle savedinstancestate){
 		super.onCreate(savedinstancestate);
 
+		Double locationlatitude;
+		Double locationlongitude;
+		 String locality;
+		
+		 //locationlatitude = null;
+		 //locationlongitude = null;
+		 //locality = "locality";
+		
 		
 		setContentView(R.layout.activity_geo);
 		//setContentView(R.activity_geo);
@@ -184,11 +196,11 @@ Log.i("aft","aft");
 		
 		LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE); 
 		Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-		longitude = location.getLongitude();
-		latitude = location.getLatitude();
+		//longitude = location.getLongitude();
+		//latitude = location.getLatitude();
 		
 		
-		Toast.makeText(this, location.getLatitude() +"," + location.getLongitude()+" : ", Toast.LENGTH_LONG).show();
+		//Toast.makeText(this, location.getLatitude() +"," + location.getLongitude()+" : ", Toast.LENGTH_LONG).show();
 
 		Geocoder geodude = new Geocoder(this);
 		//List
@@ -197,14 +209,15 @@ Log.i("aft","aft");
 			for(Address geoaddress : geodudelocation){
 
 
-			Toast.makeText(this, location.getLatitude() +"," + location.getLongitude()+" : "+ geoaddress.getLocality(), Toast.LENGTH_LONG).show();
+			//Toast.makeText(this, location.getLatitude() +"," + location.getLongitude()+" : "+ geoaddress.getLocality(), Toast.LENGTH_LONG).show();
 			}
 			
 			double x = locationdifference(location.getLatitude(),location.getLongitude(), 53.522458, -113.623004);
+			longitude = location.getLongitude();
+			latitude = location.getLatitude();
+			//Toast.makeText(this, Double.toString(x), Toast.LENGTH_LONG).show();
 			
-			Toast.makeText(this, Double.toString(x), Toast.LENGTH_LONG).show();
-			
-        	Log.i(Double.toString(x),Double.toString(x));
+        	//Log.i(Double.toString(x),Double.toString(x));
 
 
 		} catch (IOException e) {
@@ -212,7 +225,68 @@ Log.i("aft","aft");
 			e.printStackTrace();
 		}
 		
+		
+		Button next = (Button) findViewById(R.id.button1);
+		next.setOnClickListener(new View.OnClickListener() {
+		    public void onClick(View view) {
+				LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE); 
 
+		    	Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+				String locality = null;
+
+		    
+		    	//======
+		    	
+		        Geocoder coder = new Geocoder(getApplicationContext());
+				List<Address> geocodeResults;
+				
+				try {
+					geocodeResults = coder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+					for (Address address: geocodeResults){
+						Log.d("Location", location.getLatitude() +"," + location.getLongitude() +" : " +address.getLocality());
+						//Toast.makeText(this, location.getLatitude() +"," + location.getLongitude()+" : " +address.getLocality(), Toast.LENGTH_LONG).show();
+
+						Double locationlatitude = location.getLatitude();
+						Double locationlongitude = location.getLongitude();
+						locality = address.getLocality();
+						//TextView mDisplayTextView = (TextView) findViewById(R.id.displayTextViews);
+						//String q = location.getLatitude() +"," + location.getLongitude()+" : " +address.getLocality();
+						//mDisplayTextView.setText(q);
+					}
+					}
+					catch  (Exception e) { // http://developer.android.com/reference/android/content/IntentSender.html
+						// Log the error
+						//description of intent not being able to send or unable to process request 
+		                e.printStackTrace();
+					}
+		    	
+		    	
+		    	//=====
+
+				longitude = location.getLongitude();
+				latitude = location.getLatitude();
+				
+		        //Intent intent = new Intent(getApplicationContext(),CreateQuestionActivity.class);
+		        //intent.putExtra("Tag", "Value");
+				
+		        //Toast.makeText(getApplicationContext(), longitude +"," + latitude+" : " , Toast.LENGTH_LONG).show();
+				//Toast.makeText(getApplicationContext(), location.getLatitude() +"," + location.getLongitude()+" : ", Toast.LENGTH_LONG).show();
+
+		        //startActivity(intent);
+				
+				Intent intent = new Intent();
+				intent.putExtra("Latitude", latitude);
+				intent.putExtra("Longitude", longitude);
+				intent.putExtra("Locality", locality);
+
+			    setResult(REQUEST_CODE_GPS_APK, intent);
+
+				//REQUEST_CODE_GPS_APK
+				
+		        finish();
+		    }
+		    
+		});
 		
 		
 		
@@ -463,16 +537,23 @@ private final LocationListener locationListener = new LocationListener() {
 			geocodeResults = coder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
 			for (Address address: geocodeResults){
 				Log.d("Location", location.getLatitude() +"," + location.getLongitude() +" : " +address.getLocality());
-				Toast.makeText(this, location.getLatitude() +"," + location.getLongitude()+" : " +address.getLocality(), Toast.LENGTH_LONG).show();
+				//Toast.makeText(this, location.getLatitude() +"," + location.getLongitude()+" : " +address.getLocality(), Toast.LENGTH_LONG).show();
 
-				
-				//mDisplayTextView.setText(location.getLatitude() +"," + location.getLongitude()+" : " +address.getLocality());
+				Double locationlatitude = location.getLatitude();
+				Double locationlongitude = location.getLongitude();
+				String locality = address.getLocality();
+				//TextView mDisplayTextView = (TextView) findViewById(R.id.displayTextViews);
+				//String q = location.getLatitude() +"," + location.getLongitude()+" : " +address.getLocality();
+				//mDisplayTextView.setText(q);
 			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+		/*
+		Intent intent = new Intent(GeoAct.this,
+				CreateQuestionActivity.class);
+		startActivity(intent);	*/
 	}
 	
 	//http://rosettacode.org/wiki/Haversine_formula

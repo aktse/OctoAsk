@@ -451,7 +451,7 @@ containing a value of this type.
         public static final int detail_question_header=0x7f0a002e;
         public static final int detail_question_replies=0x7f0a0033;
         public static final int detail_question_replies_add=0x7f0a0034;
-        public static final int displayTextView=0x7f0a0021;
+        public static final int displayTextViews=0x7f0a0021;
         public static final int drawer_layout=0x7f0a0022;
         public static final int favourite_list=0x7f0a0037;
         public static final int grayscale=0x7f0a0012;

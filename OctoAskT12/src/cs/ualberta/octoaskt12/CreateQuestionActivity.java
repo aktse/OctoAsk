@@ -33,6 +33,8 @@ import android.widget.Toast;
 
 public class CreateQuestionActivity extends Activity {
 	Uri imageFileUri;
+    private final int GEO_ACTIVITY_REQUEST_CODE = 6969;
+
 	private final int CAMERA_ACTIVITY_REQUEST_CODE =  12345;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +77,16 @@ public class CreateQuestionActivity extends Activity {
 	
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
+		if(resultCode == GEO_ACTIVITY_REQUEST_CODE){
+		
+		   double latitude  = data.getExtras().getDouble("Latitude");
+	       double longitude = data.getExtras().getDouble("Longitude");
+	       String locality  = data.getExtras().getString("Locality");
+	       Toast.makeText(getApplicationContext(), locality+" "+Double.toString(longitude)+" "+Double.toString(latitude), Toast.LENGTH_SHORT).show();
+
+			
+		}
+		
 		if (requestCode == CAMERA_ACTIVITY_REQUEST_CODE) {
 			if (resultCode == RESULT_OK) {
 				/*
@@ -132,7 +144,10 @@ public class CreateQuestionActivity extends Activity {
 		
 		Intent intent = new Intent(CreateQuestionActivity.this,
 				GeoAct.class);
-		startActivity(intent);
+		
+		startActivityForResult(intent, GEO_ACTIVITY_REQUEST_CODE);
+
+		//startActivity(intent);
 		
 
 }
