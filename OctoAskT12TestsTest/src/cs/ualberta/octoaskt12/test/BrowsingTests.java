@@ -14,7 +14,7 @@ public class BrowsingTests extends TestCase {
 	// use case 1?
 	public void testBrowse()
 	{
-		// how to test 'live' list?
+		MainActivity.updateQuestions();
 		int temp = MainActivity.questionArrayList.getSize();
 		assertTrue(temp > 0);
 	}
