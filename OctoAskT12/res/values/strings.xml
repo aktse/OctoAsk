@@ -8,6 +8,9 @@
     <string name="title_section4">Read Later</string>
     <string name="title_section5">History</string>
     <string name="title_section6">My Username</string>
+    <string name="title_section7">Nearby Questions</string>
+    
+    
     <string name="upvote">Upvotes</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

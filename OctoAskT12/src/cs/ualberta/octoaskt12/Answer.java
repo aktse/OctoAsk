@@ -22,11 +22,39 @@ public class Answer implements Serializable {
 	// the replies for this answer
 	private ArrayList<Reply> replies = new ArrayList<Reply>();
 	// users that upvoted the answer
-	private ArrayList<User> upvotedUsers = new ArrayList<User>();
+	private ArrayList<String> upvotedUsers = new ArrayList<String>();
 	// the date the answer was created
 	private GregorianCalendar dateCreated;
 	private transient Bitmap image = null;
 	private String imageBase64;
+	public Double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
+	}
+
+	public Double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	private Double longitude;
+	private Double latitude;
+	private String location;
+
 
 	// constructor
 	public Answer(String answerBody, User user) {
@@ -110,11 +138,11 @@ public class Answer implements Serializable {
 		}
 	}
 
-	public ArrayList<User> getUpvotedUsers() {
+	public ArrayList<String> getUpvotedUsers() {
 		return this.upvotedUsers;
 	}
 
-	public void addUpvotedUser(User user) {
+	public void addUpvotedUser(String user) {
 		this.upvotedUsers.add(user);
 	}
 

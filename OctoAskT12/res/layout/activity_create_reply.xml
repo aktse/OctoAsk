@@ -66,4 +66,13 @@
         android:layout_alignRight="@+id/replyBodyText"
         android:text="Submit" />
 
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/submitReplyButton"
+        android:layout_centerHorizontal="true"
+        android:onClick="addGeo"
+        android:text="Add Location" />
+
 </RelativeLayout>

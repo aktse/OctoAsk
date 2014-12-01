@@ -14,6 +14,34 @@ public class Reply implements Serializable {
 	private User user;
 	// the date this reply was created
 	private GregorianCalendar dateCreated;
+	public Double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
+	}
+
+	public Double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+	private Double longitude;
+	private Double latitude;
+	private String location;
+
+	
 	// constructor:
 	public Reply (String reply, User user) {
 		// set the user of this reply
@@ -22,6 +50,20 @@ public class Reply implements Serializable {
 		this.reply = reply;
 		// set the date the reply is created
 		this.dateCreated = new GregorianCalendar();
+	}
+	
+	// constructor 2
+	public Reply (String reply, User user, Double latitude, Double longitude, String location) {
+		// set the user of this reply
+		this.user = user;
+		// set the reply text
+		this.reply = reply;
+		// set the date the reply is created
+		this.dateCreated = new GregorianCalendar();
+		
+		this.longitude = longitude;
+		this.latitude = latitude;
+		this.location = location;
 	}
 	
 	/***************************************************************************
