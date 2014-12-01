@@ -3,11 +3,11 @@ package cs.ualberta.octoaskt12;
 import java.io.Serializable;
 import java.util.GregorianCalendar;
 
+// Object used to represent user's replies to questions or answers.
+// Much simpler than the question/answer classes and cannot contain images.
+
 public class Reply implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3694885075802427310L;
 	private String reply;
 	// the user of this reply

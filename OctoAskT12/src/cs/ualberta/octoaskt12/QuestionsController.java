@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.Toast;
 import cs.ualberta.octoaskt12.ES.ESClient;
 
+// Controller used to manage getting new questions and updating old ones.
+
 public class QuestionsController {
 	private static QuestionArrayList allQuestions = null;
 

@@ -3,11 +3,10 @@ package cs.ualberta.octoaskt12;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+// Wrapper class used to store the ArrayLists of Questions, easier to use and handle between classes/activities.
+
 public class QuestionArrayList implements Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -1069372161964111294L;
 	private ArrayList<Question> questions = new ArrayList<Question>();
 	

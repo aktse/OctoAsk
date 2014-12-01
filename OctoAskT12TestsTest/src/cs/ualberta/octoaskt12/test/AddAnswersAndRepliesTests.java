@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import cs.ualberta.octoaskt12.Answer;
-import cs.ualberta.octoaskt12.CustomImage;
 import cs.ualberta.octoaskt12.Question;
 import cs.ualberta.octoaskt12.QuestionArrayList;
 import cs.ualberta.octoaskt12.User;

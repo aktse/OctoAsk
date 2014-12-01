@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.util.Log;
 
+// Grabs all of the questions that the user has favorited and saves it in a save file.
+// Contains functions that load and clear the .sav file as well as ones that can be used to save to a .sav file
+
 public class FavouritesCacheManager {
 	private static final String FILENAME = "favourites.sav";
 	private User user;
@@ -39,7 +42,6 @@ public class FavouritesCacheManager {
 			try {
 				offlineData.createNewFile();
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}

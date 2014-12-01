@@ -1,6 +1,8 @@
 package cs.ualberta.octoaskt12;
 
-// use to pass a specific answer around activites
+// Placeholder class used to pass a specific answer around activites
+// Temporarily holds answers that have a high chance of being used
+
 public class AnswerHolder {
 	private Answer answer = null;
 	// lazy singleton
