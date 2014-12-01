@@ -426,6 +426,7 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 				System.out.println("null");
 			}
 			answerBodyTextView.setText(answerBody);
+			
 
 			final ImageView image = (ImageView) convertView
 					.findViewById(R.id.upvote_answer_button);

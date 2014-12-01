@@ -72,7 +72,7 @@ public class Answer implements Serializable {
 	 ***************************************************************************/
 	// get the answer body
 	public String getBody() {
-		return answerBody;
+		return answerBody.concat(" (from:" + location +" )");
 	}
 
 	// set the answer body

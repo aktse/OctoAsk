@@ -929,7 +929,18 @@ public class MainActivity extends FragmentActivity implements
 
 	public static class QuestionsNearbyFragment extends Fragment {
 
+		//questionArrayList
+		
 		public CustomArrayAdapter questionViewAdapter = null;
+
+		public static QuestionsNearbyFragment newInstance(Question question) {
+			QuestionsNearbyFragment fragment = new QuestionsNearbyFragment();
+
+			Bundle args = new Bundle();
+			args.putSerializable("question", question);
+			fragment.setArguments(args);
+			return fragment;
+		}
 
 		public static QuestionsNearbyFragment newInstance() {
 			QuestionsNearbyFragment fragment = new QuestionsNearbyFragment();
@@ -939,6 +950,11 @@ public class MainActivity extends FragmentActivity implements
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
+			/*
+			for (int i = 0; i > questionArrayList.getSize(); i++ ){
+				questionArrayList.get(i); //question
+			}*/
+			NearbyArrayList = questionArrayList;
 
 			this.questionViewAdapter = new CustomArrayAdapter(getActivity(),
 					NearbyArrayList);
@@ -960,10 +976,10 @@ public class MainActivity extends FragmentActivity implements
 							.replace(
 									R.id.container,
 									QuestionDetailFragment
-											.newInstance(historyArrayList
+											.newInstance(NearbyArrayList
 													.getQuestions().get(
 															position)))
-							.addToBackStack("History").commit();
+							.commit();
 				}
 
 			});
@@ -973,7 +989,7 @@ public class MainActivity extends FragmentActivity implements
 		@Override
 		public void onAttach(Activity activity) {
 			super.onAttach(activity);
-			((MainActivity) activity).onSectionAttached(5);
+			((MainActivity) activity).onSectionAttached(7);
 		}
 	}
 
