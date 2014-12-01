@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+// Custom Array Adapter used to handle individual rows in a listview.
+
 public class CustomArrayAdapter extends ArrayAdapter<Question> {
 
 	private ArrayList<Question> questions = null;

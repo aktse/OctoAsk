@@ -30,6 +30,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+// Activity used to create a question
+// User is allowed to attach an image to the question
+// Question pushes to the server immediately after being created if a connection exists, otherwise it will be saved
+
 public class CreateQuestionActivity extends Activity {
 	Uri imageFileUri;
 	private final int GEO_ACTIVITY_REQUEST_CODE = 6969;

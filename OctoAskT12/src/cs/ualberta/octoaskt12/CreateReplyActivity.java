@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+// Activity for creating a reply to an answer or question
+
 public class CreateReplyActivity extends Activity {
 	
 	   double latitude;

@@ -18,6 +18,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+// Activity for creating an answer
+// User is allowed to upload an image to accompany his answer
+
 public class CreateAnswerActivity extends Activity {
 
     private final int GEO_ACTIVITY_REQUEST_CODE = 6969;
