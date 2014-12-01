@@ -38,22 +38,20 @@ public class QuestionArrayList implements Serializable {
 	public Question get(int i) {
 		return questions.get(i);
 	}
-	
-	/*
-	***Will be deleted if not used***
-	public void add(Question question) {
-		questions.add(question);
-	}
-	*/
 
 	public boolean has(Question question) {
 		return questions.contains(question);
 	}
 	
 	public ArrayList<Question> searchQuestion(String searchTerm) {
-		return null;
-		// TODO Auto-generated method stub
+		ArrayList<Question> arrayListQuestions = new ArrayList<Question>();
+		for (Question question: this.questions){
+			if (question.getBody().equals(searchTerm)) {
+				arrayListQuestions.add(question);
+			}
+		}
 		
+		return arrayListQuestions;		
 	}
 	
 	// the function below will be used by ReadLater class
