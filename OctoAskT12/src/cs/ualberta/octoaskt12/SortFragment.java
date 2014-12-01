@@ -7,6 +7,10 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
 
+// Dialog fragment used to prompt user into making a selection for how to sort the questions list.
+// Defaults to sorting by date.
+// Calls SortManager when user confirms selection.
+
 public class SortFragment extends DialogFragment {
 
 	public String[] sortBy = { "Date", "Upvotes", "Contains Image" };

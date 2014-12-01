@@ -9,6 +9,9 @@ import java.io.ObjectOutputStream;
 import android.content.Context;
 import android.util.Log;
 
+// Grabs all of the questions that the user has indicated that they would like to read later and saves it in a save file.
+// Contains functions that load and clear the .sav file as well as ones that can be used to save to a .sav file
+
 public class ReadLaterCacheManager {
 	private static final String FILENAME = "read_later.sav";
 	private User user;

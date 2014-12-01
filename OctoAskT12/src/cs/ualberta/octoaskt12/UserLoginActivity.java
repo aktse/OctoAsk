@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+// Prompts the user to enter their username when they attempt to ask a question or post an answer/reply without logging in.
+
 public class UserLoginActivity extends Activity {
 	private static final String FILENAME = "UserName.sav";
 	ArrayList<User> userList;

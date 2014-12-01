@@ -10,6 +10,9 @@ import java.io.ObjectOutputStream;
 import android.content.Context;
 import android.util.Log;
 
+// Grabs all of the questions that the user has asked and saves it in a save file.
+// Contains functions that load and clear the .sav file as well as ones that can be used to save to a .sav file
+
 public class MyQuestionsCacheManager {
 	private static final String FILENAME = "myQuestions.sav";
 	private User user;
