@@ -122,7 +122,8 @@ GooglePlayServicesClient.OnConnectionFailedListener {
 						
 						Double locationlatitude = location.getLatitude();
 						Double locationlongitude = location.getLongitude();
-						locality = address.getLocality();
+						locality = address.getLocality().concat(","+ address.getCountryCode());
+						//String locality2 = address.getCountryCode();
 					}
 					}
 					catch  (Exception e) { // http://developer.android.com/reference/android/content/IntentSender.html

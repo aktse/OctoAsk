@@ -31,6 +31,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+// Custom View Adapter used to display individual rows in the detail view of a question.
+// Each row is part of an expandable list view and thus requires a more complex adapter than CustomArrayAdapter.
+
 public class DetailViewAdapter extends BaseExpandableListAdapter {
 
 	private static final int CREATE_REPLY_ACTIVITY_CODE = 1236;
@@ -423,6 +426,7 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 				System.out.println("null");
 			}
 			answerBodyTextView.setText(answerBody);
+			
 
 			final ImageView image = (ImageView) convertView
 					.findViewById(R.id.upvote_answer_button);

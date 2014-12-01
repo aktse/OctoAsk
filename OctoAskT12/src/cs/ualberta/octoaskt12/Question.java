@@ -10,11 +10,12 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.util.Base64;
 
+// Object used to represent a question that the user creates.
+// Contains an array list of answers and an array list of replies for the question.
+// Can contain an image.
+
 public class Question implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 8648225441126206210L;
 	private String questionTitle;
 	// the body of the question, the actual question
@@ -88,7 +89,7 @@ public class Question implements Serializable {
 	}
 
 	public String getTitle() {
-		return questionTitle;
+		return questionTitle.concat(" (from: "+location+" )");
 	}
 
 	public void setBody(String questionBody) {

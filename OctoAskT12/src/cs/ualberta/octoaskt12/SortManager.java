@@ -3,6 +3,9 @@ package cs.ualberta.octoaskt12;
 import java.util.Collections;
 import java.util.Comparator;
 
+// Controller used to handle sorting of the questions array list.
+// Returns a sorted array based on the user's selection from the dialog fragment.
+
 public class SortManager {
 
 	QuestionArrayList sortedQuestionsArrayList = null;

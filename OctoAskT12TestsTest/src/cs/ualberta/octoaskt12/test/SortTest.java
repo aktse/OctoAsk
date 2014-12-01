@@ -5,7 +5,6 @@ import java.util.Random;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 
-import cs.ualberta.octoaskt12.CustomImage;
 import cs.ualberta.octoaskt12.Question;
 import cs.ualberta.octoaskt12.QuestionArrayList;
 import cs.ualberta.octoaskt12.SortManager;
@@ -34,26 +33,6 @@ public class SortTest extends TestCase {
 						question_list.get(i+1).getTime().getTimeInMillis());
 		}
 	}
-	
-	// test sort by date from oldest to newest
-//	public void testSortByDateFromOld()
-//	{
-//		QuestionArrayList question_list = new QuestionArrayList();
-//		User mock_user = new User("Chris");
-//
-//		for (int i = 0; i < 20; i++)
-//		{
-//			question_list.addQuestion(new Question("Q " + i, "Body " + i, mock_user));	
-//		}
-//		
-//		// virtualSortByDateFromOld()
-//		
-//		for (int i = 0; i < 19; i++)
-//		{
-//			assertTrue(question_list.get(i).getTime().getTimeInMillis() >= 
-//						question_list.get(i+1).getTime().getTimeInMillis());
-//		}
-//	}
 	
 	// user story 10
 	// test sort questions by number of upvotes
@@ -138,12 +117,5 @@ public class SortTest extends TestCase {
 			}
 		}
 		
-//		// test subsort
-//		// defaulting to most recent first
-//		for (int i = 0; i < 19; i++)
-//		{
-//			assertTrue(question_list.get(i).getTime().getTimeInMillis() < 
-//				question_list.get(i+1).getTime().getTimeInMillis());
-//		}
 	}
 }

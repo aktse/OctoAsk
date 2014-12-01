@@ -9,10 +9,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 
+// Object used to represent answers that the user creates.
+// Contains an array list containing all replies to this answer.
+// Can contain an image.
+
 public class Answer implements Serializable {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 5590593466133278091L;
 	private String answerBody;
 	// user who answered the question
@@ -27,6 +29,10 @@ public class Answer implements Serializable {
 	private GregorianCalendar dateCreated;
 	private transient Bitmap image = null;
 	private String imageBase64;
+	private Double longitude;
+	private Double latitude;
+	private String location;
+	
 	public Double getLongitude() {
 		return longitude;
 	}
@@ -51,11 +57,6 @@ public class Answer implements Serializable {
 		this.location = location;
 	}
 
-	private Double longitude;
-	private Double latitude;
-	private String location;
-
-
 	// constructor
 	public Answer(String answerBody, User user) {
 		// set the answer body
@@ -71,7 +72,7 @@ public class Answer implements Serializable {
 	 ***************************************************************************/
 	// get the answer body
 	public String getBody() {
-		return answerBody;
+		return answerBody.concat(" (from:" + location +" )");
 	}
 
 	// set the answer body

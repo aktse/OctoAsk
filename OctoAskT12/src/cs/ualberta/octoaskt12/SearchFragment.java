@@ -8,6 +8,9 @@ import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.widget.EditText;
 
+// Dialog fragment displayed to the user to prompt for an input string.
+// Calls SearchController after user confirms search string
+
 public class SearchFragment extends DialogFragment {
 
 	String searchString = null;
