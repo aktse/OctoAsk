@@ -71,7 +71,7 @@ public class Reply implements Serializable {
  	***************************************************************************/
 
 	public String getBody() {
-		return reply;
+		return reply.concat(" from("+location +" )");
 	}
 	
 	public void setBody(String reply) {
