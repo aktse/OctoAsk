@@ -41,16 +41,12 @@ public class CreateReplyActivity extends Activity {
 				if (extraKey.equals("0")){
 					AnswerHolder answerHolder = AnswerHolder.getInstance();
 					Answer answer = answerHolder.getAnswer();
-					//answer.addReply(new Reply(replyBody, UserController.getCurrentUser()));
 					answer.addReply(new Reply(replyBody, UserController.getCurrentUser(), latitude, longitude, locality));
-
-//					QuestionsController.updateQuestion(QuestionsController.getAllQuestions().getQuestion(position))
 					
 				}
 				if (extraKey.equals("1")){
 					QuestionHolder questionHolder = QuestionHolder.getInstance();
 					Question question = questionHolder.getQuestion();
-					//question.addReply(new Reply(replyBody, UserController.getCurrentUser()));
 					question.addReply(new Reply(replyBody, UserController.getCurrentUser(), latitude, longitude, locality));
 
 					QuestionsController.updateQuestion(question);
@@ -65,10 +61,7 @@ public class CreateReplyActivity extends Activity {
 		Intent intent = new Intent(CreateReplyActivity.this,
 				GeoAct.class);
 		
-		startActivityForResult(intent, GEO_ACTIVITY_REQUEST_CODE);
-
-		//startActivity(intent);
-		
+		startActivityForResult(intent, GEO_ACTIVITY_REQUEST_CODE);		
 
 }
 

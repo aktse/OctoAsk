@@ -30,21 +30,6 @@ public class ReadLater implements Serializable {
 		qal.remove(question);
 	}
 	
-	/*
-	public int exist(Question question)
-	{
-		if (qal.contains(question))
-		{
-			return 1;
-		}
-		
-		else
-		{
-			return 0;
-		}
-	}
-	*/
-	
 	public int count()
 	{
 		return qal.getSize();

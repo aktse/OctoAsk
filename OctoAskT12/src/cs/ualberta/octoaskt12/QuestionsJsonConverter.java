@@ -16,14 +16,12 @@ public class QuestionsJsonConverter implements JsonDeserializer<QuestionArrayLis
 	@Override
 	public JsonElement serialize(Bitmap arg0, Type arg1,
 			JsonSerializationContext arg2) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public QuestionArrayList deserialize(JsonElement arg0, Type arg1,
 			JsonDeserializationContext arg2) throws JsonParseException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
