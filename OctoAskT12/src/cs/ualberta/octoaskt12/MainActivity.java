@@ -97,10 +97,6 @@ public class MainActivity extends FragmentActivity implements
 				.permitAll().build();
 		StrictMode.setThreadPolicy(p);
 
-		// need to remove these two lines
-		// User currentUser2 = new User("Chris");
-		// UserController.setCurrentUser(currentUser2);
-
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo ni = cm.getActiveNetworkInfo();
 
@@ -115,18 +111,7 @@ public class MainActivity extends FragmentActivity implements
 		}
 		// have connection
 		else {
-			/*
-			 * updateQuestions();
-			 * 
-			 * // may need to modify this part // may need to modify this part
-			 * // may need to modify this part // may need to modify this part
-			 * // may need to modify this part
-			 * 
-			 * QuestionsCacheManager qcm = new
-			 * QuestionsCacheManager(getApplicationContext()); qcm.clear();
-			 */
 
-			// new
 			QuestionsCacheManager qcm = new QuestionsCacheManager(CallContext());
 			qcm.loadQuestions();
 			ArrayList<Question> cachedQuestions = qcm.get();
@@ -158,15 +143,8 @@ public class MainActivity extends FragmentActivity implements
 		// -------------------------------------------------------------------------
 
 		MyQuestionFilename = "ChrisFile";
-		// ElasticSearchAddQuestion.AddToDatabase();
 
 		// create new .sav data
-
-		// may need to modify this part
-		// may need to modify this part
-		// may need to modify this part
-		// may need to modify this part
-		// may need to modify this part
 		QuestionsCacheManager qcm = new QuestionsCacheManager(
 				getApplicationContext());
 		qcm.init();
@@ -203,13 +181,6 @@ public class MainActivity extends FragmentActivity implements
 		}
 
 	}
-
-	//
-	// @Override
-	// public void onResume() {
-	// super.onResume();
-	// updateQuestions();
-	// }
 
 	@Override
 	public void onNavigationDrawerItemSelected(int position) {
@@ -339,12 +310,7 @@ public class MainActivity extends FragmentActivity implements
 		// save history
 		HistoryCacheManager hcm = new HistoryCacheManager(
 				getApplicationContext());
-		/*
-		 * Log.i("LOOK HERE", "HEEEEEEEEEERE"); Log.i("LOOK HERE",
-		 * "HEEEEEEEEEERE"); Log.i("LOOK HERE", "HEEEEEEEEEERE");
-		 * Log.i("LOOK HERE", "HEEEEEEEEEERE"); Log.i("LOOK HERE",
-		 * "HEEEEEEEEEERE");
-		 */
+
 		hcm.clear();
 		hcm.set(historyArrayList);
 		hcm.save();
@@ -402,6 +368,8 @@ public class MainActivity extends FragmentActivity implements
 
 	public void doNegativeClick() {
 		// Cancels dialog fragments
+		// Does nothing -> returns to fragment, required because tapping screen
+		// to cancel is disabled
 	}
 
 	public static void updateQuestions() {
@@ -442,10 +410,6 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
-	public void addFavorite(View view) {
-		// favoritesArrayList.addQuestion(question);
-	}
-
 	public void setUsername(View view) {
 		Intent intent = new Intent(this, UserLoginActivity.class);
 		startActivityForResult(intent, REQUEST_CODE_USERNAME);
@@ -467,51 +431,6 @@ public class MainActivity extends FragmentActivity implements
 					.commit();
 		}
 
-	}
-
-	public static void EditUsername() {
-		// TestCase 23
-		// waiting for implementation of other methods
-	}
-
-	public static void SeeFreshestComment() {
-		// TestCase 22
-		// waiting for implementation of other methods
-
-	}
-
-	public static void SeeMostUpvotedQuestion() {
-		// TestCase 13
-		// waiting for implementation of other methods
-
-	}
-
-	public static void SeeMostUpvotedAnswer() {
-		// TestCase 13
-		// waiting for implementation of other methods
-
-	}
-
-	public static void PushStored() {
-		// TestCase 20/21
-		// waiting for implementation of other methods
-
-	}
-
-	public static void AuthorReplyOffline() {
-		// TestCase 20/21
-		// waiting for implementation of other methods
-
-	}
-
-	public static void AuthorQuestionOffline() {
-		// TestCase 20/21
-		// waiting for implementation of other methods
-	}
-
-	public static void AuthorAnswerOffline() {
-		// TestCase 20/21
-		// waiting for implementation of other methods
 	}
 
 	public static void SaveMyQuestions(Context context,
@@ -673,9 +592,6 @@ public class MainActivity extends FragmentActivity implements
 						swipeLayout.setEnabled(false);
 				}
 			});
-
-			// updateQuestions();
-
 			return rootView;
 		}
 
@@ -698,8 +614,6 @@ public class MainActivity extends FragmentActivity implements
 				for (Question cachedQuestion : cachedQuestions) {
 					QuestionsController.addQuestion(cachedQuestion);
 				}
-
-				// updateQuestions();
 
 				ArrayList<Question> emptyQuestionList = new ArrayList<Question>();
 				qcm.set(emptyQuestionList);
@@ -744,8 +658,6 @@ public class MainActivity extends FragmentActivity implements
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-
-			// updateQuestions();
 
 			myQuestionsList.clear();
 
@@ -850,7 +762,6 @@ public class MainActivity extends FragmentActivity implements
 				}
 
 			});
-			// ==
 			return rootView;
 		}
 

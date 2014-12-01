@@ -29,18 +29,15 @@ public class QuestionsCacheManager {
 			FileInputStream fis = context.openFileInput(FILENAME);
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			this.qlist = (ArrayList<Question>) ois.readObject();
-			Log.i("QCM", "file initialized");
 			fis.close();
 			ois.close();
 		}
 		catch (Exception e) {
-			Log.i("QuestionsCacheManager", "Error initializing");
 			e.printStackTrace();
 			File offlineData = new File(context.getFilesDir(), "OfflineQuestions.sav");
 			try {
 				offlineData.createNewFile();
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
@@ -63,12 +60,9 @@ public class QuestionsCacheManager {
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			this.qlist = (ArrayList<Question>) ois.readObject();
 			
-			Log.i("QCM", "Loaded questions");
-
 			fis.close();
 			ois.close();
 		} catch (Exception e) {
-			Log.i("QuestionsCacheManager", "Error loading");
 			e.printStackTrace();
 		}
 	}
@@ -84,12 +78,10 @@ public class QuestionsCacheManager {
 			FileOutputStream fos = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeObject(this.qlist);
-			Log.i("QCM", "Saved questions to cache");
 			fos.close();
 			oos.close();
 		}
 		catch (Exception e) {
-			Log.i("QuestionsCacheManager", "Error saving");
 			e.printStackTrace();
 		}
 	}
@@ -103,29 +95,14 @@ public class QuestionsCacheManager {
 			File offlineData = new File(context.getFilesDir(), FILENAME);
 			try {
 				offlineData.createNewFile();
-				Log.i("Created new file", FILENAME);
 			} catch (IOException e1) {
-				Log.i("Error creating", FILENAME);
 				e1.printStackTrace();
 			}
 		}
 		catch (Exception e)
 		{
-			Log.i("QuestionsCacheManager", "Error deleting");
+			e.printStackTrace();
 		}
 		
-		/*
-		try
-		{
-			File current_dir = this.context.getFilesDir();
-			File current_file = new File(current_dir, FILENAME);
-			current_file.delete();
-			File offlineData = new File(context.getFilesDir(), FILENAME);
-		}
-		catch (Exception e)
-		{
-			Log.i("Clearing part", "clearing a non existent file.");
-		}
-		*/
 	}
 }

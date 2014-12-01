@@ -134,39 +134,16 @@ public class ESClient {
 		String status = response.getStatusLine().toString();
 		System.out.println(status);
 		HttpEntity entity = response.getEntity();
-		// HttpPost updateRequest = new HttpPost(
-		// "http://cmput301.softwareprocess.es:8080/cmput301f14t12/question/"
-		// + question.getId() + "/_update");
-		//
-		// String UPDATE_UPVOTE = "{\n" + "\"doc\":{\n" + "\"numVotes\":"
-		// + question.getVotes() + "}\n" + "}";
-		//
-		// String UPDATE_ANSWER = "{\n" + "\"doc\":{\n" + "\answer"
-		//
-		// StringEntity stringEntity = new StringEntity(UPDATE_UPVOTE);
-		//
-		// updateRequest.setHeader("Accept", "application/json");
-		// updateRequest.setEntity(stringEntity);
-		//
-		// HttpResponse response = httpClient.execute(updateRequest);
-		//
-		// String status = response.getStatusLine().toString();
-		// System.out.println("Status: " + status);
-		//
-		// String json = getEntityContent(response);
 	}
 
 	public String getEntityContent(HttpResponse response) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(
 				(response.getEntity().getContent())));
 		String output;
-		// System.out.println("Output from Server -> ");
 		String json = "";
 		while ((output = br.readLine()) != null) {
-			// System.err.println(output);
 			json += output;
 		}
-		// System.out.println("JSON:"+json);
 		return json;
 	}
 
@@ -180,7 +157,6 @@ public class ESClient {
 				+ "\"fuzzy_like_this\":{\n" + "\"fields\": [" + "\"questionBody\", \"questionTitle\", \"answers.answerBody\"],\n"
 				+ "\"like_text\":" + "\"" + searchString + "\"" + "\n}\n}\n}\n}";
 
-		System.out.println(SEARCH_USER_FAV);
 		StringEntity stringEntity = new StringEntity(SEARCH_USER_FAV);
 
 		searchRequest.setHeader("Accept", "application/json");
@@ -198,11 +174,9 @@ public class ESClient {
 		ESSearchSearchResponse<Question> esResponse = gson.fromJson(json,
 				esResponseType);
 
-		//System.out.println("Response: " + esResponse);
 		QuestionArrayList qal = new QuestionArrayList();
 		for (ESResponse<Question> r : esResponse.getHits()) {
 			Question question = r.getSource();
-			// System.out.println(question.getTitle());
 			if (question.getImageBase64() != null) {
 				question.setImage(question.decodeBase64(question
 						.getImageBase64()));

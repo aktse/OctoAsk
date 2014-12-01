@@ -55,14 +55,6 @@ public class UserLoginActivity extends Activity {
 			}
 		});
 
-		/*
-		 * the next thing to implment is to show this user as logged in in the
-		 * navigation drawer:
-		 * 
-		 * |___Logged In As: <username>__| <--- shows this user is logged in | .
-		 * | | . | |_________Logout?-------------| <---- option to logout
-		 */
-
 	}
 
 	@Override

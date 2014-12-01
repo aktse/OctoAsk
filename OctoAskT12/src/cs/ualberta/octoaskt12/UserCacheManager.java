@@ -28,18 +28,15 @@ public class UserCacheManager {
 			ObjectInputStream ois = new ObjectInputStream(fis);
 
 			this.user = (User) ois.readObject();
-			Log.i("UCM", "user cache initialized");
 			fis.close();
 			ois.close();
 		}
 		catch (Exception e) {
-			Log.i("UCM", "Error initializing");
 			e.printStackTrace();
 			File offlineData = new File(context.getFilesDir(), FILENAME);
 			try {
 				offlineData.createNewFile();
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
@@ -52,12 +49,9 @@ public class UserCacheManager {
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			this.user = (User) ois.readObject();
 			
-			Log.i("UCM", "Loaded user");
-
 			fis.close();
 			ois.close();
 		} catch (Exception e) {
-			Log.i("UCM", "Error loading user");
 			e.printStackTrace();
 		}
 	}
@@ -83,12 +77,10 @@ public class UserCacheManager {
 			FileOutputStream fos = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeObject(this.user);
-			Log.i("UCM", "User saved to cache");
 			fos.close();
 			oos.close();
 		}
 		catch (Exception e) {
-			Log.i("UCM", "Error saving user");
 			e.printStackTrace();
 		}
 	}
@@ -102,15 +94,13 @@ public class UserCacheManager {
 			File offlineData = new File(context.getFilesDir(), FILENAME);
 			try {
 				offlineData.createNewFile();
-				Log.i("Created new file", FILENAME);
 			} catch (IOException e1) {
-				Log.i("Error creating", FILENAME);
 				e1.printStackTrace();
 			}
 		}
 		catch (Exception e)
 		{
-			Log.i("UCM", "Error deleting");
+			e.printStackTrace();
 		}
 	}
 }

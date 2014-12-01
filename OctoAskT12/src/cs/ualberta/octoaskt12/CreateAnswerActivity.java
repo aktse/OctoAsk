@@ -96,10 +96,7 @@ public class CreateAnswerActivity extends Activity {
 		Intent intent = new Intent(CreateAnswerActivity.this,
 				GeoAct.class);
 		
-		startActivityForResult(intent, GEO_ACTIVITY_REQUEST_CODE);
-
-		//startActivity(intent);
-		
+		startActivityForResult(intent, GEO_ACTIVITY_REQUEST_CODE);		
 
 }
 	

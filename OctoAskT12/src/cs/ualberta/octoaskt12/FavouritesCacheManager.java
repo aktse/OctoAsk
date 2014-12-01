@@ -30,12 +30,10 @@ public class FavouritesCacheManager {
 			ObjectInputStream ois = new ObjectInputStream(fis);
 
 			this.flist = (QuestionArrayList) ois.readObject();
-			Log.i("FCM", "favourites initialized");
 			fis.close();
 			ois.close();
 		}
 		catch (Exception e) {
-			Log.i("FavouritesCacheManager", "Error initializing");
 			e.printStackTrace();
 			File offlineData = new File(context.getFilesDir(), FILENAME);
 			try {
@@ -54,12 +52,9 @@ public class FavouritesCacheManager {
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			this.flist = (QuestionArrayList) ois.readObject();
 			
-			Log.i("Fav list", "Loaded favourites");
-
 			fis.close();
 			ois.close();
 		} catch (Exception e) {
-			Log.i("FavouritesCacheManager", "Error loading favourites");
 			e.printStackTrace();
 		}
 	}
@@ -74,25 +69,16 @@ public class FavouritesCacheManager {
 		this.flist = qal_in;
 	}
 	
-	/*
-	public void addQuestion(Question question)
-	{
-		this.qlist.add(question);
-	}
-	*/
-	
 	public void save()
 	{
 		try {
 			FileOutputStream fos = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeObject(this.flist);
-			Log.i("Fav list", "All favourites saved to cache");
 			fos.close();
 			oos.close();
 		}
 		catch (Exception e) {
-			Log.i("FavouritesCacheManager", "Error saving favourites");
 			e.printStackTrace();
 		}
 	}
@@ -106,15 +92,13 @@ public class FavouritesCacheManager {
 			File offlineData = new File(context.getFilesDir(), FILENAME);
 			try {
 				offlineData.createNewFile();
-				Log.i("Created new file", FILENAME);
 			} catch (IOException e1) {
-				Log.i("Error creating", FILENAME);
 				e1.printStackTrace();
 			}
 		}
 		catch (Exception e)
 		{
-			Log.i("QuestionsCacheManager", "Error deleting");
+			e.printStackTrace();
 		}
 	}
 }
