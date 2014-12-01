@@ -34,6 +34,10 @@ import android.widget.Toast;
 public class CreateQuestionActivity extends Activity {
 	Uri imageFileUri;
     private final int GEO_ACTIVITY_REQUEST_CODE = 6969;
+    
+	   double latitude;
+       double longitude;
+       String locality;
 
 	private final int CAMERA_ACTIVITY_REQUEST_CODE =  12345;
 	@Override
@@ -79,9 +83,9 @@ public class CreateQuestionActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
 		if(resultCode == GEO_ACTIVITY_REQUEST_CODE){
 		
-		   double latitude  = data.getExtras().getDouble("Latitude");
-	       double longitude = data.getExtras().getDouble("Longitude");
-	       String locality  = data.getExtras().getString("Locality");
+		   latitude  = data.getExtras().getDouble("Latitude");
+	       longitude = data.getExtras().getDouble("Longitude");
+	       locality  = data.getExtras().getString("Locality");
 	       Toast.makeText(getApplicationContext(), locality+" "+Double.toString(longitude)+" "+Double.toString(latitude), Toast.LENGTH_SHORT).show();
 
 			
@@ -159,6 +163,14 @@ public class CreateQuestionActivity extends Activity {
 		String questionBody = bodyEditText.getText().toString();
 		User user = UserController.getCurrentUser();
 		Question question = new Question(questionTitle, questionBody, user);
+		
+		question.setLocation(locality);
+		question.setLongitude(longitude);
+		question.setLatitude(latitude);
+		
+	    Toast.makeText(getApplicationContext(), locality+" "+Double.toString(longitude)+" "+Double.toString(latitude), Toast.LENGTH_SHORT).show();
+
+		
 		ImageView iv = (ImageView) findViewById(R.id.question_ImageView);
 		if (iv.getDrawable() != null) {
 			Bitmap picture = ((BitmapDrawable)iv.getDrawable()).getBitmap();
