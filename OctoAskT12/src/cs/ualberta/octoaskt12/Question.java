@@ -89,7 +89,12 @@ public class Question implements Serializable {
 	}
 
 	public String getTitle() {
-		return questionTitle.concat(" (from: "+location+" )");
+		if (location == null) {
+			return questionTitle;
+		}
+		else {
+			return questionTitle.concat(" (from: "+location+" )");	
+		}
 	}
 
 	public void setBody(String questionBody) {

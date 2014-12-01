@@ -32,7 +32,7 @@ public class Answer implements Serializable {
 	private Double longitude;
 	private Double latitude;
 	private String location;
-	
+
 	public Double getLongitude() {
 		return longitude;
 	}
@@ -72,7 +72,12 @@ public class Answer implements Serializable {
 	 ***************************************************************************/
 	// get the answer body
 	public String getBody() {
-		return answerBody.concat(" (from:" + location +" )");
+		if (location == null) {
+			return answerBody;
+		}
+		else {
+			return answerBody.concat(" (from:" + location + " )");
+		}
 	}
 
 	// set the answer body
@@ -94,7 +99,7 @@ public class Answer implements Serializable {
 	public void incrementVotes() {
 		numVotes++;
 	}
-	
+
 	public void decrementVotes() {
 		numVotes--;
 	}
@@ -147,10 +152,10 @@ public class Answer implements Serializable {
 		this.upvotedUsers.add(string);
 	}
 
-	public void removeUpvotedUser(String string){
+	public void removeUpvotedUser(String string) {
 		this.upvotedUsers.remove(string);
 	}
-	
+
 	public void setImage(Bitmap bitmap) {
 		this.image = bitmap;
 		this.imageBase64 = encodeToBase64(bitmap);

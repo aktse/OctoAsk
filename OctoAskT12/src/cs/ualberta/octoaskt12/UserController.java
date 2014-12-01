@@ -2,6 +2,9 @@ package cs.ualberta.octoaskt12;
 
 import java.util.ArrayList;
 
+// Controller used to set and get the user for the session. Also keeps list
+// of users.
+
 public class UserController {
 	private static User currentUser = null;
 	private static ArrayList<User> userArray = null;
