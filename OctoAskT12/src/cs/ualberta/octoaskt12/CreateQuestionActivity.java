@@ -33,6 +33,12 @@ import android.widget.Toast;
 
 public class CreateQuestionActivity extends Activity {
 	Uri imageFileUri;
+    private final int GEO_ACTIVITY_REQUEST_CODE = 6969;
+    
+	   double latitude;
+       double longitude;
+       String locality;
+
 	private final int CAMERA_ACTIVITY_REQUEST_CODE =  12345;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +81,16 @@ public class CreateQuestionActivity extends Activity {
 	
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
+		if(resultCode == GEO_ACTIVITY_REQUEST_CODE){
+		
+		   latitude  = data.getExtras().getDouble("Latitude");
+	       longitude = data.getExtras().getDouble("Longitude");
+	       locality  = data.getExtras().getString("Locality");
+	       Toast.makeText(getApplicationContext(), locality+" "+Double.toString(longitude)+" "+Double.toString(latitude), Toast.LENGTH_SHORT).show();
+
+			
+		}
+		
 		if (requestCode == CAMERA_ACTIVITY_REQUEST_CODE) {
 			if (resultCode == RESULT_OK) {
 				/*
@@ -132,7 +148,10 @@ public class CreateQuestionActivity extends Activity {
 		
 		Intent intent = new Intent(CreateQuestionActivity.this,
 				GeoAct.class);
-		startActivity(intent);
+		
+		startActivityForResult(intent, GEO_ACTIVITY_REQUEST_CODE);
+
+		//startActivity(intent);
 		
 
 }
@@ -144,6 +163,14 @@ public class CreateQuestionActivity extends Activity {
 		String questionBody = bodyEditText.getText().toString();
 		User user = UserController.getCurrentUser();
 		Question question = new Question(questionTitle, questionBody, user);
+		
+		question.setLocation(locality);
+		question.setLongitude(longitude);
+		question.setLatitude(latitude);
+		
+	    Toast.makeText(getApplicationContext(), locality+" "+Double.toString(longitude)+" "+Double.toString(latitude), Toast.LENGTH_SHORT).show();
+
+		
 		ImageView iv = (ImageView) findViewById(R.id.question_ImageView);
 		if (iv.getDrawable() != null) {
 			Bitmap picture = ((BitmapDrawable)iv.getDrawable()).getBitmap();

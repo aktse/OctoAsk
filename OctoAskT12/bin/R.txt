@@ -31,6 +31,8 @@ int attr uiZoomGestures 0x7f01000e
 int attr useViewLifecycle 0x7f01000f
 int attr zOrderOnTop 0x7f010010
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
 int color common_action_bar_splitter 0x7f060009
 int color common_signin_btn_dark_text_default 0x7f060000
 int color common_signin_btn_dark_text_disabled 0x7f060002
@@ -62,6 +64,7 @@ int dimen activity_horizontal_margin 0x7f080000
 int dimen activity_vertical_margin 0x7f080001
 int dimen navigation_drawer_width 0x7f080002
 =======
+>>>>>>> 19e640f554d185ec1f5002d1e71c2e71582c5cd7
 int color common_action_bar_splitter 0x7f070009
 int color common_signin_btn_dark_text_default 0x7f070000
 int color common_signin_btn_dark_text_disabled 0x7f070002
@@ -89,10 +92,16 @@ int color wallet_holo_blue_light 0x7f070015
 int color wallet_link_text_light 0x7f070016
 int color wallet_primary_text_holo_light 0x7f070019
 int color wallet_secondary_text_holo_dark 0x7f07001a
+<<<<<<< HEAD
+int dimen activity_horizontal_margin 0x7f090000
+int dimen activity_vertical_margin 0x7f090001
+int dimen navigation_drawer_width 0x7f090002
+=======
 int dimen activity_horizontal_margin 0x7f0a0000
 int dimen activity_vertical_margin 0x7f0a0001
 int dimen navigation_drawer_width 0x7f0a0002
 >>>>>>> 7682642ae58ca33e4590e8737bb9822599e68a08
+>>>>>>> 19e640f554d185ec1f5002d1e71c2e71582c5cd7
 int drawable common_full_open_on_phone 0x7f020000
 int drawable common_ic_googleplayservices 0x7f020001
 int drawable common_signin_btn_icon_dark 0x7f020002
@@ -138,6 +147,83 @@ int drawable readlatered 0x7f020029
 int drawable upvote 0x7f02002a
 int drawable upvoted 0x7f02002b
 int drawable upvoterepresent 0x7f02002c
+<<<<<<< HEAD
+int id action_settings 0x7f0b0046
+int id add_answer_button 0x7f0b0036
+int id addfavoritebutton 0x7f0b0032
+int id addreadlaterbutton 0x7f0b0031
+int id answerBodyText 0x7f0b0014
+int id answer_upvote_caption 0x7f0b0028
+int id book_now 0x7f0b000e
+int id button1 0x7f0b001b
+int id buyButton 0x7f0b000a
+int id buy_now 0x7f0b000f
+int id buy_with_google 0x7f0b0010
+int id cancelAnswerButton 0x7f0b0015
+int id cancelQuestionButton 0x7f0b001c
+int id cancelReplyButton 0x7f0b001f
+int id changeUserButton 0x7f0b003c
+int id classic 0x7f0b0011
+int id container 0x7f0b0023
+int id detail_answer_header 0x7f0b0029
+int id detail_answer_replies 0x7f0b002a
+int id detail_answer_replies_add 0x7f0b002b
+int id detail_question_body 0x7f0b002f
+int id detail_question_header 0x7f0b002e
+int id detail_question_replies 0x7f0b0033
+int id detail_question_replies_add 0x7f0b0034
+int id displayTextViews 0x7f0b0021
+int id drawer_layout 0x7f0b0022
+int id favourite_list 0x7f0b0037
+int id grayscale 0x7f0b0012
+int id history_list 0x7f0b0038
+int id holo_dark 0x7f0b0005
+int id holo_light 0x7f0b0006
+int id hybrid 0x7f0b0000
+int id item1 0x7f0b0047
+int id later_list 0x7f0b0039
+int id layout_bottom 0x7f0b0042
+int id list_question_answer 0x7f0b0043
+int id list_question_time 0x7f0b0044
+int id list_question_title 0x7f0b0040
+int id list_question_upvote 0x7f0b003f
+int id list_question_upvote_caption 0x7f0b0041
+int id loginText 0x7f0b0025
+int id match_parent 0x7f0b000c
+int id monochrome 0x7f0b0013
+int id myquestion_list 0x7f0b003a
+int id navigation_drawer 0x7f0b0024
+int id none 0x7f0b0001
+int id normal 0x7f0b0002
+int id production 0x7f0b0007
+int id questionBodyText 0x7f0b001a
+int id questionTitleText 0x7f0b0019
+int id question_ImageButton 0x7f0b0018
+int id question_ImageView 0x7f0b0017
+int id question_ImageViewFinal 0x7f0b0030
+int id question_list 0x7f0b003e
+int id question_upvote_caption 0x7f0b002d
+int id replyBodyText 0x7f0b001e
+int id sandbox 0x7f0b0008
+int id satellite 0x7f0b0003
+int id search 0x7f0b0049
+int id search_dialog 0x7f0b0045
+int id selectionDetails 0x7f0b000b
+int id setUsernameButton 0x7f0b0026
+int id sort 0x7f0b0048
+int id strict_sandbox 0x7f0b0009
+int id submitAnswerButton 0x7f0b0016
+int id submitQuestionButton 0x7f0b001d
+int id submitReplyButton 0x7f0b0020
+int id swipe_container 0x7f0b003d
+int id terrain 0x7f0b0004
+int id upvote_answer_button 0x7f0b0027
+int id upvote_question_button 0x7f0b002c
+int id username 0x7f0b003b
+int id view_question_detail 0x7f0b0035
+int id wrap_content 0x7f0b000d
+int integer google_play_services_version 0x7f080000
+=======
 <<<<<<< HEAD
 int id action_settings 0x7f0a0046
 int id add_answer_button 0x7f0a0036
@@ -291,6 +377,7 @@ int id view_question_detail 0x7f080035
 int id wrap_content 0x7f08000d
 int integer google_play_services_version 0x7f090000
 >>>>>>> 7682642ae58ca33e4590e8737bb9822599e68a08
+>>>>>>> 19e640f554d185ec1f5002d1e71c2e71582c5cd7
 int layout activity_create_answer 0x7f030000
 int layout activity_create_question 0x7f030001
 int layout activity_create_reply 0x7f030002
@@ -315,6 +402,15 @@ int layout fragment_question 0x7f030014
 int layout fragment_question_list_item 0x7f030015
 int layout search_dialog 0x7f030016
 int layout sort_dialog 0x7f030017
+<<<<<<< HEAD
+int menu create_answer 0x7f0a0000
+int menu create_question 0x7f0a0001
+int menu create_reply 0x7f0a0002
+int menu global 0x7f0a0003
+int menu main 0x7f0a0004
+int menu question_detailed_view 0x7f0a0005
+int menu user_login 0x7f0a0006
+=======
 <<<<<<< HEAD
 int menu create_answer 0x7f090000
 int menu create_question 0x7f090001
@@ -393,6 +489,7 @@ int menu global 0x7f0b0003
 int menu main 0x7f0b0004
 int menu question_detailed_view 0x7f0b0005
 int menu user_login 0x7f0b0006
+>>>>>>> 19e640f554d185ec1f5002d1e71c2e71582c5cd7
 int raw downvotesound 0x7f040000
 int raw favorite 0x7f040001
 int raw readlater 0x7f040002
@@ -461,7 +558,10 @@ int style WalletFragmentDefaultButtonTextAppearance 0x7f050003
 int style WalletFragmentDefaultDetailsHeaderTextAppearance 0x7f050002
 int style WalletFragmentDefaultDetailsTextAppearance 0x7f050001
 int style WalletFragmentDefaultStyle 0x7f050004
+<<<<<<< HEAD
+=======
 >>>>>>> 7682642ae58ca33e4590e8737bb9822599e68a08
+>>>>>>> 19e640f554d185ec1f5002d1e71c2e71582c5cd7
 int[] styleable AdsAttrs { 0x7f010000, 0x7f010001, 0x7f010002 }
 int styleable AdsAttrs_adSize 0
 int styleable AdsAttrs_adSizes 1

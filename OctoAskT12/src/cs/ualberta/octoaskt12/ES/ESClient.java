@@ -104,14 +104,20 @@ public class ESClient {
 			getQuestions();
 		} catch (ClientProtocolException e) {
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 19e640f554d185ec1f5002d1e71c2e71582c5cd7
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+<<<<<<< HEAD
+=======
 =======
 			e.printStackTrace();
 		} catch (IOException e) {
 >>>>>>> 7682642ae58ca33e4590e8737bb9822599e68a08
+>>>>>>> 19e640f554d185ec1f5002d1e71c2e71582c5cd7
 			e.printStackTrace();
 		}
 	}

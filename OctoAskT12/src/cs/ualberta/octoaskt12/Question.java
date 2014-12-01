@@ -39,6 +39,35 @@ public class Question implements Serializable {
 	private String imageBase64;
 	
 	private String questionId = null;
+	
+	private String location;
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public Double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
+	}
+
+	public Double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
+
+	Double longitude;
+	Double latitude;
+	
 
 	// Constructor
 	public Question(String questionTitle, String questionBody, User user) {
