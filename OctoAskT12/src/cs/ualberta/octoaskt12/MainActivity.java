@@ -959,156 +959,22 @@ public class MainActivity extends FragmentActivity implements
 			   latitude  = data.getExtras().getDouble("Latitude");
 		       longitude = data.getExtras().getDouble("Longitude");
 		       locality  = data.getExtras().getString("Locality");
-		       //Toast.makeText(getActivity(), locality+" "+Double.toString(longitude)+" "+Double.toString(latitude), Toast.LENGTH_SHORT).show();
-
-				//put the sorting here
 			}
-			QuestionArrayList sortedQal = new QuestionArrayList();
-			
-			NearbyArrayList = sortedQal;
-
-			if(questionArrayList.getSize() > 0){
-				
-			ArrayList<Double> distancecontainers = new ArrayList<Double>();
-
-		    //Toast.makeText(getActivity(), Integer.toString( questionArrayList.getSize()), Toast.LENGTH_SHORT).show();
-
-		    //Toast.makeText(getActivity(), Boolean.toString(!questionArrayList.getQuestion(0).getLatitude().equals(null) && !questionArrayList.getQuestion(0).getLongitude().equals(null)), Toast.LENGTH_SHORT).show();
-
-			ArrayList tempqal = new ArrayList();
-
-			for(int q = 0; q < questionArrayList.getSize(); q++){
-				
-				//Toast.makeText(getActivity(), "ei", Toast.LENGTH_SHORT).show();
-
-				//if(!questionArrayList.getQuestion(q).getLatitude().equals(null) || !questionArrayList.getQuestion(q).getLongitude().equals(null) || !questionArrayList.getQuestion(q).getLongitude().equals(0.0) || !questionArrayList.getQuestion(q).getLongitude().equals("")){
-				if(!questionArrayList.getQuestion(q).getLatitude().equals(0.0)){
-				//Toast.makeText(getActivity(), "null"+questionArrayList.getQuestion(q).getLatitude().equals(null), Toast.LENGTH_SHORT).show();
-				//Toast.makeText(getActivity(), "string1"+questionArrayList.getQuestion(q).getLatitude().equals(""), Toast.LENGTH_SHORT).show();
-				//Toast.makeText(getActivity(), "0.0"+questionArrayList.getQuestion(q).getLatitude().equals(0.0), Toast.LENGTH_SHORT).show();
-				//Toast.makeText(getActivity(), "nulllong"+questionArrayList.getQuestion(q).getLongitude().equals(null), Toast.LENGTH_SHORT).show();
-
-				Double blatitude = questionArrayList.getQuestion(q).getLatitude();
-				Double blongitude = questionArrayList.getQuestion(q).getLongitude();
-				//Toast.makeText(getActivity(), "ei", Toast.LENGTH_SHORT).show();
-				Double dist = locationdifference(latitude, longitude, blatitude, blatitude );
-				//Toast.makeText(getActivity(), "e"+Double.toString(dist),  Toast.LENGTH_SHORT).show();
-				distancecontainers.add(dist);
-				tempqal.add(questionArrayList.getQuestion(q));
-
-				//Toast.makeText(getActivity(), "distcontainers"+Integer.toString(distancecontainers.size()),  Toast.LENGTH_SHORT).show();
-
-				
-				}
-			}	
-				
-		    //Toast.makeText(getActivity(), Integer.toString(distancecontainers.size()) , Toast.LENGTH_SHORT).show();
-
-			Question insertquestion;
-			int s = 0;
-
-			
-			for (int i = 1; i < questionArrayList.getSize(); i++ ){
-				//if(!questionArrayList.getQuestion(i).getLatitude().equals(null) || !questionArrayList.getQuestion(i).getLongitude().equals(null)  || !questionArrayList.getQuestion(i).getLongitude().equals(0.0) || !questionArrayList.getQuestion(i).getLongitude().equals("")){
-				if(!questionArrayList.getQuestion(i).getLatitude().equals(0.0)){
-
-				insertquestion = questionArrayList.get(i);
-				Double clatitude = questionArrayList.getQuestion(i).getLatitude();
-				Double clongitude = questionArrayList.getQuestion(i).getLongitude();
-				Double dist2 = locationdifference(latitude, longitude, clatitude, clongitude );
-
-			
-				//< should be lessthan()
-				
-				for (s = i-1; (s >= 0) && (( locationdifference(latitude, longitude, questionArrayList.getQuestion(s).getLatitude(), questionArrayList.getQuestion(s).getLongitude() )) > dist2); s++){
-					tempqal.set(s+1, questionArrayList.get(s));
-				}
-				tempqal.set(s, insertquestion);
-				}
-			}
-			
-
-			
-			
-			for (int z = 0; z > tempqal.size(); z++){
-				if(questionArrayList.getQuestion(z).getLatitude().equals(null) && questionArrayList.getQuestion(z).getLongitude().equals(null)){
-
-				tempqal.remove(z);
-					}
-				}
-		    Toast.makeText(getActivity(), "size"+Integer.toString(tempqal.size()), Toast.LENGTH_SHORT).show();
-			
-			this.questionViewAdapter.clear();
-			this.questionViewAdapter.addAll(tempqal);
-			this.questionViewAdapter.notifyDataSetChanged();
-			
-			Toast.makeText(getActivity(), "done",Toast.LENGTH_SHORT ).show();
-			
-			
-			}
+			arraySort();
 				
 		}
+
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 			
-			// the n^2 sort whatever thats called
+			
 
 			Intent intent = new Intent(getActivity(), GeoAct.class);
 
 			startActivityForResult(intent, GEO_ACTIVITY_REQUEST_CODE);
 			
-			//NearbyArrayList = questionArrayList;
-			/*
-			QuestionArrayList sortedQal = new QuestionArrayList();
-			
-			NearbyArrayList = sortedQal;
-
-			if(questionArrayList.getSize() > 0){
-				
-			ArrayList distancecontainers = new ArrayList();
-
-			for(int q = 0; q > questionArrayList.getSize(); q++){
-				
-				if(!questionArrayList.getQuestion(q).getLatitude().equals(null) && !questionArrayList.getQuestion(q).getLongitude().equals(null)){
-				Double blatitude = questionArrayList.getQuestion(q).getLatitude();
-				Double blongitude = questionArrayList.getQuestion(q).getLongitude();
-				
-				Double dist = locationdifference(latitude, longitude, blatitude, blatitude );
-				
-				distancecontainers.add(dist);}
-			}	
-				
-		       Toast.makeText(getActivity(), locality+" "+distancecontainers, Toast.LENGTH_SHORT).show();
-
-			Question insertquestion;
-			int s = 0;
-			
-			//IF NULL????
-			ArrayList tempqal = new ArrayList();
-
-			for (int i = 1; i > questionArrayList.getSize(); i++ ){
-				if(!questionArrayList.getQuestion(i).getLatitude().equals(null) && !questionArrayList.getQuestion(i).getLongitude().equals(null)){
-
-				insertquestion = questionArrayList.get(i);
-				Double clatitude = questionArrayList.getQuestion(i).getLatitude();
-				Double clongitude = questionArrayList.getQuestion(i).getLongitude();
-				Double dist2 = locationdifference(latitude, longitude, clatitude, clongitude );
-
-			
-				//< should be lessthan()
-				for (s = i-1; (s >= 0) && ( locationdifference(latitude, longitude, questionArrayList.getQuestion(s).getLatitude(), questionArrayList.getQuestion(s).getLongitude() ) < dist2); s++){
-					tempqal.set(s+1, questionArrayList.get(s));
-				}
-				tempqal.set(s+1, insertquestion);
-				}
-			}
-			
-			for (int z = 0; z > tempqal.size(); z++){
-				NearbyArrayList.addQuestion(((Question)tempqal.get(z)));
-				}
-			}*/
 
 			this.questionViewAdapter = new CustomArrayAdapter(getActivity(),
 					NearbyArrayList);
@@ -1144,6 +1010,49 @@ public class MainActivity extends FragmentActivity implements
 		public void onAttach(Activity activity) {
 			super.onAttach(activity);
 			((MainActivity) activity).onSectionAttached(7);
+		}
+		
+
+		private void arraySort() {
+			QuestionArrayList sortedQal = new QuestionArrayList();		
+			NearbyArrayList = sortedQal;
+			if(questionArrayList.getSize() > 0){
+			ArrayList<Double> distancecontainers = new ArrayList<Double>();
+			ArrayList tempqal = new ArrayList();
+			for(int q = 0; q < questionArrayList.getSize(); q++){
+				//if(!questionArrayList.getQuestion(q).getLatitude().equals(null) || !questionArrayList.getQuestion(q).getLongitude().equals(null) || !questionArrayList.getQuestion(q).getLongitude().equals(0.0) || !questionArrayList.getQuestion(q).getLongitude().equals("")){
+				if(!questionArrayList.getQuestion(q).getLatitude().equals(0.0)){
+				Double blatitude = questionArrayList.getQuestion(q).getLatitude();
+				Double blongitude = questionArrayList.getQuestion(q).getLongitude();
+				Double dist = locationdifference(latitude, longitude, blatitude, blatitude );
+				distancecontainers.add(dist);
+				tempqal.add(questionArrayList.getQuestion(q));		
+				}
+			}	
+			Question insertquestion;
+			int s = 0;
+			for (int i = 1; i < questionArrayList.getSize(); i++ ){
+				if(!questionArrayList.getQuestion(i).getLatitude().equals(0.0)){
+				insertquestion = questionArrayList.get(i);
+				Double clatitude = questionArrayList.getQuestion(i).getLatitude();
+				Double clongitude = questionArrayList.getQuestion(i).getLongitude();
+				Double dist2 = locationdifference(latitude, longitude, clatitude, clongitude );
+
+				for (s = i-1; (s >= 0) && (( locationdifference(latitude, longitude, questionArrayList.getQuestion(s).getLatitude(), questionArrayList.getQuestion(s).getLongitude() )) > dist2); s++){
+					//tempqal.set(s+1, questionArrayList.get(s));
+				}
+				//tempqal.set(s, insertquestion);
+				}
+			}			
+			for (int z = 0; z > tempqal.size(); z++){
+				if(questionArrayList.getQuestion(z).getLatitude().equals(null) && questionArrayList.getQuestion(z).getLongitude().equals(null)){
+				//tempqal.remove(z);
+					}
+				}			
+			this.questionViewAdapter.clear();
+			this.questionViewAdapter.addAll(tempqal);
+			this.questionViewAdapter.notifyDataSetChanged();
+			}
 		}
 	}
 
