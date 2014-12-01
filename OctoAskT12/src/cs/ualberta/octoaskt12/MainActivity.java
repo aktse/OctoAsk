@@ -69,6 +69,8 @@ public class MainActivity extends FragmentActivity implements
 	public static QuestionArrayList favoritesArrayList = new QuestionArrayList();
 
 	public static QuestionArrayList laterArrayList = new QuestionArrayList();
+	
+	public static User loggedInUser = null;
 
 	private static NavigationDrawerFragment mNavigationDrawerFragment;
 
@@ -92,8 +94,8 @@ public class MainActivity extends FragmentActivity implements
 		StrictMode.setThreadPolicy(p);
 
 		// need to remove these two lines
-		User currentUser2 = new User("Chris");
-		UserController.setCurrentUser(currentUser2);
+		// User currentUser2 = new User("Chris");
+		// UserController.setCurrentUser(currentUser2);
 		
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo ni = cm.getActiveNetworkInfo();
@@ -141,7 +143,7 @@ public class MainActivity extends FragmentActivity implements
 			updateQuestions();
 		}
 		
-		User currentUser = UserController.getCurrentUser();
+		// User currentUser = UserController.getCurrentUser();
 
 		context = this;
 
@@ -187,6 +189,15 @@ public class MainActivity extends FragmentActivity implements
 		ReadLaterCacheManager rlcm = new ReadLaterCacheManager(getApplicationContext());
 		rlcm.init();
 		laterArrayList = rlcm.get();
+		
+		UserCacheManager ucm = new UserCacheManager(getApplicationContext());
+		ucm.init();
+		ucm.load();
+		if (ucm.getUser().getName() != null)
+		{
+			UserController.setCurrentUser(ucm.getUser());
+		}
+		
 	}
 
 	@Override
@@ -321,6 +332,14 @@ public class MainActivity extends FragmentActivity implements
 		rlcm.clear();
 		rlcm.set(laterArrayList);
 		rlcm.save();
+		
+		UserCacheManager ucm = new UserCacheManager(getApplicationContext());
+		ucm.clear();
+		if (UserController.getCurrentUser() != null)
+		{
+				ucm.setUser(UserController.getCurrentUser());
+		}
+		ucm.save();
 	}
 	public void createSortDialog(MenuItem menu) {
 		// Creates a dialog fragment to prompt user into making a selection to
@@ -699,14 +718,21 @@ public class MainActivity extends FragmentActivity implements
 			
 			myQuestionsList.clear();
 			
-			for (Question current_question : questionArrayList.getQuestions())
+			if (UserController.getCurrentUser() != null)
 			{
-				System.out.println("question, "+current_question.getUser());
-				System.out.println("user controller, "+current_question.getUser());
- 
-				if (current_question.getUser().equals(UserController.getCurrentUser().getName()))
+				for (Question current_question : questionArrayList.getQuestions())
 				{
-					MainActivity.myQuestionsList.addQuestion(current_question);
+					System.out.println("question, "+current_question.getUser());
+					System.out.println("user controller, "+current_question.getUser());
+ 
+				
+					System.out.println("Current question user: "+current_question.getUser());
+					System.out.println("User controller  user: "+UserController.getCurrentUser().getName());
+
+					if (current_question.getUser().equals(UserController.getCurrentUser().getName()))
+					{
+						MainActivity.myQuestionsList.addQuestion(current_question);
+					}
 				}
 			}
 			
