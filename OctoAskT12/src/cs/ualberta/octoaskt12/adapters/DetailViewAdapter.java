@@ -423,6 +423,8 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 						int questionIndex = MainActivity.laterArrayList.searchQuestionIndexById(question.getId());
 						MainActivity.laterArrayList.removeQuestionByIndex(questionIndex);
 						rlButton.setImageResource(R.drawable.readlater);
+						final MediaPlayer mp = MediaPlayer.create(context, R.raw.unreadlater);
+				        mp.start();
 					} else {
 						MainActivity.laterArrayList.addToFront(question);
 						rlButton.setImageResource(R.drawable.readlatered);

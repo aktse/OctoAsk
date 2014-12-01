@@ -545,7 +545,8 @@ containing a value of this type.
         public static final int favorite=0x7f040001;
         public static final int readlater=0x7f040002;
         public static final int unfavorite=0x7f040003;
-        public static final int upvotesound=0x7f040004;
+        public static final int unreadlater=0x7f040004;
+        public static final int upvotesound=0x7f040005;
     }
     public static final class string {
         public static final int accept=0x7f060002;

@@ -215,7 +215,8 @@ int raw downvotesound 0x7f040000
 int raw favorite 0x7f040001
 int raw readlater 0x7f040002
 int raw unfavorite 0x7f040003
-int raw upvotesound 0x7f040004
+int raw unreadlater 0x7f040004
+int raw upvotesound 0x7f040005
 int string accept 0x7f060002
 int string action_settings 0x7f06002f
 int string app_name 0x7f060023
