@@ -24,7 +24,7 @@ public class OfflineDataManager {
 			MyQuestions = (QuestionArrayList) ois.readObject();
 			fos.close();
 		} catch (IOException e) {
-			Log.i("Well", "GoBackToLoadAgain");
+			e.printStackTrace();
 		}
 		
 		int instanceinarraysize = MyQuestions.getSize();
@@ -43,7 +43,7 @@ public class OfflineDataManager {
 			oos.writeObject(questions);
 			fos.close();
 		} catch(IOException e) {
-			Log.i("heysave", "heysave");
+			e.printStackTrace();
 	}
 }
 

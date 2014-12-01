@@ -166,10 +166,6 @@ public class Question implements Serializable {
 		return dateCreated;
 	}
 
-	// public void attachImage(CustomImage customImage) {
-	// this.customImage = customImage;
-	// }
-
 	public int imageExists() {
 		if (this.image == null) {
 			return 0;

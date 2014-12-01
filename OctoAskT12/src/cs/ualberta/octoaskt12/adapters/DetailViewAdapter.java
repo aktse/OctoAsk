@@ -336,15 +336,8 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 				@Override
 				public void onClick(View v) {
 					boolean duplicateFav2 = false;
-					
-//					Log.i("Current question id", question.getId());
-//					Log.i("Current question id", question.getId());
-//					Log.i("Current question id", question.getId());
-//					Log.i("Current question id", question.getId());
-//					Log.i("Current question id", question.getId());
-					
+
 					for (Question favQuestion : MainActivity.favoritesArrayList.getQuestions()) {
-//						Log.i("Looped id", favQuestion.getId());
 						if (favQuestion.getId().equals(question.getId())) {
 							duplicateFav2 = true;
 							break;
@@ -362,16 +355,7 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 						final MediaPlayer mp = MediaPlayer.create(context, R.raw.favorite);
 				        mp.start();
 					}
-					
-					/*
-					if(MainActivity.favoritesArrayList.has(question)) {
-						MainActivity.favoritesArrayList.remove(question);
-						favButton.setImageResource(R.drawable.favorite);
-					} else {
-						MainActivity.favoritesArrayList.addToFront(question);
-						favButton.setImageResource(R.drawable.favorited);
-					}
-					*/
+
 				}
 			});
 			
@@ -392,28 +376,13 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 				rlButton.setImageResource(R.drawable.readlater);
 			}
 			
-			/*
-			if(MainActivity.laterArrayList.has(question)) {
-				rlButton.setImageResource(R.drawable.readlatered);
-			} else {
-				rlButton.setImageResource(R.drawable.readlater);
-			}
-			*/
-			
 			rlButton.setOnClickListener(new View.OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
 					boolean duplicateRL2 = false;
 					
-//					Log.i("Current question id", question.getId());
-//					Log.i("Current question id", question.getId());
-//					Log.i("Current question id", question.getId());
-//					Log.i("Current question id", question.getId());
-//					Log.i("Current question id", question.getId());
-					
 					for (Question rlQuestion : MainActivity.laterArrayList.getQuestions()) {
-//						Log.i("Looped id", favQuestion.getId());
 						if (rlQuestion.getId().equals(question.getId())) {
 							duplicateRL2 = true;
 							break;
@@ -431,16 +400,6 @@ public class DetailViewAdapter extends BaseExpandableListAdapter {
 						final MediaPlayer mp = MediaPlayer.create(context, R.raw.readlater);
 				        mp.start();
 					}
-					
-					/*
-					if(MainActivity.laterArrayList.has(question)) {
-						MainActivity.laterArrayList.remove(question);
-						rlButton.setImageResource(R.drawable.readlater);
-					} else {
-						MainActivity.laterArrayList.addToFront(question);
-						rlButton.setImageResource(R.drawable.readlatered);
-					}
-					*/
 				}
 			});
 			

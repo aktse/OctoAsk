@@ -57,35 +57,11 @@ GooglePlayServicesClient.OnConnectionFailedListener {
          * handle callbacks.
          */
 		
-		
         mLocationRequest = LocationRequest.create();
-        //create default parameters/ block accuracy/
-        //mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
 		mLocationClient = new LocationClient(this, this, this);
 		
 	}
-	
-	/*
-    public static class ErrorDialogFragment extends DialogFragment {
-        // Global field to contain the error dialog
-        private Dialog mDialog;
-        // Default constructor. Sets the dialog field to null
-        public ErrorDialogFragment() {
-            super();
-            mDialog = null;
-        }
-        // Set the dialog to display
-        public void setDialog(Dialog dialog) {
-            mDialog = dialog;
-        }
-        // Return a Dialog to the DialogFragment.
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            return mDialog;
-        }
-    }*/
-    
 	
 	@Override
 	protected void onStart(){
@@ -102,14 +78,6 @@ GooglePlayServicesClient.OnConnectionFailedListener {
         else{
 			Toast.makeText(this, "Google Play is not Available", Toast.LENGTH_LONG).show();
         }
-
-        /*
-       if(gpsapk==true){
-        	mLocationClient.connect();
-            mCurrentLocation = mLocationClient.getLastLocation();
-
-        	
-        }*/
         
     }
 
@@ -133,7 +101,6 @@ GooglePlayServicesClient.OnConnectionFailedListener {
 			longitude = location.getLongitude();
 			latitude = location.getLatitude();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -172,7 +139,6 @@ GooglePlayServicesClient.OnConnectionFailedListener {
 				intent.putExtra("Longitude", longitude);
 				intent.putExtra("Locality", locality);
 			    setResult(REQUEST_CODE_GPS_APK, intent);
-				//REQUEST_CODE_GPS_APK
 		        finish();
 		    }
 		});
@@ -188,45 +154,7 @@ GooglePlayServicesClient.OnConnectionFailedListener {
         mLocationClient.disconnect();
         super.onStop();
 
-	}
-
-	
-    /*
-     * Called by Location Services if the attempt to
-     * Location Services fails.
-     */
-	@Override
-	public void onConnectionFailed(ConnectionResult connectionResult) {
-		// TODO Auto-generated method stub
-		 /*
-         * Google Play services can resolve some errors it detects.
-         * If the error has a resolution, try sending an Intent to
-         * start a Google Play services activity that can resolve
-         * error.
-         */
-		
-		/*
-		if (connectionResult.hasResolution()){
-			
-			try{
-	            connectionResult.startResolutionForResult(
-                        this,
-                        REQUEST_CODE_GPS_APK);
-			}//try
-			catch  (IntentSender.SendIntentException e) { // http://developer.android.com/reference/android/content/IntentSender.html
-				// Log the error
-				//description of intent not being able to send or unable to process request 
-                e.printStackTrace();
-            }// catch
-		}// if hasresolution
-		else{
-             //* If no resolution is available, display a dialog to the
-             //* user with the error.
-	        Toast.makeText(this, "Well... SHIT..", Toast.LENGTH_SHORT).show();
-		}*/
-		
-	}//onconnectionfailed	
-		
+	}	
 
     /*
      * Called by Location Services when the request to connect the
@@ -248,111 +176,11 @@ GooglePlayServicesClient.OnConnectionFailedListener {
      */
 	@Override
 	public void onDisconnected() {
-		// TODO Auto-generated method stub
         Toast.makeText(this, "Disconnected. Please re-connect.",
                 Toast.LENGTH_SHORT).show();
         
 		
 	}// on disconnected
-	
-	
-	/*
-	Context classcontext = getApplicationContext();;
-	Activity classactivity = this;
-	
-
-	
-	public boolean isOk(){
-		
-		boolean hasAPK = false;
-		
-		System.out.println("our class context" + classcontext);
-		
-		int GPSavailability = GooglePlayServicesUtil.isGooglePlayServicesAvailable(classcontext);
-
-		System.out.println("GPS availability" + GPSavailability);
-
-		if(GPSavailability == ConnectionResult.SUCCESS){
-			
-			System.out.println("inside if statement in isOK method");
-			hasAPK = true;
-			
-			System.out.println("return True");
-
-			return hasAPK;
-			
-			
-		}else{
-			
-			System.out.println("inside else statement in isOKmethod");
-			System.out.println("print classactivity" + classactivity.getClass());
-			System.out.println("print classcontext" + classcontext.getClass());
-
-
-			if(GooglePlayServicesUtil.isUserRecoverableError(GPSavailability)){
-			
-			//if not working try:
-			//parent activity instead of classcontext for second argument
-			
-			GooglePlayServicesUtil.getErrorDialog(GPSavailability, classactivity, REQUEST_CODE_GPS_APK).show();
-			//get error dialog should  which case Google Play services may send a result back to your activity. To handle this result, override the method onActivityResult().
-			// you need a result code to identify 	
-			
-			}else{
-				
-				Toast.makeText(classcontext, "Please install the the recent Google Play Service",  Toast.LENGTH_SHORT).show();
-			}//else2
-			
-			System.out.println("return False");
-
-			hasAPK = false;
-			
-			
-		}//else1
-		
-		
-		return hasAPK;
-	}//is ok 
-	
-
-	 private boolean servicesConnected() {
-	        // Check that Google Play services is available
-	        int resultCode =
-	                GooglePlayServicesUtil.
-	                        isGooglePlayServicesAvailable(this);
-	        // If Google Play services is available
-	        if (ConnectionResult.SUCCESS == resultCode) {
-	            // In debug mode, log the status
-	            Log.d("Location Updates",
-	                    "Google Play services is available.");
-	            // Continue
-	            return true;
-	        // Google Play services was not available for some reason.
-	        // resultCode holds the error code.
-	        } else {
-	            // Get the error dialog from Google Play services
-	            Dialog errorDialog = GooglePlayServicesUtil.getErrorDialog(
-	                    resultCode,
-	                    this,
-	                    REQUEST_CODE_GPS_APK);
-
-	            // If Google Play services can provide an error dialog
-	            if (errorDialog != null) {
-	                // Create a new DialogFragment for the error dialog
-	               // ErrorDialogFragment errorFragment =
-	                 //       new ErrorDialogFragment();
-	                // Set the dialog in the DialogFragment
-	                //errorFragment.setDialog(errorDialog);
-	                // Show the error dialog in the DialogFragment
-	                //errorFragment.show(getSupportFragmentManager(),
-	                  //      "Location Updates");
-	            }
-	            
-	            }
-	        return false;
-	        }*/
-	
-	
 
 	//http://developer.android.com/training/location/retrieve-current.html
 	
@@ -430,6 +258,12 @@ private final LocationListener locationListener = new LocationListener() {
 		double distance = locationA.distanceTo(locationB) ;
 		
 		return distance;
+	}
+
+	@Override
+	public void onConnectionFailed(ConnectionResult result) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 

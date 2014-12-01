@@ -28,18 +28,15 @@ public class MyQuestionsCacheManager {
 			FileInputStream fis = context.openFileInput(FILENAME);
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			this.qal = (QuestionArrayList) ois.readObject();
-			Log.i("MQCM", "My Questions initialized");
 			fis.close();
 			ois.close();
 		}
 		catch (Exception e) {
-			Log.i("MQCM", "Error initializing");
 			e.printStackTrace();
 			File offlineData = new File(context.getFilesDir(), FILENAME);
 			try {
 				offlineData.createNewFile();
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
@@ -52,12 +49,9 @@ public class MyQuestionsCacheManager {
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			this.qal = (QuestionArrayList) ois.readObject();
 			
-			Log.i("MQCM", "Loaded my questions");
-
 			fis.close();
 			ois.close();
 		} catch (Exception e) {
-			Log.i("MQCM", "Error loading my questions");
 			e.printStackTrace();
 		}
 	}
@@ -77,25 +71,16 @@ public class MyQuestionsCacheManager {
 		this.qal.addQuestion(question);
 	}
 	
-	/*
-	public void addQuestion(Question question)
-	{
-		this.qlist.add(question);
-	}
-	*/
-	
 	public void save()
 	{
 		try {
 			FileOutputStream fos = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeObject(this.qal);
-			Log.i("MQCM", "All my questions saved to cache");
 			fos.close();
 			oos.close();
 		}
 		catch (Exception e) {
-			Log.i("MQCM", "Error saving my questions");
 			e.printStackTrace();
 		}
 	}
@@ -109,15 +94,13 @@ public class MyQuestionsCacheManager {
 			File offlineData = new File(context.getFilesDir(), FILENAME);
 			try {
 				offlineData.createNewFile();
-				Log.i("Created new file", FILENAME);
 			} catch (IOException e1) {
-				Log.i("Error creating", FILENAME);
 				e1.printStackTrace();
 			}
 		}
 		catch (Exception e)
 		{
-			Log.i("MQCM", "Error deleting");
+			e.printStackTrace();
 		}
 	}
 }
