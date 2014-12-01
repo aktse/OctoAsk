@@ -72,7 +72,7 @@ public class ESClient {
 				System.out.println("ID: " + question.getId());
 			}
 			qal.addQuestion(question);
-		}
+		}		
 		return qal;
 	}
 
@@ -103,8 +103,15 @@ public class ESClient {
 		try {
 			getQuestions();
 		} catch (ClientProtocolException e) {
+<<<<<<< HEAD
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+=======
+			e.printStackTrace();
+		} catch (IOException e) {
+>>>>>>> 7682642ae58ca33e4590e8737bb9822599e68a08
 			e.printStackTrace();
 		}
 	}

@@ -138,7 +138,6 @@ public class MainActivity extends FragmentActivity implements
 			qcm.saveQuestions();
 
 			updateQuestions();
-
 		}
 
 		// User currentUser = UserController.getCurrentUser();
@@ -201,7 +200,13 @@ public class MainActivity extends FragmentActivity implements
 		}
 
 	}
-
+//
+//	@Override
+//	public void onResume() {
+//		super.onResume();
+//		updateQuestions();
+//	}
+	
 	@Override
 	public void onNavigationDrawerItemSelected(int position) {
 		// update the main content by replacing fragments
@@ -295,8 +300,8 @@ public class MainActivity extends FragmentActivity implements
 	}
 
 	@Override
-	public void onPause() {
-		super.onPause();
+	public void onDestroy() {
+		super.onDestroy();
 
 		// save all viewable questions
 		AllQuestionsCacheManager aqcm = new AllQuestionsCacheManager(
@@ -390,7 +395,6 @@ public class MainActivity extends FragmentActivity implements
 		// Updates questions by querying server
 		try {
 			questionArrayList = QuestionsController.getAllQuestions();
-
 		} catch (ClientProtocolException e1) {
 			e1.printStackTrace();
 		} catch (IOException e1) {
@@ -420,7 +424,6 @@ public class MainActivity extends FragmentActivity implements
 		} else {
 			Intent intent = new Intent(MainActivity.this,
 					CreateQuestionActivity.class);
-			System.out.println("preparing to create question");
 			startActivityForResult(intent, REQUEST_CODE_CREATE_QUESTION);
 
 		}
@@ -444,8 +447,7 @@ public class MainActivity extends FragmentActivity implements
 					.replace(R.id.container, ProfileFragment.newInstance())
 					.commit();
 		} else if (requestCode == REQUEST_CODE_CREATE_QUESTION) {
-			System.out.println("created question");
-//			updateQuestions();
+			updateQuestions();
 			FragmentManager fragmentManager = getFragmentManager();
 			fragmentManager.beginTransaction()
 					.replace(R.id.container, QuestionFragment.newInstance())
@@ -512,7 +514,6 @@ public class MainActivity extends FragmentActivity implements
 	@Override
 	public void onBackPressed() {
 		int count = getFragmentManager().getBackStackEntryCount();
-		System.out.println(count);
 		if (count > 0) {
 			FragmentManager fragmentManager = getFragmentManager();
 			System.out
@@ -549,7 +550,6 @@ public class MainActivity extends FragmentActivity implements
 
 		public static QuestionFragment newInstance() {
 			QuestionFragment fragment = new QuestionFragment();
-			System.out.println("Question Fragment Created");
 			return fragment;
 		}
 
@@ -577,8 +577,6 @@ public class MainActivity extends FragmentActivity implements
 					boolean duplicateHistory = false;
 					for (Question histQuestion : MainActivity.historyArrayList
 							.getQuestions()) {
-						// System.out.println("Look here FAV "+histQuestion.getId());
-						// System.out.println("Look here current "+question.getId());
 						if (histQuestion.getId().equals(question.getId())) {
 							duplicateHistory = true;
 							break;
@@ -597,14 +595,7 @@ public class MainActivity extends FragmentActivity implements
 					} else {
 						historyArrayList.addToFront(question);
 					}
-
-					/*
-					 * if (historyArrayList.has(question)) {
-					 * historyArrayList.remove(question);
-					 * historyArrayList.addToFront(question); } else {
-					 * historyArrayList.addToFront(question); }
-					 */
-
+					
 					FragmentManager fragmentManager = getFragmentManager();
 					fragmentManager
 							.beginTransaction()
@@ -665,10 +656,7 @@ public class MainActivity extends FragmentActivity implements
 			});
 			
 //			updateQuestions();
-			System.out.println("updated questions");
-			onResume();
-			System.out.println(sortIndex);
-			System.out.println("resumed");
+
 			return rootView;
 		}
 
@@ -692,12 +680,14 @@ public class MainActivity extends FragmentActivity implements
 					QuestionsController.addQuestion(cachedQuestion);
 				}
 
+//				updateQuestions();
+				
 				ArrayList<Question> emptyQuestionList = new ArrayList<Question>();
 				qcm.set(emptyQuestionList);
 				qcm.clear();
 				qcm.saveQuestions();
 			}
-
+			
 			// Re-sorts the array when app is closed and reopened
 			// Guarentees consistency in sorting (doesn't randomly unsort)
 			SortManager sortManager = new SortManager();
